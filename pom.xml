@@ -1,0 +1,119 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.keyboardplaying.zip</groupId>
+  <artifactId>time-tracker-zipper</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+
+  <name>Time tracker zipper</name>
+  <description>A utility for constructing and deconstructing the XLSX file of xls-time-tracker</description>
+
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>http://www.opensource.org/licenses/mit-license.php</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <properties>
+    <!-- Github properties -->
+    <github.user>cyChop</github.user>
+    <github.repo>${project.artifactId}</github.repo>
+
+    <!-- Compilation settings -->
+    <java.version>1.7</java.version>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <!-- Propagate Java version to Sonar -->
+    <sonar.java.source>${maven.compiler.source}</sonar.java.source>
+    <sonar.java.target>${maven.compiler.target}</sonar.java.target>
+
+    <!-- Version management - test -->
+    <junit.version>4.12</junit.version>
+    <jdepend.version>2.9.1</jdepend.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <!--  _____       _    -->
+      <!-- |_   _|__ __| |_  -->
+      <!--   | |/ -_|_-<  _| -->
+      <!--   |_|\___/__/\__| -->
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${junit.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>jdepend</groupId>
+        <artifactId>jdepend</artifactId>
+        <version>${jdepend.version}</version>
+        <scope>test</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <!--  __  __           _  __        _    -->
+        <!-- |  \/  |__ _ _ _ (_)/ _|___ __| |_  -->
+        <!-- | |\/| / _` | ' \| |  _/ -_|_-<  _| -->
+        <!-- |_|  |_\__,_|_||_|_|_| \___/__/\__| -->
+        <plugin>
+          <artifactId>maven-jar-plugin</artifactId>
+          <configuration>
+            <archive>
+              <!-- Include a manifest -->
+              <manifest>
+                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+              </manifest>
+              <manifestEntries>
+                <url>${project.url}</url>
+                <Build-Time>${maven.build.timestamp}</Build-Time>
+                <X-Compile-Source-JDK>${maven.compiler.source}</X-Compile-Source-JDK>
+                <X-Compile-Target-JDK>${maven.compiler.target}</X-Compile-Target-JDK>
+              </manifestEntries>
+            </archive>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
+  <!--     _   _              _    -->
+  <!--    /_\ | |__  ___ _  _| |_  -->
+  <!--   / _ \| '_ \/ _ \ || |  _| -->
+  <!--  /_/ \_\_.__/\___/\_,_|\__| -->
+  <scm>
+    <url>https://github.com/${github.user}/${github.repo}</url>
+    <connection>scm:git:https://github.com/${github.user}/${github.repo}.git</connection>
+    <developerConnection>scm:git:git@github.com:${github.user}/${github.repo}.git</developerConnection>
+  </scm>
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/${github.user}/${github.repo}/issues</url>
+  </issueManagement>
+  <organization>
+    <name>Keyboard Playing</name>
+    <url>http://keyboardplaying.org</url>
+  </organization>
+  <developers>
+    <developer>
+      <id>cyChop</id>
+      <name>Cyrille Chopelet</name>
+      <email>cyrille dot chopelet at mines-nancy dot org</email>
+      <roles>
+        <role>developer</role>
+      </roles>
+      <timezone>+1</timezone>
+      <url>http://keyboardplaying.org</url>
+    </developer>
+  </developers>
+</project>
