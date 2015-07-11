@@ -1,4 +1,4 @@
-package org.keyboardplaying.zipper.ui;
+package org.keyboardplaying.construct.ui;
 
 import java.awt.Component;
 import java.util.ArrayList;
@@ -14,9 +14,15 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import org.keyboardplaying.zipper.action.Action;
+import org.keyboardplaying.construct.action.Action;
+import org.keyboardplaying.construct.action.ActionWrapper;
 
-public class ApplicationWindowBuilder {
+/**
+ * A utility class for building a window.
+ *
+ * @author cyChop (http://keyboardplaying.org)
+ */
+public class WindowBuilder {
     private List<Action> actions = new ArrayList<>();
     private String title;
 
@@ -35,12 +41,12 @@ public class ApplicationWindowBuilder {
         }
     }
 
-    public ApplicationWindowBuilder setTitle(String title) {
+    public WindowBuilder setTitle(String title) {
         this.title = title;
         return this;
     }
 
-    public ApplicationWindowBuilder addActions(Action... actions) {
+    public WindowBuilder addActions(Action... actions) {
         for (Action action : actions) {
             this.actions.add(action);
         }
@@ -60,8 +66,7 @@ public class ApplicationWindowBuilder {
 
         for (Action action : actions) {
             JButton btn = new JButton(action.getLabel());
-            // FIXME perform action
-            // btn.addActionListener(action);
+            btn.addActionListener(new ActionWrapper(action));
             seqGroup.addComponent(btn);
             parallelGroup.addComponent(btn);
             if (sizeRef == null) {

@@ -2,11 +2,11 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.keyboardplaying.zip</groupId>
-  <artifactId>time-tracker-zipper</artifactId>
+  <groupId>org.keyboardplaying.construct</groupId>
+  <artifactId>time-tracker-construct</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
-  <name>Time tracker zipper</name>
+  <name>Time tracker construct</name>
   <description>A utility for constructing and deconstructing the XLSX file of xls-time-tracker</description>
 
   <licenses>
@@ -71,6 +71,7 @@
             <archive>
               <!-- Include a manifest -->
               <manifest>
+                <mainClass>org.keyboardplaying.construct.ConstructApplication</mainClass>
                 <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                 <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
               </manifest>
