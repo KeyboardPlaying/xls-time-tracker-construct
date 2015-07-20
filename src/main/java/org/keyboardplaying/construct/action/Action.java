@@ -26,5 +26,5 @@ public interface Action {
      *
      * @return {@code true} if the action was successfully performed, {@code false} otherwise
      */
-    boolean perform();
+    boolean perform() throws Exception;
 }

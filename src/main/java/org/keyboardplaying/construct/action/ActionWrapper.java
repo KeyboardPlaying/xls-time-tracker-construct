@@ -18,7 +18,7 @@ public class ActionWrapper implements ActionListener {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     @Override
@@ -33,7 +33,7 @@ public class ActionWrapper implements ActionListener {
             msg.append('\n').append('\n').append(t.getClass().getName());
             String tMsg = t.getMessage();
             if (tMsg != null && tMsg.length() > 0) {
-                msg.append('\n').append(tMsg);
+                msg.append('\n').append('\t').append(tMsg);
             }
             JOptionPane.showMessageDialog(null, msg.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }
