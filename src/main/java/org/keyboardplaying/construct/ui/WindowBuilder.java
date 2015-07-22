@@ -1,6 +1,7 @@
 package org.keyboardplaying.construct.ui;
 
 import java.awt.Component;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,10 +58,16 @@ public class WindowBuilder {
         JPanel pane = new JPanel();
         GroupLayout layout = new GroupLayout(pane);
         pane.setLayout(layout);
-        // pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
+
+        SequentialGroup vGroup = layout.createSequentialGroup();
+        ParallelGroup hGroup = layout.createParallelGroup();
+
+        Component dirChooser = new DirectoryChooser(new File("."));
+        hGroup.addComponent(dirChooser);
+        vGroup.addComponent(dirChooser);
 
         SequentialGroup seqGroup = layout.createSequentialGroup();
-        ParallelGroup parallelGroup = layout.createParallelGroup();
+        ParallelGroup parGroup = layout.createParallelGroup();
 
         Component sizeRef = null;
 
@@ -68,15 +75,20 @@ public class WindowBuilder {
             JButton btn = new JButton(action.getLabel());
             btn.addActionListener(new ActionWrapper(action));
             seqGroup.addComponent(btn);
-            parallelGroup.addComponent(btn);
+            parGroup.addComponent(btn);
             if (sizeRef == null) {
                 sizeRef = btn;
             } else {
                 layout.linkSize(SwingConstants.HORIZONTAL, sizeRef, btn);
             }
         }
-        layout.setHorizontalGroup(parallelGroup);
-        layout.setVerticalGroup(seqGroup);
+
+        // TODO adjust sizes of layout
+        hGroup.addGroup(seqGroup);
+        vGroup.addGroup(parGroup);
+
+        layout.setHorizontalGroup(hGroup);
+        layout.setVerticalGroup(vGroup);
 
         return pane;
     }
