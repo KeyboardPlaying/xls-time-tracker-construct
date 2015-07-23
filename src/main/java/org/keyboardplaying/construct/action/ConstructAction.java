@@ -10,12 +10,18 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import org.keyboardplaying.construct.ConstructPaths;
+import org.keyboardplaying.construct.model.Project;
 
 /**
  * @author cyChop (http://keyboardplaying.org)
  */
 public class ConstructAction implements Action {
+
+    private Project project;
+
+    public ConstructAction(Project project) {
+        this.project = project;
+    }
 
     /*
      * (non-Javadoc)
@@ -34,7 +40,7 @@ public class ConstructAction implements Action {
      */
     @Override
     public String getUnsuccessMessage() {
-        return "The action could not be performed. Is the file " + ConstructPaths.CONSTRUCT_PATH
+        return "The action could not be performed. Is the file " + Project.CONSTRUCT_PATH
                 + " locked?";
     }
 
@@ -45,8 +51,8 @@ public class ConstructAction implements Action {
      */
     @Override
     public boolean perform() throws FileNotFoundException, IOException {
-        File constructed = new File(ConstructPaths.CONSTRUCT_PATH);
-        File deconstructed = new File(ConstructPaths.DECONSTRUCT_PATH);
+        File constructed = project.getConstructedFile();
+        File deconstructed = project.getDeconstructedDirectory();
 
         // Remove previous build if any
         if (constructed.exists()) {
@@ -54,7 +60,7 @@ public class ConstructAction implements Action {
         }
 
         // Zip deconstructed version
-        zipDirectory(deconstructed);
+        zipDirectory(deconstructed, constructed);
 
         return true;
     }
@@ -74,10 +80,10 @@ public class ConstructAction implements Action {
         return list;
     }
 
-    public void zipDirectory(File dir) throws FileNotFoundException, IOException {
+    public void zipDirectory(File dir, File destination) throws FileNotFoundException, IOException {
         List<File> files = listFiles(dir);
 
-        try (FileOutputStream fos = new FileOutputStream(ConstructPaths.CONSTRUCT_PATH);
+        try (FileOutputStream fos = new FileOutputStream(destination);
                 ZipOutputStream zos = new ZipOutputStream(fos)) {
             for (File file : files) {
                 addToZip(dir, file, zos);

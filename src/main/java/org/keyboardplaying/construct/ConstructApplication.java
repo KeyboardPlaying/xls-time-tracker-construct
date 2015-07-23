@@ -1,7 +1,5 @@
 package org.keyboardplaying.construct;
 
-import org.keyboardplaying.construct.action.ConstructAction;
-import org.keyboardplaying.construct.action.DeconstructAction;
 import org.keyboardplaying.construct.ui.WindowBuilder;
 
 /**
@@ -24,8 +22,6 @@ public class ConstructApplication {
     /** Applies the UI preferences and starts the application. */
     public void start() {
         // Build and show window
-        new WindowBuilder().setTitle("xls-time-tracker construct")
-                .addActions(new ConstructAction(), new DeconstructAction()).build()
-                .setVisible(true);
+        new WindowBuilder().setTitle("xls-time-tracker construct").build().setVisible(true);
     }
 }

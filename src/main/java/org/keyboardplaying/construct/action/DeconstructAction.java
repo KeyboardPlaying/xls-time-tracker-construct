@@ -8,12 +8,18 @@ import java.io.IOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import org.keyboardplaying.construct.ConstructPaths;
+import org.keyboardplaying.construct.model.Project;
 
 /**
  * @author cyChop (http://keyboardplaying.org)
  */
 public class DeconstructAction implements Action {
+
+    private Project project;
+
+    public DeconstructAction(Project project) {
+        this.project = project;
+    }
 
     /*
      * (non-Javadoc)
@@ -32,8 +38,8 @@ public class DeconstructAction implements Action {
      */
     @Override
     public String getUnsuccessMessage() {
-        return "The action could not be performed. Is the file " + ConstructPaths.CONSTRUCT_PATH
-                + " missing or the directory " + ConstructPaths.DECONSTRUCT_PATH + "?";
+        return "The action could not be performed. Is the file " + Project.CONSTRUCT_PATH
+                + " missing or the directory " + Project.DECONSTRUCT_PATH + "?";
     }
 
     /*
@@ -43,8 +49,8 @@ public class DeconstructAction implements Action {
      */
     @Override
     public boolean perform() throws FileNotFoundException, IOException {
-        File deconstructed = new File(ConstructPaths.DECONSTRUCT_PATH);
-        File constructed = new File(ConstructPaths.CONSTRUCT_PATH);
+        File deconstructed = project.getDeconstructedDirectory();
+        File constructed = project.getConstructedFile();
 
         // Remove previous version and create a new directory
         if (deconstructed.exists()) {

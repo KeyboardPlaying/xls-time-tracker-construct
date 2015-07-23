@@ -1,7 +1,6 @@
 package org.keyboardplaying.construct.ui;
 
 import java.awt.Component;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +16,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import org.keyboardplaying.construct.action.Action;
 import org.keyboardplaying.construct.action.ActionWrapper;
+import org.keyboardplaying.construct.action.ConstructAction;
+import org.keyboardplaying.construct.action.DeconstructAction;
+import org.keyboardplaying.construct.model.Project;
 
 /**
  * A utility class for building a window.
@@ -55,6 +57,10 @@ public class WindowBuilder {
     }
 
     private JPanel buildContent() {
+        Project project = new Project();
+
+        this.addActions(new ConstructAction(project), new DeconstructAction(project));
+
         JPanel pane = new JPanel();
         GroupLayout layout = new GroupLayout(pane);
         pane.setLayout(layout);
@@ -62,9 +68,9 @@ public class WindowBuilder {
         SequentialGroup vGroup = layout.createSequentialGroup();
         ParallelGroup hGroup = layout.createParallelGroup();
 
-        Component dirChooser = new DirectoryChooser(new File("."));
-        hGroup.addComponent(dirChooser);
-        vGroup.addComponent(dirChooser);
+        Component chooser = new ProjectChooser(project);
+        hGroup.addComponent(chooser);
+        vGroup.addComponent(chooser);
 
         SequentialGroup seqGroup = layout.createSequentialGroup();
         ParallelGroup parGroup = layout.createParallelGroup();
