@@ -17,6 +17,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import org.keyboardplaying.construct.action.Action;
 import org.keyboardplaying.construct.action.ActionWrapper;
+import org.keyboardplaying.construct.action.ClearPrefsAction;
 import org.keyboardplaying.construct.action.ConstructAction;
 import org.keyboardplaying.construct.action.DeconstructAction;
 import org.keyboardplaying.construct.events.ProjectSettingUpdateListener;
@@ -94,7 +95,7 @@ public class ConstructWindow extends JFrame implements ProjectSettingUpdateListe
         layout.setVerticalGroup(vGroup);
 
         buildActionButtons(layout, vGroup, hGroup, new ConstructAction(project),
-                new DeconstructAction(project));
+                new DeconstructAction(project), new ClearPrefsAction(preferences));
 
         valid = !project.isValid();
         projectSettingUpdated(project);
