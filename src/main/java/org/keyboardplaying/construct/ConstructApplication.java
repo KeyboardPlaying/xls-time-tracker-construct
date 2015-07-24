@@ -1,6 +1,8 @@
 package org.keyboardplaying.construct;
 
-import org.keyboardplaying.construct.ui.WindowBuilder;
+import java.util.prefs.Preferences;
+
+import org.keyboardplaying.construct.ui.ConstructWindow;
 
 /**
  * Launcher and main class for the utility application.
@@ -21,7 +23,10 @@ public class ConstructApplication {
 
     /** Applies the UI preferences and starts the application. */
     public void start() {
+        // Load preferences manager
+        Preferences preferences = Preferences.userRoot().node(getClass().getName());
+
         // Build and show window
-        new WindowBuilder().setTitle("xls-time-tracker construct").build().setVisible(true);
+        new ConstructWindow(preferences).setVisible(true);
     }
 }

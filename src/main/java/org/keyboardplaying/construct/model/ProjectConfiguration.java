@@ -8,7 +8,7 @@ import java.io.File;
  * @author cyChop (http://keyboardplaying.org)
  */
 // TODO Javadoc
-public class Project {
+public class ProjectConfiguration {
 
     /**
      * The name of the constructed XLSX file. The file should be in the same location as the
@@ -23,6 +23,14 @@ public class Project {
     public static final String DECONSTRUCT_PATH = "xlsx_deconstructed";
 
     private File root;
+
+    public ProjectConfiguration() {
+        this(".");
+    }
+
+    public ProjectConfiguration(String path) {
+        setLocation(new File(path));
+    }
 
     public File getLocation() {
         return this.root == null ? new File(".") : this.root;

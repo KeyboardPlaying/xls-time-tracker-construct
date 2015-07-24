@@ -3,30 +3,35 @@ package org.keyboardplaying.construct.ui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import org.keyboardplaying.construct.model.Project;
+import org.keyboardplaying.construct.events.ProjectSettingUpdateListener;
+import org.keyboardplaying.construct.model.ProjectConfiguration;
 
 /**
  * A tool to choose the directory the file will execute in.
  *
  * @author cyChop (http://keyboardplaying.org)
  */
-public class ProjectChooser extends JPanel {
+public class ProjectChooser extends JComponent {
 
     private JButton button;
     private JTextField textField;
 
-    private Project project;
+    private ProjectConfiguration project;
 
-    public ProjectChooser(Project project) {
+    private List<ProjectSettingUpdateListener> listeners = new ArrayList<>();
+
+    public ProjectChooser(ProjectConfiguration project) {
         this.project = project;
 
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -42,17 +47,30 @@ public class ProjectChooser extends JPanel {
         this.add(button);
     }
 
-    public Project getProject() {
+    public ProjectConfiguration getProject() {
         return this.project;
     }
 
-    public void setDirectory(File directory) {
-        if (!directory.exists() || !directory.isDirectory()) {
-            throw new IllegalArgumentException();
-        }
+    public void addProjectSettingUpdateListener(ProjectSettingUpdateListener listener) {
+        this.listeners.add(listener);
+    }
 
+    public void removeProjectSettingUpdateListener(ProjectSettingUpdateListener listener) {
+        this.listeners.remove(listener);
+    }
+
+    private void projectSettingUpdated() {
+        for (ProjectSettingUpdateListener listener : listeners) {
+            listener.projectSettingUpdated(getProject());
+        }
+    }
+
+    private void setDirectory(File directory, boolean updateText) {
         this.project.setLocation(directory);
-        updateTextField(directory);
+        if (updateText) {
+            updateTextField(directory);
+        }
+        projectSettingUpdated();
     }
 
     private void updateTextField(File location) {
@@ -74,7 +92,7 @@ public class ProjectChooser extends JPanel {
             chooser.setAcceptAllFileFilterUsed(false);
 
             if (chooser.showOpenDialog(ProjectChooser.this) == JFileChooser.APPROVE_OPTION) {
-                setDirectory(chooser.getSelectedFile());
+                setDirectory(chooser.getSelectedFile(), true);
             }
         }
     }
@@ -98,7 +116,7 @@ public class ProjectChooser extends JPanel {
 
         private void update(DocumentEvent e) {
             String path = textField.getText();
-            setDirectory(new File(path));
+            setDirectory(new File(path), false);
         }
     }
 }

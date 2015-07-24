@@ -10,16 +10,16 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import org.keyboardplaying.construct.model.Project;
+import org.keyboardplaying.construct.model.ProjectConfiguration;
 
 /**
  * @author cyChop (http://keyboardplaying.org)
  */
 public class ConstructAction implements Action {
 
-    private Project project;
+    private ProjectConfiguration project;
 
-    public ConstructAction(Project project) {
+    public ConstructAction(ProjectConfiguration project) {
         this.project = project;
     }
 
@@ -40,7 +40,7 @@ public class ConstructAction implements Action {
      */
     @Override
     public String getUnsuccessMessage() {
-        return "The action could not be performed. Is the file " + Project.CONSTRUCT_PATH
+        return "The action could not be performed. Is the file " + ProjectConfiguration.CONSTRUCT_PATH
                 + " locked?";
     }
 

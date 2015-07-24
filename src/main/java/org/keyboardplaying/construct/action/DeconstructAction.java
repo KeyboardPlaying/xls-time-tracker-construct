@@ -8,16 +8,16 @@ import java.io.IOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import org.keyboardplaying.construct.model.Project;
+import org.keyboardplaying.construct.model.ProjectConfiguration;
 
 /**
  * @author cyChop (http://keyboardplaying.org)
  */
 public class DeconstructAction implements Action {
 
-    private Project project;
+    private ProjectConfiguration project;
 
-    public DeconstructAction(Project project) {
+    public DeconstructAction(ProjectConfiguration project) {
         this.project = project;
     }
 
@@ -38,8 +38,8 @@ public class DeconstructAction implements Action {
      */
     @Override
     public String getUnsuccessMessage() {
-        return "The action could not be performed. Is the file " + Project.CONSTRUCT_PATH
-                + " missing or the directory " + Project.DECONSTRUCT_PATH + "?";
+        return "The action could not be performed. Is the file " + ProjectConfiguration.CONSTRUCT_PATH
+                + " missing or the directory " + ProjectConfiguration.DECONSTRUCT_PATH + "?";
     }
 
     /*
