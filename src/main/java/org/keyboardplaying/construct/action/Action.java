@@ -7,6 +7,12 @@ package org.keyboardplaying.construct.action;
  */
 public interface Action {
 
+    /*
+     * In a perfect world, this should contain only the perform operations. Everything else is
+     * UI-related should be in a UI wrapper. But, hey! it's only a minimalist JAR to zip and unzip
+     * files...
+     */
+
     /**
      * Returns the label this action should be displayed as.
      *
@@ -19,7 +25,7 @@ public interface Action {
      *
      * @return the name of the icon for this action
      */
-    String getImageName();
+    String getIconImageName();
 
     /**
      * Returns the message to be displayed if the action was not successfully performed.

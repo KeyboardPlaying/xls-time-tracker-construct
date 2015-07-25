@@ -59,6 +59,8 @@
   </dependencyManagement>
 
   <build>
+    <finalName>tracker-construct</finalName>
+
     <pluginManagement>
       <plugins>
         <!--  __  __           _  __        _    -->

@@ -1,12 +1,8 @@
 package org.keyboardplaying.construct.ui.components;
 
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
@@ -17,24 +13,22 @@ import org.keyboardplaying.construct.action.Action;
  *
  * @author cyChop (http://keyboardplaying.org)
  */
-public class ActionButton extends JButton implements ActionListener {
+public class ActionButton extends IconButton implements ActionListener {
 
-    private static final String IMG_PATH_PREFIX = "/icons/tango/16/";
-    private static final String IMG_EXTENSION = ".png";
+    /** Generated serial version UID. */
+    private static final long serialVersionUID = -8879808162137270769L;
 
     private Action action;
 
+    /**
+     * Creates a new instance.
+     *
+     * @param action
+     *            the action to be performed when this button is clicked
+     */
     public ActionButton(Action action) {
-        super(action.getLabel());
+        super(action.getLabel(), action.getIconImageName());
         this.action = action;
-
-        try {
-            Image img = ImageIO.read(getClass()
-                    .getResource(IMG_PATH_PREFIX + action.getImageName() + IMG_EXTENSION));
-            setIcon(new ImageIcon(img));
-        } catch (IOException e) {
-            // icons are inside source, this should not happen
-        }
 
         addActionListener(this);
     }

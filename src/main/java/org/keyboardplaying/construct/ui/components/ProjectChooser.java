@@ -22,7 +22,11 @@ import org.keyboardplaying.construct.events.ProjectSettingUpdateListener;
  *
  * @author cyChop (http://keyboardplaying.org)
  */
+// TODO Javadoc
 public class ProjectChooser extends JComponent {
+
+    /** Generated serial version UID. */
+    private static final long serialVersionUID = -6479345763565919770L;
 
     private JButton button;
     private JTextField textField;
@@ -36,7 +40,7 @@ public class ProjectChooser extends JComponent {
 
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
-        this.button = new JButton("Find dir.");
+        this.button = new IconButton("folder-saved-search");
         this.button.addActionListener(new ButtonActionListener());
 
         this.textField = new JTextField();
@@ -78,6 +82,7 @@ public class ProjectChooser extends JComponent {
     }
 
     private class ButtonActionListener implements ActionListener {
+
         /*
          * (non-Javadoc)
          *
@@ -99,22 +104,37 @@ public class ProjectChooser extends JComponent {
 
     private class TextFieldListener implements DocumentListener {
 
+        /*
+         * (non-Javadoc)
+         *
+         * @see javax.swing.event.DocumentListener#changedUpdate(javax.swing.event.DocumentEvent)
+         */
         @Override
         public void changedUpdate(DocumentEvent e) {
-            update(e);
+            update();
         }
 
+        /*
+         * (non-Javadoc)
+         *
+         * @see javax.swing.event.DocumentListener#insertUpdate(javax.swing.event.DocumentEvent)
+         */
         @Override
         public void insertUpdate(DocumentEvent e) {
-            update(e);
+            update();
         }
 
+        /*
+         * (non-Javadoc)
+         *
+         * @see javax.swing.event.DocumentListener#removeUpdate(javax.swing.event.DocumentEvent)
+         */
         @Override
         public void removeUpdate(DocumentEvent e) {
-            update(e);
+            update();
         }
 
-        private void update(DocumentEvent e) {
+        private void update() {
             String path = textField.getText();
             setDirectory(new File(path), false);
         }

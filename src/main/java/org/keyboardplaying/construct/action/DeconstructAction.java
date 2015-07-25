@@ -45,7 +45,7 @@ public class DeconstructAction implements Action {
      * @see org.keyboardplaying.construct.action.Action#getImageName()
      */
     @Override
-    public String getImageName() {
+    public String getIconImageName() {
         return "package-x-generic";
     }
 

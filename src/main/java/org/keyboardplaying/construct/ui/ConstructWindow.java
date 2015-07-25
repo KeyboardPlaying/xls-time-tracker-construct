@@ -31,6 +31,9 @@ import org.keyboardplaying.construct.ui.components.ProjectChooser;
  */
 public class ConstructWindow extends JFrame implements ProjectSettingUpdateListener {
 
+    /** Generated serial version UID. */
+    private static final long serialVersionUID = -994440020143809205L;
+
     private static final String TITLE = "xls-time-tracker construct";
     private static final String PRF_PROJECT_DIR = "project.dir";
 

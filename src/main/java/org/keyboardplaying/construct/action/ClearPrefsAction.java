@@ -38,7 +38,7 @@ public class ClearPrefsAction implements Action {
      * @see org.keyboardplaying.construct.action.Action#getImageName()
      */
     @Override
-    public String getImageName() {
+    public String getIconImageName() {
         return "edit-clear";
     }
 
