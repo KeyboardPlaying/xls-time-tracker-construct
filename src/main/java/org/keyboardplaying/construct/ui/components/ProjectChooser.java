@@ -1,4 +1,4 @@
-package org.keyboardplaying.construct.ui;
+package org.keyboardplaying.construct.ui.components;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,8 +14,8 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import org.keyboardplaying.construct.configuration.ProjectConfiguration;
 import org.keyboardplaying.construct.events.ProjectSettingUpdateListener;
-import org.keyboardplaying.construct.model.ProjectConfiguration;
 
 /**
  * A tool to choose the directory the file will execute in.

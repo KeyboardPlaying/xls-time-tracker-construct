@@ -1,19 +1,25 @@
-package org.keyboardplaying.construct.action;
+package org.keyboardplaying.construct.ui.components;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
+import org.keyboardplaying.construct.action.Action;
+
 /**
- * @author cyChop (http://keyboardplaying.org/)
+ * @author cyChop (http://keyboardplaying.org)
  */
-public class ActionWrapper implements ActionListener {
+public class ActionButton extends JButton implements ActionListener {
 
-    private final Action action;
+    private Action action;
 
-    public ActionWrapper(Action action) {
+    public ActionButton(Action action) {
+        super(action.getLabel());
         this.action = action;
+
+        addActionListener(this);
     }
 
     /*

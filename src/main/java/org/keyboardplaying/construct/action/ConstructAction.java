@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import org.keyboardplaying.construct.model.ProjectConfiguration;
+import org.keyboardplaying.construct.configuration.ProjectConfiguration;
 
 /**
  * @author cyChop (http://keyboardplaying.org)

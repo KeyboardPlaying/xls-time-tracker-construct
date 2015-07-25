@@ -16,12 +16,13 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import org.keyboardplaying.construct.action.Action;
-import org.keyboardplaying.construct.action.ActionWrapper;
 import org.keyboardplaying.construct.action.ClearPrefsAction;
 import org.keyboardplaying.construct.action.ConstructAction;
 import org.keyboardplaying.construct.action.DeconstructAction;
+import org.keyboardplaying.construct.configuration.ProjectConfiguration;
 import org.keyboardplaying.construct.events.ProjectSettingUpdateListener;
-import org.keyboardplaying.construct.model.ProjectConfiguration;
+import org.keyboardplaying.construct.ui.components.ActionButton;
+import org.keyboardplaying.construct.ui.components.ProjectChooser;
 
 /**
  * A utility class for building a window.
@@ -130,8 +131,7 @@ public class ConstructWindow extends JFrame implements ProjectSettingUpdateListe
         Component sizeRef = null;
 
         for (Action action : actions) {
-            JButton btn = new JButton(action.getLabel());
-            btn.addActionListener(new ActionWrapper(action));
+            ActionButton btn = new ActionButton(action);
 
             seqGroup.addComponent(btn);
             parGroup.addComponent(btn);

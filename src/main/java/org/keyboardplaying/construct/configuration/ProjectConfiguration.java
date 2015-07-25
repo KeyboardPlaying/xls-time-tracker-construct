@@ -1,4 +1,4 @@
-package org.keyboardplaying.construct.model;
+package org.keyboardplaying.construct.configuration;
 
 import java.io.File;
 
