@@ -8,8 +8,8 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import org.keyboardplaying.construct.configuration.ProjectConfiguration;
-import org.keyboardplaying.construct.events.ProjectConfigurationUpdateListener;
+import org.keyboardplaying.construct.configuration.ProjectLocation;
+import org.keyboardplaying.construct.events.ProjectLocationUpdateListener;
 
 /**
  * A tool to choose the directory the file will execute in.
@@ -18,53 +18,47 @@ import org.keyboardplaying.construct.events.ProjectConfigurationUpdateListener;
  */
 // TODO Javadoc
 public class TextFieldProjectChooser extends JTextField
-        implements DocumentListener, ProjectConfigurationUpdateListener {
+        implements DocumentListener, ProjectLocationUpdateListener {
 
     /** Generated serial version UID. */
-    private static final long serialVersionUID = -3701119858258431753L;
+    private static final long serialVersionUID = 3202883511876422218L;
 
-    private ProjectConfiguration project;
+    private ProjectLocation location;
 
-    private List<ProjectConfigurationUpdateListener> listeners = new ArrayList<>();
+    private List<ProjectLocationUpdateListener> listeners = new ArrayList<>();
 
-    public TextFieldProjectChooser(ProjectConfiguration project) {
+    public TextFieldProjectChooser(ProjectLocation location) {
         super();
 
-        this.project = project;
+        this.location = location;
 
-        updateTextField(project.getLocation());
+        updateTextField(location.getRoot());
         getDocument().addDocumentListener(this);
     }
 
-    public ProjectConfiguration getProject() {
-        return this.project;
-    }
-
-    public void addProjectSettingUpdateListener(ProjectConfigurationUpdateListener listener) {
+    public void addProjectSettingUpdateListener(ProjectLocationUpdateListener listener) {
         this.listeners.add(listener);
     }
 
-    public void removeProjectSettingUpdateListener(ProjectConfigurationUpdateListener listener) {
+    public void removeProjectSettingUpdateListener(ProjectLocationUpdateListener listener) {
         this.listeners.remove(listener);
     }
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see org.keyboardplaying.construct.events.ProjectLocationUpdateListener#
+     * projectLocationUpdated(org.keyboardplaying.construct.configuration.ProjectLocation)
+     */
     @Override
-    public void projectConfigurationUpdated(ProjectConfiguration updated) {
-        updateTextField(updated.getLocation());
+    public void projectLocationUpdated(ProjectLocation updated) {
+        updateTextField(updated.getRoot());
     }
 
     private void projectSettingUpdated() {
-        for (ProjectConfigurationUpdateListener listener : listeners) {
-            listener.projectConfigurationUpdated(getProject());
+        for (ProjectLocationUpdateListener listener : listeners) {
+            listener.projectLocationUpdated(this.location);
         }
-    }
-
-    private void setDirectory(File directory, boolean updateText) {
-        this.project.setLocation(directory);
-        if (updateText) {
-            updateTextField(directory);
-        }
-        projectSettingUpdated();
     }
 
     private void updateTextField(File location) {
@@ -103,6 +97,7 @@ public class TextFieldProjectChooser extends JTextField
 
     private void update() {
         String path = getText();
-        setDirectory(new File(path), false);
+        location.setRoot(new File(path));
+        projectSettingUpdated();
     }
 }

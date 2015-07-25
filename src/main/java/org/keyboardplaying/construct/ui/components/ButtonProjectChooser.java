@@ -8,8 +8,8 @@ import java.util.List;
 
 import javax.swing.JFileChooser;
 
-import org.keyboardplaying.construct.configuration.ProjectConfiguration;
-import org.keyboardplaying.construct.events.ProjectConfigurationUpdateListener;
+import org.keyboardplaying.construct.configuration.ProjectLocation;
+import org.keyboardplaying.construct.events.ProjectLocationUpdateListener;
 
 /**
  * A tool to choose the directory the file will execute in.
@@ -20,40 +20,36 @@ import org.keyboardplaying.construct.events.ProjectConfigurationUpdateListener;
 public class ButtonProjectChooser extends IconButton implements ActionListener {
 
     /** Generated serial version UID. */
-    private static final long serialVersionUID = -8086818773016169377L;
+    private static final long serialVersionUID = 5844064194538203681L;
 
-    private ProjectConfiguration project;
+    private ProjectLocation location;
 
-    private List<ProjectConfigurationUpdateListener> listeners = new ArrayList<>();
+    private List<ProjectLocationUpdateListener> listeners = new ArrayList<>();
 
-    public ButtonProjectChooser(ProjectConfiguration project) {
+    public ButtonProjectChooser(ProjectLocation location) {
         super("folder-saved-search");
 
-        this.project = project;
+        this.location = location;
 
         addActionListener(this);
     }
 
-    public ProjectConfiguration getProject() {
-        return this.project;
-    }
-
-    public void addProjectSettingUpdateListener(ProjectConfigurationUpdateListener listener) {
+    public void addProjectSettingUpdateListener(ProjectLocationUpdateListener listener) {
         this.listeners.add(listener);
     }
 
-    public void removeProjectSettingUpdateListener(ProjectConfigurationUpdateListener listener) {
+    public void removeProjectSettingUpdateListener(ProjectLocationUpdateListener listener) {
         this.listeners.remove(listener);
     }
 
     private void projectSettingUpdated() {
-        for (ProjectConfigurationUpdateListener listener : listeners) {
-            listener.projectConfigurationUpdated(getProject());
+        for (ProjectLocationUpdateListener listener : listeners) {
+            listener.projectLocationUpdated(location);
         }
     }
 
     private void setDirectory(File directory) {
-        this.project.setLocation(directory);
+        this.location.setRoot(directory);
         projectSettingUpdated();
     }
 
@@ -65,8 +61,8 @@ public class ButtonProjectChooser extends IconButton implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         JFileChooser chooser = new JFileChooser();
-        chooser.setCurrentDirectory(project.getLocation());
-        chooser.setDialogTitle("Set xls-time-tracker project directory");
+        chooser.setCurrentDirectory(location.getRoot());
+        chooser.setDialogTitle("Set xls-time-tracker location directory");
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         chooser.setAcceptAllFileFilterUsed(false);
 
@@ -74,40 +70,4 @@ public class ButtonProjectChooser extends IconButton implements ActionListener {
             setDirectory(chooser.getSelectedFile());
         }
     }
-
-    // /*
-    // * (non-Javadoc)
-    // *
-    // * @see javax.swing.JComponent#getMinimumSize()
-    // */
-    // @Override
-    // public Dimension getMinimumSize() {
-    // return recalculateSize(super.getMinimumSize());
-    // }
-    //
-    // /*
-    // * (non-Javadoc)
-    // *
-    // * @see javax.swing.JComponent#getMaximumSize()
-    // */
-    // @Override
-    // public Dimension getMaximumSize() {
-    // return recalculateSize(super.getMaximumSize());
-    // }
-    //
-    // /*
-    // * (non-Javadoc)
-    // *
-    // * @see javax.swing.JComponent#getPreferredSize()
-    // */
-    // @Override
-    // public Dimension getPreferredSize() {
-    // return recalculateSize(super.getPreferredSize());
-    // }
-    //
-    // private Dimension recalculateSize(Dimension size) {
-    // Insets insets = getInsets();
-    // int width = size.height - insets.top - insets.bottom + insets.left + insets.right;
-    // return new Dimension(width, size.height);
-    // }
 }

@@ -1,12 +1,13 @@
 package org.keyboardplaying.construct.ui.components;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+import java.awt.Image;
 import java.util.Objects;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+
+import org.keyboardplaying.construct.ui.icon.IconSize;
+import org.keyboardplaying.construct.ui.icon.ImageLoader;
 
 /**
  * A component to easily make a button with an icon from an image embedded within the sources.
@@ -16,12 +17,9 @@ import javax.swing.JButton;
 public class IconButton extends JButton {
 
     /** Generated serial version UID. */
-    private static final long serialVersionUID = -9085591317844409661L;
+    private static final long serialVersionUID = 7062712805719944391L;
 
-    private static final String IMG_PATH_PREFIX = "/icons/tango/16/";
-    private static final String IMG_EXTENSION = ".png";
-
-    private BufferedImage master;
+    private static final IconSize IMG_SIZE = IconSize._16;
 
     /**
      * Creates a new instance.
@@ -46,13 +44,7 @@ public class IconButton extends JButton {
 
         Objects.requireNonNull(imageName, "An IconButton must be provided an image name.");
 
-        try {
-            master = ImageIO
-                    .read(getClass().getResource(IMG_PATH_PREFIX + imageName + IMG_EXTENSION));
-
-            setIcon(new ImageIcon(master));
-        } catch (IOException e) {
-            // icons are with source, this should not happen
-        }
+        Image img = new ImageLoader().getImage(imageName, IMG_SIZE);
+        setIcon(new ImageIcon(img));
     }
 }

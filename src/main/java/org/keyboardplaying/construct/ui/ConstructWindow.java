@@ -18,23 +18,26 @@ import javax.swing.UnsupportedLookAndFeelException;
 import org.keyboardplaying.construct.action.ClearPrefsAction;
 import org.keyboardplaying.construct.action.ConstructAction;
 import org.keyboardplaying.construct.action.DeconstructAction;
-import org.keyboardplaying.construct.configuration.ProjectConfiguration;
-import org.keyboardplaying.construct.events.ProjectConfigurationUpdateListener;
+import org.keyboardplaying.construct.configuration.ProjectLocation;
+import org.keyboardplaying.construct.events.ProjectLocationUpdateListener;
 import org.keyboardplaying.construct.ui.components.ActionButton;
 import org.keyboardplaying.construct.ui.components.ButtonProjectChooser;
 import org.keyboardplaying.construct.ui.components.TextFieldProjectChooser;
+import org.keyboardplaying.construct.ui.icon.ImageLoader;
 
 /**
  * A utility class for building a window.
  *
  * @author cyChop (http://keyboardplaying.org)
  */
-public class ConstructWindow extends JFrame implements ProjectConfigurationUpdateListener {
+public class ConstructWindow extends JFrame implements ProjectLocationUpdateListener {
 
     /** Generated serial version UID. */
-    private static final long serialVersionUID = -994440020143809205L;
+    private static final long serialVersionUID = 4689227798900897618L;
 
     private static final String TITLE = "xls-time-tracker construct";
+    private static final String ICON_NAME = "appointment-new";
+
     private static final String PRF_PROJECT_DIR = "project.dir";
 
     private List<JComponent> constructActions = new ArrayList<>();
@@ -60,6 +63,7 @@ public class ConstructWindow extends JFrame implements ProjectConfigurationUpdat
     public ConstructWindow(Preferences preferences) {
         /* Title and icon. */
         super(TITLE);
+        setIconImages(new ImageLoader().getImages(ICON_NAME));
 
         this.preferences = preferences;
 
@@ -70,20 +74,21 @@ public class ConstructWindow extends JFrame implements ProjectConfigurationUpdat
         this.setLocationRelativeTo(null);
 
         /* Now the content. */
-        this.setContentPane(buildContent());
+        this.setContentPane(buildContent(loadProject()));
 
         /* Adapt size to fit the content. */
         this.setResizable(false);
         this.pack();
     }
 
-    private JPanel buildContent() {
+    private JPanel buildContent(ProjectLocation project) {
+        /* Create UI. */
         JPanel pane = new JPanel();
         GroupLayout layout = new GroupLayout(pane);
         pane.setLayout(layout);
 
-        ProjectConfiguration project = loadProject();
-
+        /* Create components. */
+        // Directory chooser
         TextFieldProjectChooser textChooser = new TextFieldProjectChooser(project);
         textChooser.addProjectSettingUpdateListener(this);
 
@@ -91,23 +96,28 @@ public class ConstructWindow extends JFrame implements ProjectConfigurationUpdat
         btnChooser.addProjectSettingUpdateListener(this);
         btnChooser.addProjectSettingUpdateListener(textChooser);
 
+        // Construct / deconstruct
         ActionButton constructAction = new ActionButton(new ConstructAction(project));
         ActionButton deconstructAction = new ActionButton(new DeconstructAction(project));
-        ActionButton clearPrefsAction = new ActionButton(new ClearPrefsAction(preferences));
-
         constructActions.add(constructAction);
         constructActions.add(deconstructAction);
 
-        layoutFrame(layout, textChooser, btnChooser, constructAction, deconstructAction,
+        // Clear prefs
+        ActionButton clearPrefsAction = new ActionButton(new ClearPrefsAction(preferences));
+
+        /* Arrange the components */
+        arrangeLayout(layout, textChooser, btnChooser, constructAction, deconstructAction,
                 clearPrefsAction);
 
+        /* Initialize interface. */
         valid = !project.isValid();
-        projectConfigurationUpdated(project);
+        projectLocationUpdated(project);
 
+        /* We're done! */
         return pane;
     }
 
-    private void layoutFrame(GroupLayout layout, TextFieldProjectChooser textChooser,
+    private void arrangeLayout(GroupLayout layout, TextFieldProjectChooser textChooser,
             ButtonProjectChooser btnChooser, ActionButton constructAction,
             ActionButton deconstructAction, ActionButton clearPrefsAction) {
 
@@ -123,8 +133,8 @@ public class ConstructWindow extends JFrame implements ProjectConfigurationUpdat
         SequentialGroup sequential = layout.createSequentialGroup();
         ParallelGroup parallel = layout.createParallelGroup();
 
-        add(sequential, parallel, textChooser);
-        add(sequential, parallel, btnChooser);
+        addComponent(textChooser, sequential, parallel);
+        addComponent(btnChooser, sequential, parallel);
 
         horizontal.addGroup(sequential);
         vertical.addGroup(parallel);
@@ -133,10 +143,10 @@ public class ConstructWindow extends JFrame implements ProjectConfigurationUpdat
         sequential = layout.createSequentialGroup();
         parallel = layout.createParallelGroup();
 
-        add(sequential, parallel, constructAction);
-        add(sequential, parallel, deconstructAction);
+        addComponent(constructAction, sequential, parallel);
+        addComponent(deconstructAction, sequential, parallel);
         sequential.addPreferredGap(ComponentPlacement.UNRELATED);
-        add(sequential, parallel, clearPrefsAction);
+        addComponent(clearPrefsAction, sequential, parallel);
 
         horizontal.addGroup(sequential);
         vertical.addGroup(parallel);
@@ -146,27 +156,38 @@ public class ConstructWindow extends JFrame implements ProjectConfigurationUpdat
         layout.setVerticalGroup(vertical);
     }
 
-    private void add(SequentialGroup seq, ParallelGroup par, JComponent component) {
+    private void addComponent(JComponent component, SequentialGroup seq, ParallelGroup par) {
         seq.addComponent(component);
         par.addComponent(component);
     }
 
-    private ProjectConfiguration loadProject() {
-        ProjectConfiguration project;
+    /**
+     * Loads the project location from the preferences or initialize it if nothing is set yet.
+     *
+     * @return the project location
+     */
+    private ProjectLocation loadProject() {
+        ProjectLocation location;
 
         String path = preferences.get(PRF_PROJECT_DIR, null);
         if (path == null) {
-            project = new ProjectConfiguration();
-            storeProject(project);
+            location = new ProjectLocation();
+            storeProject(location);
         } else {
-            project = new ProjectConfiguration(path);
+            location = new ProjectLocation(path);
         }
 
-        return project;
+        return location;
     }
 
-    private void storeProject(ProjectConfiguration project) {
-        preferences.put(PRF_PROJECT_DIR, project.getLocation().getAbsolutePath());
+    /**
+     * Stores the project location to the preferences.
+     *
+     * @param location
+     *            the project location
+     */
+    private void storeProject(ProjectLocation location) {
+        preferences.put(PRF_PROJECT_DIR, location.getRoot().getAbsolutePath());
     }
 
     /**
@@ -177,7 +198,7 @@ public class ConstructWindow extends JFrame implements ProjectConfigurationUpdat
      *            {@inheritDoc}
      */
     @Override
-    public void projectConfigurationUpdated(ProjectConfiguration updated) {
+    public void projectLocationUpdated(ProjectLocation updated) {
         if (valid != updated.isValid()) {
             valid = !valid;
             for (JComponent action : constructActions) {

@@ -1,19 +1,19 @@
 package org.keyboardplaying.construct.events;
 
-import org.keyboardplaying.construct.configuration.ProjectConfiguration;
+import org.keyboardplaying.construct.configuration.ProjectLocation;
 
 /**
  * An interface for listening to project configuration updates.
  *
  * @author cyChop (http://keyboardplaying.org)
  */
-public interface ProjectConfigurationUpdateListener {
+public interface ProjectLocationUpdateListener {
 
     /**
      * Action to perform when the configuration is updated.
      *
-     * @param updated
+     * @param location
      *            the updated configuration
      */
-    void projectConfigurationUpdated(ProjectConfiguration updated);
+    void projectLocationUpdated(ProjectLocation location);
 }

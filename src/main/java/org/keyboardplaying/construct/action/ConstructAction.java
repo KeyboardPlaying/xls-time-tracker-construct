@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import org.keyboardplaying.construct.configuration.ProjectConfiguration;
+import org.keyboardplaying.construct.configuration.ProjectLocation;
 
 /**
  * Constructs an XLSX file from the exploded version.
@@ -19,16 +19,16 @@ import org.keyboardplaying.construct.configuration.ProjectConfiguration;
  */
 public class ConstructAction implements Action {
 
-    private ProjectConfiguration project;
+    private ProjectLocation location;
 
     /**
      * Creates a new instance.
      *
-     * @param project
-     *            the project configuration
+     * @param location
+     *            the location configuration
      */
-    public ConstructAction(ProjectConfiguration project) {
-        this.project = project;
+    public ConstructAction(ProjectLocation location) {
+        this.location = location;
     }
 
     /*
@@ -58,8 +58,8 @@ public class ConstructAction implements Action {
      */
     @Override
     public String getUnsuccessMessage() {
-        return "The action could not be performed. Is the file "
-                + ProjectConfiguration.CONSTRUCT_PATH + " locked?";
+        return "The action could not be performed. Is the file " + ProjectLocation.CONSTRUCT_PATH
+                + " locked?";
     }
 
     /*
@@ -69,8 +69,8 @@ public class ConstructAction implements Action {
      */
     @Override
     public boolean perform() throws FileNotFoundException, IOException {
-        File constructed = project.getConstructedFile();
-        File deconstructed = project.getDeconstructedDirectory();
+        File constructed = location.getConstructedFile();
+        File deconstructed = location.getDeconstructedDirectory();
 
         // Remove previous build if any
         if (constructed.exists()) {

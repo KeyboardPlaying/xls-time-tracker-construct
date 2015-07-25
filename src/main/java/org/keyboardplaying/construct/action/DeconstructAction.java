@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import org.keyboardplaying.construct.configuration.ProjectConfiguration;
+import org.keyboardplaying.construct.configuration.ProjectLocation;
 
 /**
  * Updates the exploded version of the tracker based on the XLSX file.
@@ -17,16 +17,16 @@ import org.keyboardplaying.construct.configuration.ProjectConfiguration;
  */
 public class DeconstructAction implements Action {
 
-    private ProjectConfiguration project;
+    private ProjectLocation location;
 
     /**
      * Creates a new instance.
      *
-     * @param project
-     *            the project configuration
+     * @param location
+     *            the location configuration
      */
-    public DeconstructAction(ProjectConfiguration project) {
-        this.project = project;
+    public DeconstructAction(ProjectLocation location) {
+        this.location = location;
     }
 
     /*
@@ -56,9 +56,8 @@ public class DeconstructAction implements Action {
      */
     @Override
     public String getUnsuccessMessage() {
-        return "The action could not be performed. Is the file "
-                + ProjectConfiguration.CONSTRUCT_PATH + " missing or the directory "
-                + ProjectConfiguration.DECONSTRUCT_PATH + "?";
+        return "The action could not be performed. Is the file " + ProjectLocation.CONSTRUCT_PATH
+                + " missing or the directory " + ProjectLocation.DECONSTRUCT_PATH + "?";
     }
 
     /*
@@ -68,8 +67,8 @@ public class DeconstructAction implements Action {
      */
     @Override
     public boolean perform() throws FileNotFoundException, IOException {
-        File deconstructed = project.getDeconstructedDirectory();
-        File constructed = project.getConstructedFile();
+        File deconstructed = location.getDeconstructedDirectory();
+        File constructed = location.getConstructedFile();
 
         // Remove previous version and create a new directory
         if (deconstructed.exists()) {
@@ -83,7 +82,6 @@ public class DeconstructAction implements Action {
     }
 
     public void delete(File f) {
-
         if (f.isDirectory()) {
             for (File file : f.listFiles()) {
                 delete(file);
