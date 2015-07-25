@@ -1,6 +1,5 @@
 package org.keyboardplaying.construct.ui;
 
-import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.prefs.Preferences;
@@ -8,28 +7,29 @@ import java.util.prefs.Preferences;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.ParallelGroup;
 import javax.swing.GroupLayout.SequentialGroup;
-import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import org.keyboardplaying.construct.action.Action;
 import org.keyboardplaying.construct.action.ClearPrefsAction;
 import org.keyboardplaying.construct.action.ConstructAction;
 import org.keyboardplaying.construct.action.DeconstructAction;
 import org.keyboardplaying.construct.configuration.ProjectConfiguration;
-import org.keyboardplaying.construct.events.ProjectSettingUpdateListener;
+import org.keyboardplaying.construct.events.ProjectConfigurationUpdateListener;
 import org.keyboardplaying.construct.ui.components.ActionButton;
-import org.keyboardplaying.construct.ui.components.ProjectChooser;
+import org.keyboardplaying.construct.ui.components.ButtonProjectChooser;
+import org.keyboardplaying.construct.ui.components.TextFieldProjectChooser;
 
 /**
  * A utility class for building a window.
  *
  * @author cyChop (http://keyboardplaying.org)
  */
-public class ConstructWindow extends JFrame implements ProjectSettingUpdateListener {
+public class ConstructWindow extends JFrame implements ProjectConfigurationUpdateListener {
 
     /** Generated serial version UID. */
     private static final long serialVersionUID = -994440020143809205L;
@@ -37,7 +37,7 @@ public class ConstructWindow extends JFrame implements ProjectSettingUpdateListe
     private static final String TITLE = "xls-time-tracker construct";
     private static final String PRF_PROJECT_DIR = "project.dir";
 
-    private List<JButton> actions = new ArrayList<>();
+    private List<JComponent> constructActions = new ArrayList<>();
     private boolean valid = true;
 
     private Preferences preferences;
@@ -66,45 +66,89 @@ public class ConstructWindow extends JFrame implements ProjectSettingUpdateListe
         /* Make sure thread is ended on close. */
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        /* General styling */
-        // setAlwaysOnTop(alwaysOnTop);
-        this.setResizable(false);
-        // center on screen
+        /* Center on screen. */
         this.setLocationRelativeTo(null);
 
         /* Now the content. */
         this.setContentPane(buildContent());
 
         /* Adapt size to fit the content. */
+        this.setResizable(false);
         this.pack();
     }
 
     private JPanel buildContent() {
-        ProjectConfiguration project = loadProject();
-
         JPanel pane = new JPanel();
         GroupLayout layout = new GroupLayout(pane);
         pane.setLayout(layout);
 
-        ProjectChooser chooser = new ProjectChooser(project);
-        chooser.addProjectSettingUpdateListener(this);
+        ProjectConfiguration project = loadProject();
 
-        SequentialGroup vGroup = layout.createSequentialGroup();
-        ParallelGroup hGroup = layout.createParallelGroup();
+        TextFieldProjectChooser textChooser = new TextFieldProjectChooser(project);
+        textChooser.addProjectSettingUpdateListener(this);
 
-        hGroup.addComponent(chooser);
-        vGroup.addComponent(chooser);
+        ButtonProjectChooser btnChooser = new ButtonProjectChooser(project);
+        btnChooser.addProjectSettingUpdateListener(this);
+        btnChooser.addProjectSettingUpdateListener(textChooser);
 
-        layout.setHorizontalGroup(hGroup);
-        layout.setVerticalGroup(vGroup);
+        ActionButton constructAction = new ActionButton(new ConstructAction(project));
+        ActionButton deconstructAction = new ActionButton(new DeconstructAction(project));
+        ActionButton clearPrefsAction = new ActionButton(new ClearPrefsAction(preferences));
 
-        buildActionButtons(layout, vGroup, hGroup, new ConstructAction(project),
-                new DeconstructAction(project), new ClearPrefsAction(preferences));
+        constructActions.add(constructAction);
+        constructActions.add(deconstructAction);
+
+        layoutFrame(layout, textChooser, btnChooser, constructAction, deconstructAction,
+                clearPrefsAction);
 
         valid = !project.isValid();
-        projectSettingUpdated(project);
+        projectConfigurationUpdated(project);
 
         return pane;
+    }
+
+    private void layoutFrame(GroupLayout layout, TextFieldProjectChooser textChooser,
+            ButtonProjectChooser btnChooser, ActionButton constructAction,
+            ActionButton deconstructAction, ActionButton clearPrefsAction) {
+
+        /* Link sizes. */
+        layout.linkSize(SwingConstants.VERTICAL, textChooser, btnChooser);
+        layout.linkSize(constructAction, deconstructAction, clearPrefsAction);
+
+        /* The main groups. */
+        ParallelGroup horizontal = layout.createParallelGroup();
+        SequentialGroup vertical = layout.createSequentialGroup();
+
+        /* First line. */
+        SequentialGroup sequential = layout.createSequentialGroup();
+        ParallelGroup parallel = layout.createParallelGroup();
+
+        add(sequential, parallel, textChooser);
+        add(sequential, parallel, btnChooser);
+
+        horizontal.addGroup(sequential);
+        vertical.addGroup(parallel);
+
+        /* Second line. */
+        sequential = layout.createSequentialGroup();
+        parallel = layout.createParallelGroup();
+
+        add(sequential, parallel, constructAction);
+        add(sequential, parallel, deconstructAction);
+        sequential.addPreferredGap(ComponentPlacement.UNRELATED);
+        add(sequential, parallel, clearPrefsAction);
+
+        horizontal.addGroup(sequential);
+        vertical.addGroup(parallel);
+
+        /* Set layout. */
+        layout.setHorizontalGroup(horizontal);
+        layout.setVerticalGroup(vertical);
+    }
+
+    private void add(SequentialGroup seq, ParallelGroup par, JComponent component) {
+        seq.addComponent(component);
+        par.addComponent(component);
     }
 
     private ProjectConfiguration loadProject() {
@@ -125,33 +169,6 @@ public class ConstructWindow extends JFrame implements ProjectSettingUpdateListe
         preferences.put(PRF_PROJECT_DIR, project.getLocation().getAbsolutePath());
     }
 
-    private void buildActionButtons(GroupLayout layout, SequentialGroup vGroup,
-            ParallelGroup hGroup, Action... actions) {
-
-        SequentialGroup seqGroup = layout.createSequentialGroup();
-        ParallelGroup parGroup = layout.createParallelGroup();
-
-        Component sizeRef = null;
-
-        for (Action action : actions) {
-            ActionButton btn = new ActionButton(action);
-
-            seqGroup.addComponent(btn);
-            parGroup.addComponent(btn);
-            this.actions.add(btn);
-
-            if (sizeRef == null) {
-                sizeRef = btn;
-            } else {
-                layout.linkSize(SwingConstants.HORIZONTAL, sizeRef, btn);
-            }
-        }
-
-        // TODO adjust sizes of layout
-        hGroup.addGroup(seqGroup);
-        vGroup.addGroup(parGroup);
-    }
-
     /**
      * Activates or deactivates the action buttons according to the selected project directory
      * validity.
@@ -160,10 +177,10 @@ public class ConstructWindow extends JFrame implements ProjectSettingUpdateListe
      *            {@inheritDoc}
      */
     @Override
-    public void projectSettingUpdated(ProjectConfiguration updated) {
+    public void projectConfigurationUpdated(ProjectConfiguration updated) {
         if (valid != updated.isValid()) {
             valid = !valid;
-            for (JButton action : actions) {
+            for (JComponent action : constructActions) {
                 action.setEnabled(valid);
             }
             if (valid) {

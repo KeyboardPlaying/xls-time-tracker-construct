@@ -1,11 +1,10 @@
 package org.keyboardplaying.construct.ui.components;
 
-import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
 import javax.imageio.ImageIO;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -21,6 +20,8 @@ public class IconButton extends JButton {
 
     private static final String IMG_PATH_PREFIX = "/icons/tango/16/";
     private static final String IMG_EXTENSION = ".png";
+
+    private BufferedImage master;
 
     /**
      * Creates a new instance.
@@ -41,21 +42,17 @@ public class IconButton extends JButton {
      *            the name of the image to use for the icon, without path nor extension
      */
     public IconButton(String label, String imageName) {
-        super(label, makeIcon(imageName));
-    }
+        super(label);
 
-    private static Icon makeIcon(String imageName) {
         Objects.requireNonNull(imageName, "An IconButton must be provided an image name.");
 
-        Icon icon;
         try {
-            Image img = ImageIO.read(
-                    IconButton.class.getResource(IMG_PATH_PREFIX + imageName + IMG_EXTENSION));
-            icon = new ImageIcon(img);
+            master = ImageIO
+                    .read(getClass().getResource(IMG_PATH_PREFIX + imageName + IMG_EXTENSION));
+
+            setIcon(new ImageIcon(master));
         } catch (IOException e) {
             // icons are with source, this should not happen
-            icon = null;
         }
-        return icon;
     }
 }

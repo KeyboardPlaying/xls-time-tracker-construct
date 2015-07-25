@@ -7,7 +7,7 @@ import org.keyboardplaying.construct.configuration.ProjectConfiguration;
  *
  * @author cyChop (http://keyboardplaying.org)
  */
-public interface ProjectSettingUpdateListener {
+public interface ProjectConfigurationUpdateListener {
 
     /**
      * Action to perform when the configuration is updated.
@@ -15,5 +15,5 @@ public interface ProjectSettingUpdateListener {
      * @param updated
      *            the updated configuration
      */
-    void projectSettingUpdated(ProjectConfiguration updated);
+    void projectConfigurationUpdated(ProjectConfiguration updated);
 }
