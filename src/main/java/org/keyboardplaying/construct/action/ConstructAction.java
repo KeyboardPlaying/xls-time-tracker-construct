@@ -34,11 +34,11 @@ public class ConstructAction implements Action {
     /*
      * (non-Javadoc)
      *
-     * @see org.keyboardplaying.construct.action.Action#getLabel()
+     * @see org.keyboardplaying.construct.action.Action#getLabelKey()
      */
     @Override
-    public String getLabel() {
-        return "Construct";
+    public String getLabelKey() {
+        return "action.construct";
     }
 
     /*

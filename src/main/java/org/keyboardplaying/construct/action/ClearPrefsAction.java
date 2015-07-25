@@ -25,11 +25,11 @@ public class ClearPrefsAction implements Action {
     /*
      * (non-Javadoc)
      *
-     * @see org.keyboardplaying.construct.action.Action#getLabel()
+     * @see org.keyboardplaying.construct.action.Action#getLabelKey()
      */
     @Override
-    public String getLabel() {
-        return "Clear pref.";
+    public String getLabelKey() {
+        return "action.prefs.clear";
     }
 
     /*

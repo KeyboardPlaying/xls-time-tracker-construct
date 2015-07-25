@@ -15,7 +15,7 @@ import javax.imageio.ImageIO;
 // TODO Javadoc
 public class ImageLoader {
 
-    private static final String IMG_PATH_PREFIX = "/icons/tango/";
+    private static final String IMG_PATH_PREFIX = "tango/";
     private static final String IMG_EXTENSION = ".png";
 
     public Image getImage(String imageName, IconSize size) {

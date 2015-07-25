@@ -14,11 +14,11 @@ public interface Action {
      */
 
     /**
-     * Returns the label this action should be displayed as.
+     * Returns the key for the label this action should be displayed as.
      *
-     * @return the label for this action
+     * @return the label key
      */
-    String getLabel();
+    String getLabelKey();
 
     /**
      * Returns the name of the image representing this action.

@@ -23,6 +23,7 @@ import org.keyboardplaying.construct.events.ProjectLocationUpdateListener;
 import org.keyboardplaying.construct.ui.components.ActionButton;
 import org.keyboardplaying.construct.ui.components.ButtonProjectChooser;
 import org.keyboardplaying.construct.ui.components.TextFieldProjectChooser;
+import org.keyboardplaying.construct.ui.i18n.MessageBundle;
 import org.keyboardplaying.construct.ui.icon.ImageLoader;
 
 /**
@@ -35,7 +36,7 @@ public class ConstructWindow extends JFrame implements ProjectLocationUpdateList
     /** Generated serial version UID. */
     private static final long serialVersionUID = 4689227798900897618L;
 
-    private static final String TITLE = "xls-time-tracker construct";
+    private static final String TITLE = "app.name";
     private static final String ICON_NAME = "appointment-new";
 
     private static final String PRF_PROJECT_DIR = "project.dir";
@@ -62,7 +63,7 @@ public class ConstructWindow extends JFrame implements ProjectLocationUpdateList
 
     public ConstructWindow(Preferences preferences) {
         /* Title and icon. */
-        super(TITLE);
+        super(new MessageBundle().getMessage(TITLE));
         setIconImages(new ImageLoader().getImages(ICON_NAME));
 
         this.preferences = preferences;

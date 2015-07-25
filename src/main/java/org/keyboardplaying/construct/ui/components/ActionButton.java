@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import org.keyboardplaying.construct.action.Action;
+import org.keyboardplaying.construct.ui.i18n.MessageBundle;
 
 /**
  * A component to add an {@link Action} as a {@link JButton} on the interface.
@@ -27,7 +28,7 @@ public class ActionButton extends IconButton implements ActionListener {
      *            the action to be performed when this button is clicked
      */
     public ActionButton(Action action) {
-        super(action.getLabel(), action.getIconImageName());
+        super(new MessageBundle().getMessage(action.getLabelKey()), action.getIconImageName());
         this.action = action;
 
         addActionListener(this);
