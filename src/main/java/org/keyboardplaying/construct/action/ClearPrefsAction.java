@@ -12,6 +12,12 @@ public class ClearPrefsAction implements Action {
 
     private Preferences preferences;
 
+    /**
+     * Creates a new instance.
+     *
+     * @param preferences
+     *            the preference manager
+     */
     public ClearPrefsAction(Preferences preferences) {
         this.preferences = preferences;
     }
@@ -24,6 +30,16 @@ public class ClearPrefsAction implements Action {
     @Override
     public String getLabel() {
         return "Clear pref.";
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see org.keyboardplaying.construct.action.Action#getImageName()
+     */
+    @Override
+    public String getImageName() {
+        return "edit-clear";
     }
 
     /*

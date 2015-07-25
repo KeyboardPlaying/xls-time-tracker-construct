@@ -15,6 +15,13 @@ public interface Action {
     String getLabel();
 
     /**
+     * Returns the name of the image representing this action.
+     *
+     * @return the name of the icon for this action
+     */
+    String getImageName();
+
+    /**
      * Returns the message to be displayed if the action was not successfully performed.
      *
      * @return the message in case of execution failure

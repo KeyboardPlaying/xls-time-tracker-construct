@@ -13,12 +13,20 @@ import java.util.zip.ZipOutputStream;
 import org.keyboardplaying.construct.configuration.ProjectConfiguration;
 
 /**
+ * Constructs an XLSX file from the exploded version.
+ *
  * @author cyChop (http://keyboardplaying.org)
  */
 public class ConstructAction implements Action {
 
     private ProjectConfiguration project;
 
+    /**
+     * Creates a new instance.
+     *
+     * @param project
+     *            the project configuration
+     */
     public ConstructAction(ProjectConfiguration project) {
         this.project = project;
     }
@@ -36,12 +44,22 @@ public class ConstructAction implements Action {
     /*
      * (non-Javadoc)
      *
+     * @see org.keyboardplaying.construct.action.Action#getImageName()
+     */
+    @Override
+    public String getImageName() {
+        return "x-office-spreadsheet";
+    }
+
+    /*
+     * (non-Javadoc)
+     *
      * @see org.keyboardplaying.construct.action.Action#getUnsuccessMessage()
      */
     @Override
     public String getUnsuccessMessage() {
-        return "The action could not be performed. Is the file " + ProjectConfiguration.CONSTRUCT_PATH
-                + " locked?";
+        return "The action could not be performed. Is the file "
+                + ProjectConfiguration.CONSTRUCT_PATH + " locked?";
     }
 
     /*
