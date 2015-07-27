@@ -1,11 +1,11 @@
-# ![&#x1f559;](doc/icon-timetracker-32.png) xls-time-tracker construct
+# ![&#x1f559;](doc/icons/timetracker-32.png) xls-time-tracker construct
 
 [![MIT licensed][license-mit-badge]][license-mit]
 [![Join the chat at https://gitter.im/cyChop/xls-time-tracker][gitter-badge]][gitter-channel]
 
 This project is a utility for developers wishing to contribute to the [xls-time-tracker]. It provides an easy way to switch to and fro between the version controlled source and the editable Excel file.
 
-![xls-time-tracker construct](doc/screenshot-construct.png)
+![xls-time-tracker construct](doc/screenshots/construct.png)
 
 ## Documentation
 
