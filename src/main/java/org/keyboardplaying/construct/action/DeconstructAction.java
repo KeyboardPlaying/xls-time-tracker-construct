@@ -31,7 +31,7 @@ public class DeconstructAction implements Action {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.keyboardplaying.construct.action.Action#getLabelKey()
      */
     @Override
@@ -46,7 +46,7 @@ public class DeconstructAction implements Action {
      */
     @Override
     public String getIconImageName() {
-        return "package-x-generic";
+        return "action-deconstruct";
     }
 
     /*

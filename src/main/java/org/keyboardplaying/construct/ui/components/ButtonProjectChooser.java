@@ -27,7 +27,7 @@ public class ButtonProjectChooser extends IconButton implements ActionListener {
     private List<ProjectLocationUpdateListener> listeners = new ArrayList<>();
 
     public ButtonProjectChooser(ProjectLocation location) {
-        super("folder-saved-search");
+        super("action-search-folder");
 
         this.location = location;
 

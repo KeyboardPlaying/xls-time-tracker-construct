@@ -39,7 +39,7 @@ public class ClearPrefsAction implements Action {
      */
     @Override
     public String getIconImageName() {
-        return "edit-clear";
+        return "action-clear-prefs";
     }
 
     /*

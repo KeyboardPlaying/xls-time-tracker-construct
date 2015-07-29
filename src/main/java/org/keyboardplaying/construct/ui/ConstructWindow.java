@@ -37,7 +37,7 @@ public class ConstructWindow extends JFrame implements ProjectLocationUpdateList
     private static final long serialVersionUID = 4689227798900897618L;
 
     private static final String TITLE = "app.name";
-    private static final String ICON_NAME = "appointment-new";
+    private static final String ICON_NAME = "icon-timetracker";
 
     private static final String PRF_PROJECT_DIR = "project.dir";
 
