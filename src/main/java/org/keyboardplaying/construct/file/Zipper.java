@@ -12,6 +12,8 @@ import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import org.keyboardplaying.construct.util.StreamCopier;
+
 /**
  * Zips a directory into a file.
  *
@@ -29,14 +31,22 @@ public class Zipper {
      *            the original file or directory
      * @param target
      *            the destination file
+     *
+     * @throws IllegalArgumentException
+     *             if the target already exists and is a directory
      */
     public Zipper(File source, File target) {
-        // Do not control if the source is a directory, the code will be reusable
         this.source = Objects.requireNonNull(source, "Source must not be null.");
         this.target = Objects.requireNonNull(target, "Target must not be null.");
+
+        if (!source.exists()) {
+            // Do not control if the source is a directory, the code will be reusable
+            throw new IllegalArgumentException(
+                    "Source " + source.getAbsolutePath() + " does not exist.");
+        }
         if (target.exists() && target.isDirectory()) {
             throw new IllegalArgumentException(
-                    target.getAbsolutePath() + " already exists and is a directory.");
+                    "Target " + target.getAbsolutePath() + " already exists and is a directory.");
         }
     }
 
@@ -52,7 +62,9 @@ public class Zipper {
      */
     public boolean cleanAndBuildTarget() throws IOException {
         // Remove if existing
-        deleteTarget();
+        if (!deleteTarget()) {
+            throw new IOException("The target could not be deleted.");
+        }
 
         // Build anew
         return buildTarget();
@@ -91,7 +103,7 @@ public class Zipper {
                 ZipOutputStream zos = new ZipOutputStream(fos)) {
             URI root = (source.isDirectory() ? source : source.getParentFile()).toURI();
             for (File file : files) {
-                addToZip(root, file, zos);
+                addZipEntry(root, file, zos);
             }
         }
 
@@ -119,7 +131,7 @@ public class Zipper {
         return list;
     }
 
-    private void addToZip(URI root, File file, ZipOutputStream zos)
+    private void addZipEntry(URI root, File file, ZipOutputStream zos)
             throws FileNotFoundException, IOException {
 
         try (FileInputStream fis = new FileInputStream(file)) {
@@ -130,16 +142,8 @@ public class Zipper {
             // Create entry and copy content
             ZipEntry zipEntry = new ZipEntry(relativePath);
             zos.putNextEntry(zipEntry);
-            copyStream(fis, zos);
+            new StreamCopier().copyStream(fis, zos);
             zos.closeEntry();
-        }
-    }
-
-    private void copyStream(FileInputStream fis, ZipOutputStream zos) throws IOException {
-        byte[] bytes = new byte[1024];
-        int length;
-        while ((length = fis.read(bytes)) >= 0) {
-            zos.write(bytes, 0, length);
         }
     }
 }
