@@ -19,7 +19,7 @@
 
   <properties>
     <!-- Github properties -->
-    <github.user>cyChop</github.user>
+    <github.user>KeyboardPlaying</github.user>
     <github.repo>${project.artifactId}</github.repo>
 
     <!-- Compilation settings -->
