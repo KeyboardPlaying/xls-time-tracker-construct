@@ -6,7 +6,7 @@ import java.util.prefs.Preferences;
 /**
  * An action to remove preferences from the computer the constructor is executed upon.
  *
- * @author cyChop (http://keyboardplaying.org)
+ * @author Cyrille Chopelet (http://keyboardplaying.org)
  */
 public class ClearPrefsAction implements Action {
 

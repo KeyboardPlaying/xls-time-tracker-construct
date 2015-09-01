@@ -5,7 +5,7 @@ import org.keyboardplaying.construct.configuration.ProjectLocation;
 /**
  * An interface for listening to project configuration updates.
  *
- * @author cyChop (http://keyboardplaying.org)
+ * @author Cyrille Chopelet (http://keyboardplaying.org)
  */
 public interface ProjectLocationUpdateListener {
 

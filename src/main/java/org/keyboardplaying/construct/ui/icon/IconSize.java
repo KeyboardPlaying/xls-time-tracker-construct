@@ -3,7 +3,7 @@ package org.keyboardplaying.construct.ui.icon;
 /**
  * The available sizes for icons.
  *
- * @author cyChop (http://keyboardplaying.org/)
+ * @author Cyrille Chopelet (http://keyboardplaying.org)
  */
 public enum IconSize {
 

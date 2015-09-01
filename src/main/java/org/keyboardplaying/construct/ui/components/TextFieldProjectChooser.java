@@ -14,11 +14,10 @@ import org.keyboardplaying.construct.events.ProjectLocationUpdateListener;
 /**
  * A tool to choose the directory the file will execute in.
  *
- * @author cyChop (http://keyboardplaying.org)
+ * @author Cyrille Chopelet (http://keyboardplaying.org)
  */
 // TODO Javadoc
-public class TextFieldProjectChooser extends JTextField
-        implements DocumentListener, ProjectLocationUpdateListener {
+public class TextFieldProjectChooser extends JTextField implements DocumentListener, ProjectLocationUpdateListener {
 
     /** Generated serial version UID. */
     private static final long serialVersionUID = 3202883511876422218L;

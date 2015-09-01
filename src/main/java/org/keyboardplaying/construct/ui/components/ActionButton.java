@@ -12,7 +12,7 @@ import org.keyboardplaying.construct.ui.i18n.MessageBundle;
 /**
  * A component to add an {@link Action} as a {@link JButton} on the interface.
  *
- * @author cyChop (http://keyboardplaying.org)
+ * @author Cyrille Chopelet (http://keyboardplaying.org)
  */
 public class ActionButton extends IconButton implements ActionListener {
 

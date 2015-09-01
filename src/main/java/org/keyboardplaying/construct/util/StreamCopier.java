@@ -7,7 +7,7 @@ import java.io.OutputStream;
 /**
  * Utility to perform stream copy.
  *
- * @author cyChop (http://keyboardplaying.org)
+ * @author Cyrille Chopelet (http://keyboardplaying.org)
  */
 public class StreamCopier {
 

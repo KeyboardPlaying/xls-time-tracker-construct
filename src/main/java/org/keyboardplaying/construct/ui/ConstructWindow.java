@@ -29,7 +29,7 @@ import org.keyboardplaying.construct.ui.icon.ImageLoader;
 /**
  * A utility class for building a window.
  *
- * @author cyChop (http://keyboardplaying.org)
+ * @author Cyrille Chopelet (http://keyboardplaying.org)
  */
 public class ConstructWindow extends JFrame implements ProjectLocationUpdateListener {
 
@@ -107,8 +107,7 @@ public class ConstructWindow extends JFrame implements ProjectLocationUpdateList
         ActionButton clearPrefsAction = new ActionButton(new ClearPrefsAction(preferences));
 
         /* Arrange the components */
-        arrangeLayout(layout, textChooser, btnChooser, constructAction, deconstructAction,
-                clearPrefsAction);
+        arrangeLayout(layout, textChooser, btnChooser, constructAction, deconstructAction, clearPrefsAction);
 
         /* Initialize interface. */
         valid = !project.isValid();
@@ -118,9 +117,8 @@ public class ConstructWindow extends JFrame implements ProjectLocationUpdateList
         return pane;
     }
 
-    private void arrangeLayout(GroupLayout layout, TextFieldProjectChooser textChooser,
-            ButtonProjectChooser btnChooser, ActionButton constructAction,
-            ActionButton deconstructAction, ActionButton clearPrefsAction) {
+    private void arrangeLayout(GroupLayout layout, TextFieldProjectChooser textChooser, ButtonProjectChooser btnChooser,
+            ActionButton constructAction, ActionButton deconstructAction, ActionButton clearPrefsAction) {
 
         /* Link sizes. */
         layout.linkSize(SwingConstants.VERTICAL, textChooser, btnChooser);
@@ -192,8 +190,7 @@ public class ConstructWindow extends JFrame implements ProjectLocationUpdateList
     }
 
     /**
-     * Activates or deactivates the action buttons according to the selected project directory
-     * validity.
+     * Activates or deactivates the action buttons according to the selected project directory validity.
      *
      * @param updated
      *            {@inheritDoc}

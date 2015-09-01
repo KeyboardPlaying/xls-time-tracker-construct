@@ -14,7 +14,7 @@ import org.keyboardplaying.construct.util.StreamCopier;
 /**
  * Unzips a file into a directory.
  *
- * @author cyChop (http://keyboardplaying.org)
+ * @author Cyrille Chopelet (http://keyboardplaying.org)
  */
 public class Unzipper {
 
@@ -30,8 +30,8 @@ public class Unzipper {
                     "Source " + source.getAbsolutePath() + " does not exist or is not a file.");
         }
         if (target.exists() && !target.isDirectory()) {
-            throw new IllegalArgumentException("Target " + target.getAbsolutePath()
-                    + " already exists and is not a directory.");
+            throw new IllegalArgumentException(
+                    "Target " + target.getAbsolutePath() + " already exists and is not a directory.");
         }
     }
 
@@ -106,8 +106,7 @@ public class Unzipper {
         return true;
     }
 
-    private void unzipEntry(ZipEntry ze, ZipInputStream zis)
-            throws IOException, FileNotFoundException {
+    private void unzipEntry(ZipEntry ze, ZipInputStream zis) throws IOException, FileNotFoundException {
         File entry = new File(target, ze.getName());
 
         // create all non existing directories

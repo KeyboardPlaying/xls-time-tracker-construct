@@ -10,7 +10,7 @@ import javax.imageio.ImageIO;
 /**
  * A utility to load the images to display as button or application icons.
  *
- * @author cyChop (http://keyboardplaying.org)
+ * @author Cyrille Chopelet (http://keyboardplaying.org)
  */
 // TODO Javadoc
 public class ImageLoader {
@@ -20,8 +20,8 @@ public class ImageLoader {
 
     public Image getImage(String imageName, IconSize size) {
         try {
-            return ImageIO.read(getClass().getResourceAsStream(
-                    IMG_PATH_PREFIX + size.getPath() + '/' + imageName + IMG_EXTENSION));
+            return ImageIO.read(
+                    getClass().getResourceAsStream(IMG_PATH_PREFIX + size.getPath() + '/' + imageName + IMG_EXTENSION));
         } catch (IOException e) {
             // icons are with source, this should not happen
             return null;

@@ -7,7 +7,7 @@ import org.keyboardplaying.construct.ui.ConstructWindow;
 /**
  * Launcher and main class for the utility application.
  *
- * @author cyChop (http://keyboardplaying.org/)
+ * @author Cyrille Chopelet (http://keyboardplaying.org)
  */
 public class ConstructApplication {
 

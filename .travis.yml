@@ -1,0 +1,28 @@
+language: java
+
+sudo: false
+
+jdk:
+  - oraclejdk7
+
+# Coverage report on Coveralls
+after_success:
+  - mvn cobertura:cobertura coveralls:report
+
+# Coverity scan
+# Execute only for builds on branch coverity_scan
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "mcxAgYcRHhNYPaJsPrLNGJ9NRCzua02SiOBccDTolLedT4irXwYOuxumvnoAmTt/dRfkWHkfaUrnFZI8bCsWw+xqp+TQeFU/+wx5ecLGDg97p+AMZF3CW/hGD94mNpyDZWsisLXQd31hmMCWVaexAQCQAmEHYodxnzC6UH4XsOksyt666XpYvmS8zLC9B8jB+8IkCnAgBDKLzhfhYjAH77Ode9R00DpdixpA2HjqSjndbbHkJMtorb91uNA0DfIyOTtjlWT354HS2N9GNNUCL+u4YwQRImyHggJuuywjfv5vNiU660udFNwuMqoN4MXpS1fYgnuCEvl2yb/G+NAhofXL/YU9A5lSpt7yXeAp5UP0spls6xInvwhW2oRRfdSEREeODXjJWDpWwg1XFxMuhrAsLgmQKAIxz0NW1mfd3Zqwgqnu6gPXWfOb4HrqI5p4bK/JWdNFfg5p03Eq8R2qXTFcgH5nROFud7VscER6IEvFBE9kAlJBC/ryIac+tl+7h10swF95If5KtPN5YX/ervi6ZZyfe4g+hziTqUuK1bB+3SOE/YlA5gyt+A637QILA3PG3gIGZlTrs/9Z8PPLdojmpHKSU34AtZlxeRTxsCNzQVuxGmdZiGbI2Ml2uaX1dlpgD2JL60LpP2Gj7WW6qYe+0M7OfsKsw3qYMm5uWjQ="
+
+addons:
+  coverity_scan:
+    project:
+      name: "KeyboardPlaying/xls-time-tracker-construct"
+      description: "Build submitted via Travis CI"
+    notification_email: cyrille.chopelet@mines-nancy.org
+    build_command_prepend: "mvn clean"
+    build_command:   "mvn -DskipTests=true compile"
+    branch_pattern: coverity_scan

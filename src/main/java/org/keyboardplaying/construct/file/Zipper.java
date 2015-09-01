@@ -17,7 +17,7 @@ import org.keyboardplaying.construct.util.StreamCopier;
 /**
  * Zips a directory into a file.
  *
- * @author cyChop (http://keyboardplaying.org)
+ * @author Cyrille Chopelet (http://keyboardplaying.org)
  */
 public class Zipper {
 
@@ -41,8 +41,7 @@ public class Zipper {
 
         if (!source.exists()) {
             // Do not control if the source is a directory, the code will be reusable
-            throw new IllegalArgumentException(
-                    "Source " + source.getAbsolutePath() + " does not exist.");
+            throw new IllegalArgumentException("Source " + source.getAbsolutePath() + " does not exist.");
         }
         if (target.exists() && target.isDirectory()) {
             throw new IllegalArgumentException(
@@ -73,8 +72,7 @@ public class Zipper {
     /**
      * Deletes the existing version of the target if any.
      *
-     * @return {@code true} if the target did not exist or was successfully deleted; {@code false}
-     *         otherwise
+     * @return {@code true} if the target did not exist or was successfully deleted; {@code false} otherwise
      */
     public boolean deleteTarget() {
         if (target.exists()) {
@@ -99,8 +97,7 @@ public class Zipper {
     }
 
     private boolean zipFiles(List<File> files) throws FileNotFoundException, IOException {
-        try (FileOutputStream fos = new FileOutputStream(target);
-                ZipOutputStream zos = new ZipOutputStream(fos)) {
+        try (FileOutputStream fos = new FileOutputStream(target); ZipOutputStream zos = new ZipOutputStream(fos)) {
             URI root = (source.isDirectory() ? source : source.getParentFile()).toURI();
             for (File file : files) {
                 addZipEntry(root, file, zos);
@@ -111,8 +108,7 @@ public class Zipper {
     }
 
     /**
-     * Creates a list of all files present under {@code source}, or {@code source} only if source is
-     * a file.
+     * Creates a list of all files present under {@code source}, or {@code source} only if source is a file.
      *
      * @return a list of all files present under {@code source}
      */
@@ -131,8 +127,7 @@ public class Zipper {
         return list;
     }
 
-    private void addZipEntry(URI root, File file, ZipOutputStream zos)
-            throws FileNotFoundException, IOException {
+    private void addZipEntry(URI root, File file, ZipOutputStream zos) throws FileNotFoundException, IOException {
 
         try (FileInputStream fis = new FileInputStream(file)) {
 

@@ -14,7 +14,7 @@ import org.keyboardplaying.construct.events.ProjectLocationUpdateListener;
 /**
  * A tool to choose the directory the file will execute in.
  *
- * @author cyChop (http://keyboardplaying.org)
+ * @author Cyrille Chopelet (http://keyboardplaying.org)
  */
 // TODO Javadoc
 public class ButtonProjectChooser extends IconButton implements ActionListener {

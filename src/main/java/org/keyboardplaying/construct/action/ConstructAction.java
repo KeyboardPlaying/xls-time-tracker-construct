@@ -8,7 +8,7 @@ import org.keyboardplaying.construct.file.Zipper;
 /**
  * Constructs an XLSX file from the exploded version.
  *
- * @author cyChop (http://keyboardplaying.org)
+ * @author Cyrille Chopelet (http://keyboardplaying.org)
  */
 public class ConstructAction implements Action {
 
@@ -51,8 +51,7 @@ public class ConstructAction implements Action {
      */
     @Override
     public String getUnsuccessMessage() {
-        return "The action could not be performed. Is the file " + ProjectLocation.CONSTRUCT_PATH
-                + " locked?";
+        return "The action could not be performed. Is the file " + ProjectLocation.CONSTRUCT_PATH + " locked?";
     }
 
     /*
@@ -62,7 +61,6 @@ public class ConstructAction implements Action {
      */
     @Override
     public boolean perform() throws IOException {
-        return new Zipper(location.getDeconstructedDirectory(), location.getConstructedFile())
-                .cleanAndBuildTarget();
+        return new Zipper(location.getDeconstructedDirectory(), location.getConstructedFile()).cleanAndBuildTarget();
     }
 }

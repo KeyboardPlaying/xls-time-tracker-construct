@@ -12,7 +12,7 @@ import org.keyboardplaying.construct.ui.icon.ImageLoader;
 /**
  * A component to easily make a button with an icon from an image embedded within the sources.
  *
- * @author cyChop (http://keyboardplaying.org)
+ * @author Cyrille Chopelet (http://keyboardplaying.org)
  */
 public class IconButton extends JButton {
 

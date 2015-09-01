@@ -9,7 +9,7 @@ import org.keyboardplaying.construct.file.Unzipper;
 /**
  * Updates the exploded version of the tracker based on the XLSX file.
  *
- * @author cyChop (http://keyboardplaying.org)
+ * @author Cyrille Chopelet (http://keyboardplaying.org)
  */
 public class DeconstructAction implements Action {
 
@@ -63,7 +63,6 @@ public class DeconstructAction implements Action {
      */
     @Override
     public boolean perform() throws FileNotFoundException, IOException {
-        return new Unzipper(location.getConstructedFile(), location.getDeconstructedDirectory())
-                .cleanAndBuildTarget();
+        return new Unzipper(location.getConstructedFile(), location.getDeconstructedDirectory()).cleanAndBuildTarget();
     }
 }

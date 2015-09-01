@@ -3,14 +3,13 @@ package org.keyboardplaying.construct.action;
 /**
  * An interface for actions that can be executed from the utility.
  *
- * @author cyChop (http://keyboardplaying.org)
+ * @author Cyrille Chopelet (http://keyboardplaying.org)
  */
 public interface Action {
 
     /*
-     * In a perfect world, this should contain only the perform operations. Everything else is
-     * UI-related should be in a UI wrapper. But, hey! it's only a minimalist JAR to zip and unzip
-     * files...
+     * In a perfect world, this should contain only the perform operations. Everything else is UI-related should be in a
+     * UI wrapper. But, hey! it's only a minimalist JAR to zip and unzip files...
      */
 
     /**
