@@ -21,6 +21,14 @@ public class Unzipper {
     private File source;
     private File target;
 
+    /**
+     * Creates a new instance.
+     *
+     * @param source
+     *            the original zip file
+     * @param target
+     *            the directory the file should be unzipped to
+     */
     public Unzipper(File source, File target) {
         this.source = Objects.requireNonNull(source, "Source must not be null.");
         this.target = Objects.requireNonNull(target, "Target must not be null.");
@@ -65,9 +73,8 @@ public class Unzipper {
     public boolean makeEmptyTarget() {
         if (!target.exists()) {
             return target.mkdirs();
-        } else {
-            return delete(target, false);
         }
+        return delete(target, false);
     }
 
     private boolean delete(File file, boolean deleteRoot) {
@@ -80,9 +87,8 @@ public class Unzipper {
                 result &= file.delete();
             }
             return result;
-        } else {
-            return file.delete();
         }
+        return file.delete();
     }
 
     /**

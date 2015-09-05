@@ -60,8 +60,8 @@ public class TextFieldProjectChooser extends JTextField implements DocumentListe
         }
     }
 
-    private void updateTextField(File location) {
-        setText(location.getAbsolutePath());
+    private void updateTextField(File directory) {
+        setText(directory.getAbsolutePath());
     }
 
     /*
