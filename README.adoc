@@ -11,7 +11,7 @@ Cyrille Chopelet <cyrille.chopelet@mines-nancy.org>
 :license-url: http://opensource.org/licenses/MIT
 
 :url-main: https://github.com/KeyboardPlaying/xls-time-tracker
-:url-wiki: https://github.com/KeyboardPlaying/xls-time-tracker/wiki
+:url-wiki: {url-main}/wiki
 
 // The badges. Should not require any change.
 :url-shields: http://img.shields.io/
@@ -23,7 +23,7 @@ image:{url-shields}badge/gitter-join_chat_%E2%86%92-1dce73.svg[Join the chat, li
 
 // Now, the main documentation.
 
-This project is a utility for developers wishing to contribute to the [xls-time-tracker]. It provides an easy way to switch to and fro between the version controlled source and the editable Excel file.
+This project is a utility for developers wishing to contribute to the {url-wiki}[xls-time-tracker]. It provides an easy way to switch to and fro between the version controlled source and the editable Excel file.
 
 image:doc/screenshots/construct.png[xls-time-tracker construct,align="center"]
 
