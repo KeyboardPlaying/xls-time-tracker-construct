@@ -1,8 +1,16 @@
-# Maven build directory
-/target
+## Maven ##
+/*/target/
+pom.xml.*
+release.properties
 
-# Eclipse IDE file
+## IDE ##
+
+# Cloud9
+/.c9/
+
+# Eclipse
+/*/.settings/
+/*/.classpath
+/*/.project
 /.settings/
 /.project
-/.classpath
-

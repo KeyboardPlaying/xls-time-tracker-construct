@@ -2,9 +2,10 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.keyboardplaying.construct</groupId>
-    <artifactId>time-tracker-construct</artifactId>
-    <version>1.1.0-SNAPSHOT</version>
+    <groupId>org.keyboardplaying.xtt</groupId>
+    <artifactId>construct</artifactId>
+    <version>2.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
     <name>Time tracker construct</name>
     <description>A utility for constructing and deconstructing the XLSX file of xls-time-tracker</description>
@@ -16,6 +17,11 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
+
+    <modules>
+        <module>construct-ui</module>
+        <module>construct-logic</module>
+    </modules>
 
     <properties>
         <!-- Github properties -->
@@ -40,25 +46,25 @@
         <coveralls.plugin.version>4.0.0</coveralls.plugin.version>
     </properties>
 
-    <dependencies>
+    <dependencyManagement>
+        <dependencies>
         <!--<![CDATA[
              _____       _
             |_   _|__ __| |_
               | |/ -_|_-<  _|
               |_|\___/__/\__| ]]>-->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>jdepend</groupId>
-            <artifactId>jdepend</artifactId>
-            <version>${jdepend.version}</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>jdepend</groupId>
+                <artifactId>jdepend</artifactId>
+                <version>${jdepend.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <finalName>tracker-construct</finalName>
@@ -92,7 +98,6 @@
                         <archive>
                             <!-- Include a manifest -->
                             <manifest>
-                                <mainClass>org.keyboardplaying.construct.ConstructApplication</mainClass>
                                 <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                                 <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                             </manifest>
@@ -151,7 +156,7 @@
         <developer>
             <id>cyChop</id>
             <name>Cyrille Chopelet</name>
-            <email>cyrille dot chopelet at mines-nancy dot org</email>
+            <email>cyrille.chopelet@mines-nancy.org</email>
             <roles>
                 <role>developer</role>
             </roles>
