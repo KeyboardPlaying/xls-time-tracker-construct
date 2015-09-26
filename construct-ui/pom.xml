@@ -44,6 +44,8 @@
     </dependencies>
 
     <build>
+        <finalName>xtt-construct</finalName>
+
         <plugins>
             <!--<![CDATA[
                  __  __           _  __        _
@@ -51,15 +53,34 @@
                 | |\/| / _` | ' \| |  _/ -_|_-<  _|
                 |_|  |_\__,_|_||_|_|_| \___/__/\__| ]]>-->
             <plugin>
-                <artifactId>maven-jar-plugin</artifactId>
+                <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
                     <archive>
-                        <!-- Include a manifest -->
                         <manifest>
                             <mainClass>org.keyboardplaying.xtt.ConstructApplication</mainClass>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                         </manifest>
+                        <manifestEntries>
+                            <url>${project.url}</url>
+                            <Build-Time>${maven.build.timestamp}</Build-Time>
+                            <X-Compile-Source-JDK>${maven.compiler.source}</X-Compile-Source-JDK>
+                            <X-Compile-Target-JDK>${maven.compiler.target}</X-Compile-Target-JDK>
+                        </manifestEntries>
                     </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

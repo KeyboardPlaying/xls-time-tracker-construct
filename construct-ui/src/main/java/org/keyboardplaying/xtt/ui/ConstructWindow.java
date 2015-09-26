@@ -127,11 +127,13 @@ public class ConstructWindow extends JFrame {
 
         this.projectTextChooser = new ProjectTextFieldChooser();
         this.projectTextChooser.setLocationHelper(this.locationHelper);
+        this.projectTextChooser.init();
 
         this.projectButtonChooser = new ProjectButtonChooser();
         this.projectButtonChooser.setIconKey("action-search-folder");
         this.projectButtonChooser.setI18nHelper(this.i18nHelper);
         this.projectButtonChooser.setLocationHelper(this.locationHelper);
+        this.projectButtonChooser.init();
 
         this.constructButton = new ProjectActionButton();
         this.constructButton.setTextKey("action.construct");
@@ -139,6 +141,7 @@ public class ConstructWindow extends JFrame {
         this.constructButton.setI18nHelper(this.i18nHelper);
         this.constructButton.setLocationHelper(this.locationHelper);
         this.constructButton.setAction(this.constructAction);
+        this.constructButton.init();
 
         this.deconstructButton = new ProjectActionButton();
         this.deconstructButton.setTextKey("action.deconstruct");
@@ -146,12 +149,14 @@ public class ConstructWindow extends JFrame {
         this.deconstructButton.setI18nHelper(this.i18nHelper);
         this.deconstructButton.setLocationHelper(this.locationHelper);
         this.deconstructButton.setAction(this.deconstructAction);
+        this.deconstructButton.init();
 
         this.clearPrefsButton = new ActionButton<>();
         this.clearPrefsButton.setTextKey("action.prefs.clear");
         this.clearPrefsButton.setIconKey("action-clear-prefs");
         this.clearPrefsButton.setI18nHelper(this.i18nHelper);
         this.clearPrefsButton.setAction(this.clearPrefsAction);
+        this.clearPrefsButton.init();
     }
 
     /** Initializes this instance. */

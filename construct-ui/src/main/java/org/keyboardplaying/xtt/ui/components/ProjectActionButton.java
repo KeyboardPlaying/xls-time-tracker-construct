@@ -32,6 +32,17 @@ public class ProjectActionButton extends ActionButton<ProjectAction>implements U
 
     /*
      * (non-Javadoc)
+     * 
+     * @see org.keyboardplaying.xtt.ui.components.ActionButton#init()
+     */
+    @Override
+    public void init() {
+        super.init();
+        this.locationHelper.registerForUpdate(this);
+    }
+
+    /*
+     * (non-Javadoc)
      *
      * @see org.keyboardplaying.xtt.configuration.ProjectLocationHelper.UpdateListener#notifyLocation()
      */

@@ -67,8 +67,6 @@
     </dependencyManagement>
 
     <build>
-        <finalName>tracker-construct</finalName>
-
         <plugins>
             <!--<![CDATA[
                   ___                      _ _
