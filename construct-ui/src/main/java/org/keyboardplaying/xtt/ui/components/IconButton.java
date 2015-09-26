@@ -6,6 +6,7 @@ import java.util.Objects;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+import org.keyboardplaying.xtt.ui.i18n.I18nHelper;
 import org.keyboardplaying.xtt.ui.icon.IconSize;
 import org.keyboardplaying.xtt.ui.icon.ImageLoader;
 
@@ -17,34 +18,67 @@ import org.keyboardplaying.xtt.ui.icon.ImageLoader;
 public class IconButton extends JButton {
 
     /** Generated serial version UID. */
-    private static final long serialVersionUID = 7062712805719944391L;
+    private static final long serialVersionUID = 8099387573563370857L;
 
     private static final IconSize IMG_SIZE = IconSize._16;
 
+    private I18nHelper i18nHelper;
+
+    private String textKey;
+    private String iconKey;
+
     /**
-     * Creates a new instance.
+     * Sets the i18nHelper for this instance.
      *
-     * @param imageName
-     *            the name of the image to use for the icon, without path nor extension
+     * @param i18nHelper
+     *            the new i18nHelper
      */
-    public IconButton(String imageName) {
-        this(null, imageName);
+    // @Autowired
+    public void setI18nHelper(I18nHelper i18nHelper) {
+        this.i18nHelper = i18nHelper;
     }
 
     /**
-     * Creates a new instance.
+     * Sets the textKey for this instance.
      *
-     * @param label
-     *            the label for the icon
-     * @param imageName
-     *            the name of the image to use for the icon, without path nor extension
+     * @param textKey
+     *            the new textKey
      */
-    public IconButton(String label, String imageName) {
-        super(label);
+    public void setTextKey(String textKey) {
+        this.textKey = textKey;
+    }
 
-        Objects.requireNonNull(imageName, "An IconButton must be provided an image name.");
+    /**
+     * Sets the iconKey for this instance.
+     *
+     * @param iconKey
+     *            the new iconKey
+     */
+    public void setIconKey(String iconKey) {
+        this.iconKey = iconKey;
+    }
 
-        Image img = new ImageLoader().getImage(imageName, IMG_SIZE);
-        setIcon(new ImageIcon(img));
+    /**
+     * Gets the string message corresponding to the key.
+     *
+     * @param key
+     *            the key for the desired string
+     * @return the string for the given key
+     */
+    protected String getMessage(String key) {
+        return i18nHelper.getMessage(key);
+    }
+
+    /** Initializes this instance. */
+    // @PostConstruct
+    public void init() {
+        Objects.requireNonNull(iconKey, "An IconButton must be provided an image name.");
+
+        String key = textKey;
+        String text = key != null ? getMessage(key) : null;
+
+        Image icon = new ImageLoader().getImage(iconKey, IMG_SIZE);
+
+        super.init(text, new ImageIcon(icon));
     }
 }

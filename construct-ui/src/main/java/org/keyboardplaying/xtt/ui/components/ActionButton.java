@@ -3,38 +3,43 @@ package org.keyboardplaying.xtt.ui.components;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import org.keyboardplaying.xtt.action.Action;
-import org.keyboardplaying.xtt.ui.i18n.MessageBundle;
 
 /**
- * A component to add an {@link Action} as a {@link JButton} on the interface.
+ * A component to add an {@link Action} to a button.
+ *
+ * @param <T>
+ *            the type of action this button is linked to
  *
  * @author Cyrille Chopelet (http://keyboardplaying.org)
  */
-public class ActionButton extends IconButton implements ActionListener {
+public class ActionButton<T extends Action> extends IconButton implements ActionListener {
 
     /** Generated serial version UID. */
-    private static final long serialVersionUID = -8879808162137270769L;
+    private static final long serialVersionUID = -5878747183335075792L;
 
-    private Action action;
+    private T action;
 
     /**
-     * Creates a new instance.
+     * Sets the action for this instance.
      *
-     * @param labelKey
-     *            TODO
-     * @param icon
-     *            TODO
      * @param action
-     *            the action to be performed when this button is clicked
+     *            the new action
      */
-    public ActionButton(String labelKey, String icon, Action action) {
-        super(new MessageBundle().getMessage(labelKey), icon);
+    public void setAction(T action) {
         this.action = action;
+    }
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see org.keyboardplaying.xtt.ui.components.IconButton#init()
+     */
+    @Override
+    public void init() {
+        super.init();
         addActionListener(this);
     }
 

@@ -3,7 +3,7 @@ package org.keyboardplaying.xtt.action;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import org.keyboardplaying.xtt.configuration.ProjectLocation;
+import org.keyboardplaying.xtt.configuration.ProjectLocationHelper;
 import org.keyboardplaying.xtt.zip.Unzipper;
 
 /**
@@ -11,38 +11,39 @@ import org.keyboardplaying.xtt.zip.Unzipper;
  *
  * @author Cyrille Chopelet (http://keyboardplaying.org)
  */
-public class DeconstructAction implements Action {
+public class DeconstructAction implements ProjectAction {
 
-    private ProjectLocation location;
+    private ProjectLocationHelper locationHelper;
 
     /**
-     * Creates a new instance.
+     * Sets the project location helper for this instance.
      *
-     * @param location
-     *            the location configuration
+     * @param locationHelper
+     *            the new project location helper
      */
-    public DeconstructAction(ProjectLocation location) {
-        this.location = location;
+    // @Autowired
+    public void setLocationHelper(ProjectLocationHelper locationHelper) {
+        this.locationHelper = locationHelper;
     }
 
     /*
      * (non-Javadoc)
      *
-     * @see org.keyboardplaying.xtt.action.Action#getUnsuccessMessage()
+     * @see org.keyboardplaying.xtt.action.ProjectAction#getUnsuccessMessage()
      */
     @Override
     public String getUnsuccessMessage() {
-        return "The action could not be performed. Is the file " + ProjectLocation.CONSTRUCT_PATH
-                + " missing or the directory " + ProjectLocation.DECONSTRUCT_PATH + "?";
+        return "The action could not be performed. Is the file Excel file missing?";
     }
 
     /*
      * (non-Javadoc)
      *
-     * @see org.keyboardplaying.xtt.action.Action#perform()
+     * @see org.keyboardplaying.xtt.action.ProjectAction#perform()
      */
     @Override
     public boolean perform() throws FileNotFoundException, IOException {
-        return new Unzipper(location.getConstructedFile(), location.getDeconstructedDirectory()).cleanAndBuildTarget();
+        return new Unzipper(locationHelper.getConstructedFile(), locationHelper.getDeconstructedDirectory())
+                .cleanAndBuildTarget();
     }
 }

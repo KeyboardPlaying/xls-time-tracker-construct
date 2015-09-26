@@ -1,9 +1,5 @@
 package org.keyboardplaying.xtt.ui;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.prefs.Preferences;
-
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.ParallelGroup;
 import javax.swing.GroupLayout.SequentialGroup;
@@ -17,37 +13,52 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import org.keyboardplaying.xtt.action.ClearPrefsAction;
 import org.keyboardplaying.xtt.action.ConstructAction;
+import org.keyboardplaying.xtt.action.ConstructUtilityAction;
 import org.keyboardplaying.xtt.action.DeconstructAction;
-import org.keyboardplaying.xtt.configuration.ProjectLocation;
-import org.keyboardplaying.xtt.events.ProjectLocationUpdateListener;
+import org.keyboardplaying.xtt.configuration.ProjectLocationHelper;
 import org.keyboardplaying.xtt.ui.components.ActionButton;
-import org.keyboardplaying.xtt.ui.components.ButtonProjectChooser;
-import org.keyboardplaying.xtt.ui.components.TextFieldProjectChooser;
-import org.keyboardplaying.xtt.ui.i18n.MessageBundle;
+import org.keyboardplaying.xtt.ui.components.ProjectActionButton;
+import org.keyboardplaying.xtt.ui.components.ProjectButtonChooser;
+import org.keyboardplaying.xtt.ui.components.ProjectTextFieldChooser;
+import org.keyboardplaying.xtt.ui.i18n.I18nHelper;
 import org.keyboardplaying.xtt.ui.icon.ImageLoader;
 
 /**
- * A utility class for building a window.
+ * The application graphical context and main window.
  *
  * @author Cyrille Chopelet (http://keyboardplaying.org)
  */
-public class ConstructWindow extends JFrame implements ProjectLocationUpdateListener {
+public class ConstructWindow extends JFrame {
 
     /** Generated serial version UID. */
-    private static final long serialVersionUID = 4689227798900897618L;
+    private static final long serialVersionUID = -4415822151746371919L;
 
-    private static final String TITLE = "app.name";
-    private static final String ICON_NAME = "icon-timetracker";
+    private ProjectLocationHelper locationHelper;
 
-    private static final String PRF_PROJECT_DIR = "project.dir";
+    private I18nHelper i18nHelper;
 
-    private List<JComponent> constructActions = new ArrayList<>();
-    private boolean valid = true;
+    private ConstructAction constructAction;
+    private DeconstructAction deconstructAction;
+    private ClearPrefsAction clearPrefsAction;
 
-    private Preferences preferences;
+    private ProjectTextFieldChooser projectTextChooser;
+    private ProjectButtonChooser projectButtonChooser;
 
-    // Apply System look and feel the first time this class is loaded
+    private ProjectActionButton constructButton;
+    private ProjectActionButton deconstructButton;
+    private ActionButton<ConstructUtilityAction> clearPrefsButton;
+
     static {
+        /* Apply System look and feel the first time this class is loaded. */
+        applySystemLookAndFeel();
+    }
+
+    {
+        /* Make sure thread is ended on close. */
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    }
+
+    private static void applySystemLookAndFeel() {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException e) {
@@ -62,76 +73,121 @@ public class ConstructWindow extends JFrame implements ProjectLocationUpdateList
     }
 
     /**
-     * Creates a new instance.
+     * Sets the project location helper for this instance.
      *
-     * @param preferences
-     *            the user's preferences
+     * @param locationHelper
+     *            the new project location helper
      */
-    public ConstructWindow(Preferences preferences) {
+    // @Autowired
+    public void setLocationHelper(ProjectLocationHelper locationHelper) {
+        this.locationHelper = locationHelper;
+    }
+
+    /**
+     * Sets the construct action for this instance.
+     *
+     * @param constructAction
+     *            the new construct action
+     */
+    // @Autowired
+    public void setConstructAction(ConstructAction constructAction) {
+        this.constructAction = constructAction;
+    }
+
+    /**
+     * Sets the deconstruct action for this instance.
+     *
+     * @param deconstructAction
+     *            the new deconstruct action
+     */
+    // @Autowired
+    public void setDeconstructAction(DeconstructAction deconstructAction) {
+        this.deconstructAction = deconstructAction;
+    }
+
+    /**
+     * Sets the preference cleaning action for this instance.
+     *
+     * @param clearPrefsAction
+     *            the new preference cleaning action
+     */
+    // @Autowired
+    public void setClearPrefsAction(ClearPrefsAction clearPrefsAction) {
+        this.clearPrefsAction = clearPrefsAction;
+    }
+
+    /**
+     * Configures the UI.
+     * <p/>
+     * In a more complete application, this would be performed using a Spring context, but I am trying to keep the
+     * application as light as possible here.
+     */
+    public void configure() {
+        this.i18nHelper = new I18nHelper();
+
+        this.projectTextChooser = new ProjectTextFieldChooser();
+        this.projectTextChooser.setLocationHelper(this.locationHelper);
+
+        this.projectButtonChooser = new ProjectButtonChooser();
+        this.projectButtonChooser.setIconKey("action-search-folder");
+        this.projectButtonChooser.setI18nHelper(this.i18nHelper);
+        this.projectButtonChooser.setLocationHelper(this.locationHelper);
+
+        this.constructButton = new ProjectActionButton();
+        this.constructButton.setTextKey("action.construct");
+        this.constructButton.setIconKey("action-construct");
+        this.constructButton.setI18nHelper(this.i18nHelper);
+        this.constructButton.setLocationHelper(this.locationHelper);
+        this.constructButton.setAction(this.constructAction);
+
+        this.deconstructButton = new ProjectActionButton();
+        this.deconstructButton.setTextKey("action.deconstruct");
+        this.deconstructButton.setIconKey("action-deconstruct");
+        this.deconstructButton.setI18nHelper(this.i18nHelper);
+        this.deconstructButton.setLocationHelper(this.locationHelper);
+        this.deconstructButton.setAction(this.deconstructAction);
+
+        this.clearPrefsButton = new ActionButton<>();
+        this.clearPrefsButton.setTextKey("action.prefs.clear");
+        this.clearPrefsButton.setIconKey("action-clear-prefs");
+        this.clearPrefsButton.setI18nHelper(this.i18nHelper);
+        this.clearPrefsButton.setAction(this.clearPrefsAction);
+    }
+
+    /** Initializes this instance. */
+    public void init() {
         /* Title and icon. */
-        super(new MessageBundle().getMessage(TITLE));
-        setIconImages(new ImageLoader().getImages(ICON_NAME));
-
-        this.preferences = preferences;
-
-        /* Make sure thread is ended on close. */
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-        /* Center on screen. */
-        this.setLocationRelativeTo(null);
+        setTitle(i18nHelper.getMessage("app.name"));
+        setIconImages(new ImageLoader().getImages("icon-timetracker"));
 
         /* Now the content. */
-        this.setContentPane(buildContent(loadProject()));
+        this.setContentPane(buildContent());
 
         /* Adapt size to fit the content. */
         this.setResizable(false);
         this.pack();
+        // Center on screen.
+        this.setLocationRelativeTo(null);
     }
 
-    private JPanel buildContent(ProjectLocation project) {
+    private JPanel buildContent() {
         /* Create UI. */
         JPanel pane = new JPanel();
         GroupLayout layout = new GroupLayout(pane);
         pane.setLayout(layout);
 
-        /* Create components. */
-        // Directory chooser
-        TextFieldProjectChooser textChooser = new TextFieldProjectChooser(project);
-        textChooser.addProjectSettingUpdateListener(this);
-
-        ButtonProjectChooser btnChooser = new ButtonProjectChooser(project);
-        btnChooser.addProjectSettingUpdateListener(this);
-        btnChooser.addProjectSettingUpdateListener(textChooser);
-
-        // Construct / deconstruct
-        ActionButton constructAction = new ActionButton("action.construct", "action-construct",
-                new ConstructAction(project));
-        ActionButton deconstructAction = new ActionButton("action.deconstruct", "action-deconstruct",
-                new DeconstructAction(project));
-        constructActions.add(constructAction);
-        constructActions.add(deconstructAction);
-
-        // Clear prefs
-        ActionButton clearPrefsAction = new ActionButton("action.prefs.clear", "action-clear-prefs",
-                new ClearPrefsAction(preferences));
-
         /* Arrange the components */
-        arrangeLayout(layout, textChooser, btnChooser, constructAction, deconstructAction, clearPrefsAction);
-
-        /* Initialize interface. */
-        valid = !project.isValid();
-        projectLocationUpdated(project);
+        arrangeLayout(layout);
 
         /* We're done! */
         return pane;
     }
 
-    private void arrangeLayout(GroupLayout layout, TextFieldProjectChooser textChooser, ButtonProjectChooser btnChooser,
-            ActionButton constructAction, ActionButton deconstructAction, ActionButton clearPrefsAction) {
+    private void arrangeLayout(GroupLayout layout) {
 
         /* Link sizes. */
-        layout.linkSize(SwingConstants.VERTICAL, textChooser, btnChooser);
-        layout.linkSize(constructAction, deconstructAction, clearPrefsAction);
+        layout.linkSize(SwingConstants.VERTICAL, projectTextChooser, projectButtonChooser);
+        layout.linkSize(constructButton, deconstructButton, clearPrefsButton);
 
         /* The main groups. */
         ParallelGroup horizontal = layout.createParallelGroup();
@@ -141,8 +197,8 @@ public class ConstructWindow extends JFrame implements ProjectLocationUpdateList
         SequentialGroup sequential = layout.createSequentialGroup();
         ParallelGroup parallel = layout.createParallelGroup();
 
-        addComponent(textChooser, sequential, parallel);
-        addComponent(btnChooser, sequential, parallel);
+        addComponent(projectTextChooser, sequential, parallel);
+        addComponent(projectButtonChooser, sequential, parallel);
 
         horizontal.addGroup(sequential);
         vertical.addGroup(parallel);
@@ -151,10 +207,10 @@ public class ConstructWindow extends JFrame implements ProjectLocationUpdateList
         sequential = layout.createSequentialGroup();
         parallel = layout.createParallelGroup();
 
-        addComponent(constructAction, sequential, parallel);
-        addComponent(deconstructAction, sequential, parallel);
+        addComponent(constructButton, sequential, parallel);
+        addComponent(deconstructButton, sequential, parallel);
         sequential.addPreferredGap(ComponentPlacement.UNRELATED);
-        addComponent(clearPrefsAction, sequential, parallel);
+        addComponent(clearPrefsButton, sequential, parallel);
 
         horizontal.addGroup(sequential);
         vertical.addGroup(parallel);
@@ -167,53 +223,5 @@ public class ConstructWindow extends JFrame implements ProjectLocationUpdateList
     private void addComponent(JComponent component, SequentialGroup seq, ParallelGroup par) {
         seq.addComponent(component);
         par.addComponent(component);
-    }
-
-    /**
-     * Loads the project location from the preferences or initialize it if nothing is set yet.
-     *
-     * @return the project location
-     */
-    private ProjectLocation loadProject() {
-        ProjectLocation location;
-
-        String path = preferences.get(PRF_PROJECT_DIR, null);
-        if (path == null) {
-            location = new ProjectLocation();
-            storeProject(location);
-        } else {
-            location = new ProjectLocation(path);
-        }
-
-        return location;
-    }
-
-    /**
-     * Stores the project location to the preferences.
-     *
-     * @param location
-     *            the project location
-     */
-    private void storeProject(ProjectLocation location) {
-        preferences.put(PRF_PROJECT_DIR, location.getRoot().getAbsolutePath());
-    }
-
-    /**
-     * Activates or deactivates the action buttons according to the selected project directory validity.
-     *
-     * @param updated
-     *            {@inheritDoc}
-     */
-    @Override
-    public void projectLocationUpdated(ProjectLocation updated) {
-        if (valid != updated.isValid()) {
-            valid = !valid;
-            for (JComponent action : constructActions) {
-                action.setEnabled(valid);
-            }
-            if (valid) {
-                storeProject(updated);
-            }
-        }
     }
 }

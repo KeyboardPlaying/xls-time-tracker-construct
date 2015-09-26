@@ -1,31 +1,32 @@
 package org.keyboardplaying.xtt.action;
 
 import java.util.prefs.BackingStoreException;
-import java.util.prefs.Preferences;
+
+import org.keyboardplaying.xtt.configuration.PreferencesHelper;
 
 /**
  * An action to remove preferences from the computer the constructor is executed upon.
  *
  * @author Cyrille Chopelet (http://keyboardplaying.org)
  */
-public class ClearPrefsAction implements Action {
+public class ClearPrefsAction implements ConstructUtilityAction {
 
-    private Preferences preferences;
+    private PreferencesHelper preferencesHelper;
 
     /**
-     * Creates a new instance.
+     * Sets the preferences helper for this instance.
      *
-     * @param preferences
-     *            the preference manager
+     * @param preferencesHelper
+     *            the new preferences helper
      */
-    public ClearPrefsAction(Preferences preferences) {
-        this.preferences = preferences;
+    public void setPreferencesHelper(PreferencesHelper preferencesHelper) {
+        this.preferencesHelper = preferencesHelper;
     }
 
     /*
      * (non-Javadoc)
      *
-     * @see org.keyboardplaying.xtt.action.Action#getUnsuccessMessage()
+     * @see org.keyboardplaying.xtt.action.ProjectAction#getUnsuccessMessage()
      */
     @Override
     public String getUnsuccessMessage() {
@@ -35,11 +36,12 @@ public class ClearPrefsAction implements Action {
     /*
      * (non-Javadoc)
      *
-     * @see org.keyboardplaying.xtt.action.Action#perform()
+     * @see org.keyboardplaying.xtt.action.ProjectAction#perform()
      */
     @Override
     public boolean perform() throws BackingStoreException {
-        preferences.clear();
+        // TODO this should close the application
+        preferencesHelper.clear();
         return true;
     }
 }
