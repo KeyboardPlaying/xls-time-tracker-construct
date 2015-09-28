@@ -83,7 +83,7 @@ public class ProjectTextFieldChooser extends JTextField implements DocumentListe
 
     /** Updates the location of the project. This will trigger a "location updated event" */
     private void updateLocation() {
-        locationHelper.setProjectLocation(new File(getText()));
+        locationHelper.setProjectLocation(getText());
     }
 
     /**

@@ -74,11 +74,10 @@ public class IconButton extends JButton {
     public void init() {
         Objects.requireNonNull(iconKey, "An IconButton must be provided an image name.");
 
-        String key = textKey;
-        String text = key != null ? getMessage(key) : null;
+        String text = textKey != null ? getMessage(textKey) : null;
 
         Image icon = new ImageLoader().getImage(iconKey, IMG_SIZE);
 
-        super.init(text, new ImageIcon(icon));
+        super.init(text, icon != null ? new ImageIcon(icon) : null);
     }
 }

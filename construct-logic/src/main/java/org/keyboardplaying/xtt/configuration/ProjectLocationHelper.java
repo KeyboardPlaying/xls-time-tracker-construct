@@ -118,6 +118,19 @@ public class ProjectLocationHelper {
     /**
      * Updates the project location.
      *
+     * @param path
+     *            the new project location
+     * @throws IllegalArgumentException
+     *             if the location is not valid
+     * @see #isValid(File)
+     */
+    public void setProjectLocation(String path) {
+        setProjectLocation(path != null ? path : PROJECT_DIR_DEFAULT);
+    }
+
+    /**
+     * Updates the project location.
+     *
      * @param d
      *            the new project location
      * @throws IllegalArgumentException
