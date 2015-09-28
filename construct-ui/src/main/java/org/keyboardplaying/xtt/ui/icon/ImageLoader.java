@@ -23,6 +23,15 @@ public class ImageLoader {
                 getClass().getResourceAsStream(IMG_PATH_PREFIX + size.getPath() + '/' + imageName + IMG_EXTENSION));
     }
 
+    /**
+     * Loads the image in PNG format with the corresponding name and size.
+     *
+     * @param imageName
+     *            the name of the image to load (without extension)
+     * @param size
+     *            the size to load
+     * @return the image
+     */
     public Image getImage(String imageName, IconSize size) {
         try {
             return loadImage(imageName, size);
@@ -32,6 +41,15 @@ public class ImageLoader {
         }
     }
 
+    /**
+     * Loads the images with the corresponding name in all sizes.
+     *
+     * @param imageName
+     *            the name of the image to load (without extension)
+     * @return the images
+     *
+     * @see #getImage(String, IconSize)
+     */
     public List<Image> getImages(String imageName) {
         List<Image> images = new ArrayList<>();
         for (IconSize size : IconSize.values()) {
