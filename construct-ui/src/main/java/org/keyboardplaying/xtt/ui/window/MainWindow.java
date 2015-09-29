@@ -6,9 +6,15 @@ import java.awt.GridBagLayout;
 
 import javax.swing.JPanel;
 
+import org.keyboardplaying.xtt.action.ConstructAction;
 import org.keyboardplaying.xtt.action.ConstructUtilityAction;
+import org.keyboardplaying.xtt.action.DeconstructAction;
+import org.keyboardplaying.xtt.configuration.ProjectLocationHelper;
+import org.keyboardplaying.xtt.ui.action.OpenSettingsAction;
 import org.keyboardplaying.xtt.ui.components.ActionButton;
 import org.keyboardplaying.xtt.ui.components.ProjectActionButton;
+import org.keyboardplaying.xtt.ui.icon.IconSize;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * The main window for the construct application.
@@ -18,40 +24,55 @@ import org.keyboardplaying.xtt.ui.components.ProjectActionButton;
 public class MainWindow extends ConstructWindow {
 
     /** Generated serial version UID. */
-    private static final long serialVersionUID = -7869895277316128051L;
 
-    private ProjectActionButton constructButton;
-    private ProjectActionButton deconstructButton;
-    private ActionButton<ConstructUtilityAction> settingsButton;
+    private ProjectLocationHelper locationHelper;
+
+    private ConstructAction constructAction;
+    private DeconstructAction deconstructAction;
+    private OpenSettingsAction settingsAction;
 
     /**
-     * Sets the constructButton for this instance.
+     * Sets the locationHelper for this instance.
      *
-     * @param constructButton
-     *            the new constructButton
+     * @param locationHelper
+     *            the new locationHelper
      */
-    public void setConstructButton(ProjectActionButton constructButton) {
-        this.constructButton = constructButton;
+    @Autowired
+    public void setLocationHelper(ProjectLocationHelper locationHelper) {
+        this.locationHelper = locationHelper;
     }
 
     /**
-     * Sets the deconstructButton for this instance.
+     * Sets the constructAction for this instance.
      *
-     * @param deconstructButton
-     *            the new deconstructButton
+     * @param constructAction
+     *            the new constructAction
      */
-    public void setDeconstructButton(ProjectActionButton deconstructButton) {
-        this.deconstructButton = deconstructButton;
+    @Autowired
+    public void setConstructAction(ConstructAction constructAction) {
+        this.constructAction = constructAction;
     }
 
     /**
-     * Sets the settingsButton for this instance.
+     * Sets the deconstructAction for this instance.
      *
-     * @param settingsButton
-     *            the new settingsButton
+     * @param deconstructAction
+     *            the new deconstructAction
      */
-    public void setSettingsButton(ActionButton<ConstructUtilityAction> settingsButton) {
-        this.settingsButton = settingsButton;
+    @Autowired
+    public void setDeconstructAction(DeconstructAction deconstructAction) {
+        this.deconstructAction = deconstructAction;
+    }
+
+    /**
+     * Sets the settingsAction for this instance.
+     *
+     * @param settingsAction
+     *            the new settingsAction
+     */
+    @Autowired
+    public void setSettingsAction(OpenSettingsAction settingsAction) {
+        this.settingsAction = settingsAction;
     }
 
     /*
@@ -72,23 +93,54 @@ public class MainWindow extends ConstructWindow {
         c.gridy = 0;
         c.gridwidth = 2;
         c.fill = GridBagConstraints.BOTH;
-        pane.add(constructButton, c);
+        pane.add(makeConstructButton(), c);
 
         c = new GridBagConstraints();
         c.gridx = 0;
         c.gridy = 1;
         c.gridwidth = 2;
         c.fill = GridBagConstraints.BOTH;
-        pane.add(deconstructButton, c);
+        pane.add(makeDeconstructButton(), c);
 
         c = new GridBagConstraints();
         c.gridx = 2;
         c.gridy = 0;
         c.gridheight = 2;
         c.fill = GridBagConstraints.BOTH;
-        pane.add(settingsButton, c);
+        pane.add(makeSettingsButton(), c);
 
         /* We're done! */
         return pane;
+    }
+
+    private ProjectActionButton makeConstructButton() {
+        ProjectActionButton constructButton = new ProjectActionButton();
+        constructButton.setTextKey("action.construct");
+        constructButton.setIconKey("action-construct");
+        constructButton.setI18nHelper(getI18nHelper());
+        constructButton.setLocationHelper(this.locationHelper);
+        constructButton.setAction(this.constructAction);
+        constructButton.init();
+        return constructButton;
+    }
+
+    private ProjectActionButton makeDeconstructButton() {
+        ProjectActionButton deconstructButton = new ProjectActionButton();
+        deconstructButton.setTextKey("action.deconstruct");
+        deconstructButton.setIconKey("action-deconstruct");
+        deconstructButton.setI18nHelper(getI18nHelper());
+        deconstructButton.setLocationHelper(this.locationHelper);
+        deconstructButton.setAction(this.deconstructAction);
+        deconstructButton.init();
+        return deconstructButton;
+    }
+
+    private ActionButton<ConstructUtilityAction> makeSettingsButton() {
+        ActionButton<ConstructUtilityAction> settingsButton = new ActionButton<>();
+        settingsButton.setIconKey("icon-settings");
+        settingsButton.setSize(IconSize._32);
+        settingsButton.setAction(settingsAction);
+        settingsButton.init();
+        return settingsButton;
     }
 }

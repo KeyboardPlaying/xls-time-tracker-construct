@@ -4,6 +4,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 /**
  * A class to manage the paths relative to the project directory.
  *
@@ -48,13 +52,13 @@ public class ProjectLocationHelper {
      * @param preferencesHelper
      *            the new preferences manager
      */
-    // @Autowired
+    @Autowired
     public void setPreferencesHelper(PreferencesHelper preferencesHelper) {
         this.preferencesHelper = preferencesHelper;
     }
 
     /** Initializes this instance. */
-    // @PostConstruct
+    @PostConstruct
     public void init() {
         String path = this.preferencesHelper.get(PROJECT_DIR_PREFKEY);
         this.location = new File(path != null ? path : PROJECT_DIR_DEFAULT);

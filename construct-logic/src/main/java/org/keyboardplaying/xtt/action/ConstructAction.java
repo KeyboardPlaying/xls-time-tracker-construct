@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.keyboardplaying.xtt.configuration.ProjectLocationHelper;
 import org.keyboardplaying.xtt.zip.Zipper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Constructs an XLSX file from the exploded version.
@@ -20,7 +21,7 @@ public class ConstructAction implements ProjectAction {
      * @param locationHelper
      *            the new project location helper
      */
-    // @Autowired
+    @Autowired
     public void setLocationHelper(ProjectLocationHelper locationHelper) {
         this.locationHelper = locationHelper;
     }

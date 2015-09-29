@@ -3,6 +3,7 @@ package org.keyboardplaying.xtt.action;
 import java.util.prefs.BackingStoreException;
 
 import org.keyboardplaying.xtt.configuration.PreferencesHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * An action to remove preferences from the computer the constructor is executed upon.
@@ -19,6 +20,7 @@ public class ClearPrefsAction implements ConstructUtilityAction {
      * @param preferencesHelper
      *            the new preferences helper
      */
+    @Autowired
     public void setPreferencesHelper(PreferencesHelper preferencesHelper) {
         this.preferencesHelper = preferencesHelper;
     }

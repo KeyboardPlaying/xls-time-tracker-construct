@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import org.keyboardplaying.xtt.configuration.ProjectLocationHelper;
 import org.keyboardplaying.xtt.zip.Unzipper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Updates the exploded version of the tracker based on the XLSX file.
@@ -21,7 +22,7 @@ public class DeconstructAction implements ProjectAction {
      * @param locationHelper
      *            the new project location helper
      */
-    // @Autowired
+    @Autowired
     public void setLocationHelper(ProjectLocationHelper locationHelper) {
         this.locationHelper = locationHelper;
     }

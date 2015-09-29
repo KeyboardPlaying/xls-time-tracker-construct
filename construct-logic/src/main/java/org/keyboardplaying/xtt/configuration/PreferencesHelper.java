@@ -3,11 +3,14 @@ package org.keyboardplaying.xtt.configuration;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
+import org.springframework.stereotype.Component;
+
 /**
  * A class to manage the preferences of the application.
  *
  * @author Cyrille Chopelet (http://keyboardplaying.org)
  */
+@Component
 public class PreferencesHelper {
 
     private static final String NODE = "org/keyboardplaying/xtt/construct";

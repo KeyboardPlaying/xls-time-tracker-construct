@@ -38,6 +38,9 @@
         <sonar.java.source>${maven.compiler.source}</sonar.java.source>
         <sonar.java.target>${maven.compiler.target}</sonar.java.target>
 
+        <!-- Spring -->
+        <spring.version>4.2.1.RELEASE</spring.version>
+
         <!-- Version management - test -->
         <junit.version>4.12</junit.version>
         <jdepend.version>2.9.1</jdepend.version>
@@ -48,11 +51,23 @@
 
     <dependencyManagement>
         <dependencies>
-        <!--<![CDATA[
-             _____       _
-            |_   _|__ __| |_
-              | |/ -_|_-<  _|
-              |_|\___/__/\__| ]]>-->
+            <!--<![CDATA[
+                 ___          _           
+                / __|_ __ _ _(_)_ _  __ _ 
+                \__ \ '_ \ '_| | ' \/ _` |
+                |___/ .__/_| |_|_||_\__, |
+                    |_|             |___/  ]]>-->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+        
+            <!--<![CDATA[
+                 _____       _
+                |_   _|__ __| |_
+                  | |/ -_|_-<  _|
+                  |_|\___/__/\__| ]]>-->
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>

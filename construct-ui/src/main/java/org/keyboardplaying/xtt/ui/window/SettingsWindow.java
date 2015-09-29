@@ -10,9 +10,12 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import org.keyboardplaying.xtt.action.ConstructUtilityAction;
+import org.keyboardplaying.xtt.configuration.ProjectLocationHelper;
+import org.keyboardplaying.xtt.ui.action.ConfirmClearPrefsAction;
 import org.keyboardplaying.xtt.ui.components.ActionButton;
 import org.keyboardplaying.xtt.ui.components.ProjectButtonChooser;
 import org.keyboardplaying.xtt.ui.components.ProjectTextFieldChooser;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * The window for configuring the construct.
@@ -21,39 +24,29 @@ import org.keyboardplaying.xtt.ui.components.ProjectTextFieldChooser;
  */
 public class SettingsWindow extends ConstructWindow {
 
-    private ProjectTextFieldChooser projectTextChooser;
-    private ProjectButtonChooser projectButtonChooser;
-
-    private ActionButton<ConstructUtilityAction> clearPrefsButton;
+    private ProjectLocationHelper locationHelper;
+    private ConfirmClearPrefsAction clearPrefsAction;
 
     /**
-     * Sets the projectTextChooser for this instance.
+     * Sets the locationHelper for this instance.
      *
-     * @param projectTextChooser
-     *            the new projectTextChooser
+     * @param locationHelper
+     *            the new locationHelper
      */
-    public void setProjectTextChooser(ProjectTextFieldChooser projectTextChooser) {
-        this.projectTextChooser = projectTextChooser;
+    @Autowired
+    public void setLocationHelper(ProjectLocationHelper locationHelper) {
+        this.locationHelper = locationHelper;
     }
 
     /**
-     * Sets the projectButtonChooser for this instance.
+     * Sets the clearPrefsAction for this instance.
      *
-     * @param projectButtonChooser
-     *            the new projectButtonChooser
+     * @param clearPrefsAction
+     *            the new clearPrefsAction
      */
-    public void setProjectButtonChooser(ProjectButtonChooser projectButtonChooser) {
-        this.projectButtonChooser = projectButtonChooser;
-    }
-
-    /**
-     * Sets the clearPrefsButton for this instance.
-     *
-     * @param clearPrefsButton
-     *            the new clearPrefsButton
-     */
-    public void setClearPrefsButton(ActionButton<ConstructUtilityAction> clearPrefsButton) {
-        this.clearPrefsButton = clearPrefsButton;
+    @Autowired
+    public void setClearPrefsAction(ConfirmClearPrefsAction clearPrefsAction) {
+        this.clearPrefsAction = clearPrefsAction;
     }
 
     /*
@@ -77,8 +70,11 @@ public class SettingsWindow extends ConstructWindow {
 
     private void arrangeLayout(GroupLayout layout) {
 
+        ProjectTextFieldChooser projectTextChooser = makeProjectTextChooser();
+        ProjectButtonChooser projectBtnChooser = makeProjectBtnChooser();
+
         /* Link sizes. */
-        layout.linkSize(SwingConstants.VERTICAL, projectTextChooser, projectButtonChooser);
+        layout.linkSize(SwingConstants.VERTICAL, projectTextChooser, projectBtnChooser);
 
         /* The main groups. */
         ParallelGroup horizontal = layout.createParallelGroup();
@@ -89,7 +85,7 @@ public class SettingsWindow extends ConstructWindow {
         ParallelGroup parallel = layout.createParallelGroup();
 
         addComponent(projectTextChooser, sequential, parallel);
-        addComponent(projectButtonChooser, sequential, parallel);
+        addComponent(projectBtnChooser, sequential, parallel);
 
         horizontal.addGroup(sequential);
         vertical.addGroup(parallel);
@@ -98,7 +94,7 @@ public class SettingsWindow extends ConstructWindow {
         sequential = layout.createSequentialGroup();
         parallel = layout.createParallelGroup();
 
-        addComponent(clearPrefsButton, sequential, parallel);
+        addComponent(makeClearPrefsButton(), sequential, parallel);
 
         horizontal.addGroup(sequential);
         vertical.addGroup(parallel);
@@ -111,5 +107,31 @@ public class SettingsWindow extends ConstructWindow {
     private void addComponent(JComponent component, SequentialGroup seq, ParallelGroup par) {
         seq.addComponent(component);
         par.addComponent(component);
+    }
+
+    private ProjectTextFieldChooser makeProjectTextChooser() {
+        ProjectTextFieldChooser projectTextChooser = new ProjectTextFieldChooser();
+        projectTextChooser.setLocationHelper(this.locationHelper);
+        projectTextChooser.init();
+        return projectTextChooser;
+    }
+
+    private ProjectButtonChooser makeProjectBtnChooser() {
+        ProjectButtonChooser projectButtonChooser = new ProjectButtonChooser();
+        projectButtonChooser.setIconKey("action-search-folder");
+        projectButtonChooser.setI18nHelper(getI18nHelper());
+        projectButtonChooser.setLocationHelper(this.locationHelper);
+        projectButtonChooser.init();
+        return projectButtonChooser;
+    }
+
+    private ActionButton<ConstructUtilityAction> makeClearPrefsButton() {
+        ActionButton<ConstructUtilityAction> clearPrefsButton = new ActionButton<>();
+        clearPrefsButton.setTextKey("action.prefs.clear");
+        clearPrefsButton.setIconKey("action-clear-prefs");
+        clearPrefsButton.setI18nHelper(getI18nHelper());
+        clearPrefsButton.setAction(this.clearPrefsAction);
+        clearPrefsButton.init();
+        return clearPrefsButton;
     }
 }

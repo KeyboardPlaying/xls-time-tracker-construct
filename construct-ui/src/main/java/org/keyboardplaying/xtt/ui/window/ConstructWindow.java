@@ -2,10 +2,12 @@ package org.keyboardplaying.xtt.ui.window;
 
 import java.awt.Container;
 
+import javax.annotation.PostConstruct;
 import javax.swing.JFrame;
 
 import org.keyboardplaying.xtt.ui.i18n.I18nHelper;
 import org.keyboardplaying.xtt.ui.icon.ImageLoader;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Common parent for construct application windows
@@ -15,7 +17,7 @@ import org.keyboardplaying.xtt.ui.icon.ImageLoader;
 public abstract class ConstructWindow extends JFrame {
 
     /** Generated serial version UID. */
-    private static final long serialVersionUID = 7458961220769455955L;
+    private static final long serialVersionUID = 264294138687954787L;
 
     private I18nHelper i18nHelper;
 
@@ -33,9 +35,13 @@ public abstract class ConstructWindow extends JFrame {
      * @param i18nHelper
      *            the new i18nHelper
      */
-    // @Autowired
+    @Autowired
     public void setI18nHelper(I18nHelper i18nHelper) {
         this.i18nHelper = i18nHelper;
+    }
+
+    protected I18nHelper getI18nHelper() {
+        return i18nHelper;
     }
 
     /**
@@ -59,7 +65,7 @@ public abstract class ConstructWindow extends JFrame {
     }
 
     /** Initializes the component. */
-    // @PostConstruct
+    @PostConstruct
     public void init() {
         /* Title and icon. */
         this.setTitle(i18nHelper.getMessage(textKey));
