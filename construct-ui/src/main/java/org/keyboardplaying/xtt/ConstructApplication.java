@@ -5,7 +5,7 @@ import org.keyboardplaying.xtt.action.ConstructAction;
 import org.keyboardplaying.xtt.action.DeconstructAction;
 import org.keyboardplaying.xtt.configuration.PreferencesHelper;
 import org.keyboardplaying.xtt.configuration.ProjectLocationHelper;
-import org.keyboardplaying.xtt.ui.ConstructWindow;
+import org.keyboardplaying.xtt.ui.ConstructUI;
 
 /**
  * Launcher and main class for the utility application.
@@ -58,16 +58,16 @@ public class ConstructApplication {
     }
 
     private void startUI() {
-        ConstructWindow window = new ConstructWindow();
+        ConstructUI ui = new ConstructUI();
 
-        window.setLocationHelper(locationHelper);
-        window.setConstructAction(constructAction);
-        window.setDeconstructAction(deconstructAction);
-        window.setClearPrefsAction(clearPrefsAction);
+        ui.setPreferencesHelper(preferencesHelper);
+        ui.setLocationHelper(locationHelper);
+        ui.setConstructAction(constructAction);
+        ui.setDeconstructAction(deconstructAction);
+        ui.setClearPrefsAction(clearPrefsAction);
 
-        window.configure();
-        window.init();
         // Ready? Go!
-        window.setVisible(true);
+        ui.configure();
+        ui.start();
     }
 }

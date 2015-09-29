@@ -10,9 +10,29 @@ import java.util.prefs.Preferences;
  */
 public class PreferencesHelper {
 
-    private static final String APP_NAME = "xtt-construct";
+    private static final String NODE = "org/keyboardplaying/xtt/construct";
 
-    private Preferences preferences = Preferences.userRoot().node(APP_NAME);
+    private Preferences preferences;
+    private boolean initialized;
+
+    {
+        Preferences prefRoot = Preferences.userRoot();
+        try {
+            initialized = prefRoot.nodeExists(NODE);
+        } catch (BackingStoreException e) {
+            initialized = false;
+        }
+        preferences = prefRoot.node(NODE);
+    }
+
+    /**
+     * Returns {@code true} if preferences were already initialized for this application.
+     *
+     * @return {@code true} if preferences were already initialized, {@code false} otherwise
+     */
+    public boolean wasInitialized() {
+        return initialized;
+    }
 
     /**
      * Returns the value associated with the specified key in this preference node. Returns the specified default if

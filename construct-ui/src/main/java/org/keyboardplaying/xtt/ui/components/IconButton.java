@@ -18,7 +18,7 @@ import org.keyboardplaying.xtt.ui.icon.ImageLoader;
 public class IconButton extends JButton {
 
     /** Generated serial version UID. */
-    private static final long serialVersionUID = 8099387573563370857L;
+    private static final long serialVersionUID = 461639300267001291L;
 
     private static final IconSize IMG_SIZE = IconSize._16;
 
@@ -26,6 +26,7 @@ public class IconButton extends JButton {
 
     private String textKey;
     private String iconKey;
+    private IconSize size = IMG_SIZE;
 
     /**
      * Sets the i18nHelper for this instance.
@@ -59,6 +60,16 @@ public class IconButton extends JButton {
     }
 
     /**
+     * Sets the icon size.
+     *
+     * @param size
+     *            the icon size
+     */
+    public void setSize(IconSize size) {
+        this.size = size;
+    }
+
+    /**
      * Gets the string message corresponding to the key.
      *
      * @param key
@@ -76,7 +87,7 @@ public class IconButton extends JButton {
 
         String text = textKey != null ? getMessage(textKey) : null;
 
-        Image icon = new ImageLoader().getImage(iconKey, IMG_SIZE);
+        Image icon = new ImageLoader().getImage(iconKey, size);
 
         super.init(text, icon != null ? new ImageIcon(icon) : null);
     }
