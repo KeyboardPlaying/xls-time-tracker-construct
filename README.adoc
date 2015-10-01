@@ -27,6 +27,8 @@ This project is a utility for developers wishing to contribute to the {url-wiki}
 
 image:doc/screenshots/construct.png[xls-time-tracker construct,align="center"]
 
+image:doc/screenshots/settings.png[xls-time-tracker construct settings,align="center"]
+
 == Documentation
 
 See {url-main}[xls-time-tracker]'s {url-wiki}[wiki] for documentation about this utility.
