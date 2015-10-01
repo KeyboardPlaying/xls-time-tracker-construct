@@ -47,18 +47,109 @@ public class UIController {
 
     private ConstructUtilityAction settingsAction = new ConstructUtilityAction() {
 
+        /*
+         * (non-Javadoc)
+         *
+         * @see org.keyboardplaying.xtt.action.Action#perform()
+         */
         @Override
         public boolean perform() throws Exception {
             showSettingsWindow();
             return true;
         }
 
+        /*
+         * (non-Javadoc)
+         *
+         * @see org.keyboardplaying.xtt.action.Action#getUnsuccessMessage()
+         */
         @Override
         public String getUnsuccessMessage() {
             return "The configuration window could not be shown";
         }
     };
 
+    /**
+     * Sets the i18nHelper for this instance.
+     *
+     * @param i18nHelper
+     *            the new i18nHelper
+     */
+    public void setI18nHelper(I18nHelper i18nHelper) {
+        this.i18nHelper = i18nHelper;
+    }
+
+    /**
+     * Sets the imageLoader for this instance.
+     *
+     * @param imageLoader
+     *            the new imageLoader
+     */
+    public void setImageLoader(ImageLoader imageLoader) {
+        this.imageLoader = imageLoader;
+    }
+
+    /**
+     * Sets the preferencesHelper for this instance.
+     *
+     * @param preferencesHelper
+     *            the new preferencesHelper
+     */
+    public void setPreferencesHelper(PreferencesHelper preferencesHelper) {
+        this.preferencesHelper = preferencesHelper;
+    }
+
+    /**
+     * Sets the locationHelper for this instance.
+     *
+     * @param locationHelper
+     *            the new locationHelper
+     */
+    public void setLocationHelper(ProjectLocationHelper locationHelper) {
+        this.locationHelper = locationHelper;
+    }
+
+    /**
+     * Sets the constructAction for this instance.
+     *
+     * @param constructAction
+     *            the new constructAction
+     */
+    public void setConstructAction(ConstructAction constructAction) {
+        this.constructAction = constructAction;
+    }
+
+    /**
+     * Sets the deconstructAction for this instance.
+     *
+     * @param deconstructAction
+     *            the new deconstructAction
+     */
+    public void setDeconstructAction(DeconstructAction deconstructAction) {
+        this.deconstructAction = deconstructAction;
+    }
+
+    /**
+     * Sets the clearPrefsAction for this instance.
+     *
+     * @param clearPrefsAction
+     *            the new clearPrefsAction
+     */
+    public void setClearPrefsAction(ConfirmClearPrefsAction clearPrefsAction) {
+        this.clearPrefsAction = clearPrefsAction;
+    }
+
+    /**
+     * Sets the settingsAction for this instance.
+     *
+     * @param settingsAction
+     *            the new settingsAction
+     */
+    public void setSettingsAction(ConstructUtilityAction settingsAction) {
+        this.settingsAction = settingsAction;
+    }
+
+    /** Starts the UI. */
     public void startUI() {
         showMainWindow();
         if (!preferencesHelper.wasInitialized()) {
@@ -66,6 +157,7 @@ public class UIController {
         }
     }
 
+    /** Builds and shows the main window. */
     public void showMainWindow() {
         /* Create UI. */
         JPanel pane = new JPanel(new GridBagLayout());
@@ -128,6 +220,7 @@ public class UIController {
         return settingsButton;
     }
 
+    /** Builds and shows the settings window. */
     public void showSettingsWindow() {
         /* Create UI. */
         JPanel pane = new JPanel(new GridBagLayout());
