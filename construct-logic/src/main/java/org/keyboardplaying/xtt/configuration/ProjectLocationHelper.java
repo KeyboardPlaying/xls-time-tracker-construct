@@ -129,7 +129,7 @@ public class ProjectLocationHelper {
      * @see #isValid(File)
      */
     public void setProjectLocation(String path) {
-        setProjectLocation(path != null ? path : PROJECT_DIR_DEFAULT);
+        setProjectLocation(new File(path != null ? path : PROJECT_DIR_DEFAULT));
     }
 
     /**

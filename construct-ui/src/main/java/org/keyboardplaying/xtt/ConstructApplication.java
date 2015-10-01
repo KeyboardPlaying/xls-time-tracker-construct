@@ -1,7 +1,7 @@
 package org.keyboardplaying.xtt;
 
 import org.keyboardplaying.xtt.ui.UIConfiguration;
-import org.keyboardplaying.xtt.ui.window.MainWindow;
+import org.keyboardplaying.xtt.ui.UIController;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -21,7 +21,7 @@ public class ConstructApplication {
     public static void main(String... args) {
         @SuppressWarnings("resource") // not closing, needed for prototypes
         ApplicationContext ctx = new AnnotationConfigApplicationContext(UIConfiguration.class);
-        MainWindow window = ctx.getBean(MainWindow.class);
-        window.setVisible(true);
+        UIController controller = ctx.getBean(UIController.class);
+        controller.startUI();
     }
 }
