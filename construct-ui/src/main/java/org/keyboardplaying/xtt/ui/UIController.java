@@ -3,20 +3,27 @@ package org.keyboardplaying.xtt.ui;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import org.keyboardplaying.xtt.action.Action;
 import org.keyboardplaying.xtt.action.ConstructAction;
 import org.keyboardplaying.xtt.action.ConstructUtilityAction;
 import org.keyboardplaying.xtt.action.DeconstructAction;
+import org.keyboardplaying.xtt.action.ProjectAction;
 import org.keyboardplaying.xtt.configuration.PreferencesHelper;
 import org.keyboardplaying.xtt.configuration.ProjectLocationHelper;
+import org.keyboardplaying.xtt.configuration.ProjectLocationHelper.UpdateListener;
 import org.keyboardplaying.xtt.ui.action.ConfirmClearPrefsAction;
-import org.keyboardplaying.xtt.ui.components.ActionButton;
-import org.keyboardplaying.xtt.ui.components.ProjectActionButton;
-import org.keyboardplaying.xtt.ui.components.ProjectButtonChooser;
 import org.keyboardplaying.xtt.ui.components.ProjectTextFieldChooser;
 import org.keyboardplaying.xtt.ui.i18n.I18nHelper;
 import org.keyboardplaying.xtt.ui.icon.IconSize;
@@ -170,54 +177,24 @@ public class UIController {
         c.gridy = 0;
         c.gridwidth = 2;
         c.fill = GridBagConstraints.BOTH;
-        pane.add(makeConstructButton(), c);
+        pane.add(makeProjectActionButton("action.construct", "action-construct", IconSize._16, constructAction), c);
 
         c = new GridBagConstraints();
         c.gridx = 0;
         c.gridy = 1;
         c.gridwidth = 2;
         c.fill = GridBagConstraints.BOTH;
-        pane.add(makeDeconstructButton(), c);
+        pane.add(makeProjectActionButton("action.deconstruct", "action-deconstruct", IconSize._16, deconstructAction),
+                c);
 
         c = new GridBagConstraints();
         c.gridx = 2;
         c.gridy = 0;
         c.gridheight = 2;
         c.fill = GridBagConstraints.BOTH;
-        pane.add(makeSettingsButton(), c);
+        pane.add(makeActionButton(null, "icon-settings", IconSize._32, settingsAction), c);
 
         makeWindow("app.name", "icon-timetracker", pane).setVisible(true);
-    }
-
-    private ProjectActionButton makeConstructButton() {
-        ProjectActionButton constructButton = new ProjectActionButton();
-        constructButton.setTextKey("action.construct");
-        constructButton.setIconKey("action-construct");
-        constructButton.setI18nHelper(i18nHelper);
-        constructButton.setLocationHelper(locationHelper);
-        constructButton.setAction(constructAction);
-        constructButton.init();
-        return constructButton;
-    }
-
-    private ProjectActionButton makeDeconstructButton() {
-        ProjectActionButton deconstructButton = new ProjectActionButton();
-        deconstructButton.setTextKey("action.deconstruct");
-        deconstructButton.setIconKey("action-deconstruct");
-        deconstructButton.setI18nHelper(i18nHelper);
-        deconstructButton.setLocationHelper(locationHelper);
-        deconstructButton.setAction(deconstructAction);
-        deconstructButton.init();
-        return deconstructButton;
-    }
-
-    private ActionButton<ConstructUtilityAction> makeSettingsButton() {
-        ActionButton<ConstructUtilityAction> settingsButton = new ActionButton<>();
-        settingsButton.setIconKey("icon-settings");
-        settingsButton.setSize(IconSize._32);
-        settingsButton.setAction(settingsAction);
-        settingsButton.init();
-        return settingsButton;
     }
 
     /** Builds and shows the settings window. */
@@ -246,7 +223,7 @@ public class UIController {
         c.gridy = 1;
         c.gridwidth = 3;
         c.fill = GridBagConstraints.BOTH;
-        pane.add(makeClearPrefsButton(), c);
+        pane.add(makeActionButton("action.prefs.clear", "action-clear-prefs", IconSize._16, clearPrefsAction), c);
 
         makeWindow("app.name", "icon-timetracker", pane).setVisible(true);
     }
@@ -258,23 +235,19 @@ public class UIController {
         return projectTextChooser;
     }
 
-    private ProjectButtonChooser makeProjectBtnChooser() {
-        ProjectButtonChooser projectButtonChooser = new ProjectButtonChooser();
-        projectButtonChooser.setIconKey("action-search-folder");
-        projectButtonChooser.setI18nHelper(i18nHelper);
-        projectButtonChooser.setLocationHelper(locationHelper);
-        projectButtonChooser.init();
-        return projectButtonChooser;
+    private JButton makeProjectBtnChooser() {
+        JButton btn = makeIconButton(null, "action-search-folder", IconSize._16);
+        btn.addActionListener(new ProjectDirectoryChooserListener(btn, makeDirectoryChooser(), locationHelper));
+        return btn;
     }
 
-    private ActionButton<ConstructUtilityAction> makeClearPrefsButton() {
-        ActionButton<ConstructUtilityAction> clearPrefsButton = new ActionButton<>();
-        clearPrefsButton.setTextKey("action.prefs.clear");
-        clearPrefsButton.setIconKey("action-clear-prefs");
-        clearPrefsButton.setI18nHelper(i18nHelper);
-        clearPrefsButton.setAction(clearPrefsAction);
-        clearPrefsButton.init();
-        return clearPrefsButton;
+    private JFileChooser makeDirectoryChooser() {
+        JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(locationHelper.getProjectLocation());
+        chooser.setDialogTitle(i18nHelper.getMessage("project.directory.select"));
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        chooser.setAcceptAllFileFilterUsed(false);
+        return chooser;
     }
 
     private Window makeWindow(String titleKey, String iconKey, Container content) {
@@ -291,5 +264,89 @@ public class UIController {
         window.setLocationRelativeTo(null);
 
         return window;
+    }
+
+    private JButton makeIconButton(String textKey, String iconKey, IconSize iconSize) {
+        String text = textKey != null ? i18nHelper.getMessage(textKey) : null;
+        Image icon = imageLoader.getImage(iconKey, iconSize);
+
+        return new JButton(text, icon != null ? new ImageIcon(icon) : null);
+    }
+
+    private <T extends Action> JButton makeActionButton(String textKey, String iconKey, IconSize iconSize, T action) {
+        JButton btn = makeIconButton(textKey, iconKey, iconSize);
+        btn.addActionListener(new ActionExecutor<>(action));
+        return btn;
+    }
+
+    private JButton makeProjectActionButton(String textKey, String iconKey, IconSize iconSize, ProjectAction action) {
+        JButton btn = makeActionButton(textKey, iconKey, iconSize, action);
+        locationHelper.registerForUpdate(new ProjectButtonListener(btn, locationHelper));
+        return btn;
+    }
+
+    private static class ProjectDirectoryChooserListener implements ActionListener {
+
+        private final JButton btn;
+        private final JFileChooser chooser;
+
+        private final ProjectLocationHelper locationHelper;
+
+        public ProjectDirectoryChooserListener(JButton btn, JFileChooser chooser,
+                ProjectLocationHelper locationHelper) {
+            super();
+            this.btn = btn;
+            this.chooser = chooser;
+            this.locationHelper = locationHelper;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (chooser.showOpenDialog(btn) == JFileChooser.APPROVE_OPTION) {
+                locationHelper.setProjectLocation(chooser.getSelectedFile());
+            }
+        }
+    }
+
+    private static class ProjectButtonListener implements UpdateListener {
+        private final JButton btn;
+        private final ProjectLocationHelper locationHelper;
+
+        private ProjectButtonListener(JButton btn, ProjectLocationHelper locationHelper) {
+            this.btn = btn;
+            this.locationHelper = locationHelper;
+        }
+
+        @Override
+        public void notifyLocationUpdate() {
+            btn.setEnabled(locationHelper.isValid());
+        }
+    }
+
+    private static class ActionExecutor<T extends Action> implements ActionListener {
+
+        private T action;
+
+        public ActionExecutor(T action) {
+            this.action = action;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                if (!action.perform()) {
+                    JOptionPane.showMessageDialog(null, action.getUnsuccessMessage(), "Failure",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            } catch (Throwable t) {
+                StringBuilder msg = new StringBuilder(action.getUnsuccessMessage());
+                msg.append('\n').append('\n').append(t.getClass().getName());
+                String tMsg = t.getMessage();
+                if (tMsg != null && tMsg.length() > 0) {
+                    msg.append('\n').append('\t').append(tMsg);
+                }
+                JOptionPane.showMessageDialog(null, msg.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 }
