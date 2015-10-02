@@ -1,12 +1,15 @@
 package org.keyboardplaying.xtt.ui;
 
 import java.awt.Container;
+import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -194,7 +197,24 @@ public class UIController {
         c.fill = GridBagConstraints.BOTH;
         pane.add(makeActionButton(null, "icon-settings", IconSize._32, settingsAction), c);
 
-        makeWindow("app.name", "icon-timetracker", pane).setVisible(true);
+        Window window = makeWindow("app.name", "icon-timetracker", pane);
+        window.addWindowListener(new WindowAdapter() {
+
+            /*
+             * (non-Javadoc)
+             *
+             * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
+             */
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                Frame[] windows = JFrame.getFrames();
+                for (Frame w : windows) {
+                    w.dispose();
+                }
+            }
+        });
+        window.setVisible(true);
     }
 
     /** Builds and shows the settings window. */
