@@ -12,6 +12,9 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  */
 public class ConstructApplication {
 
+    private ConstructApplication() {
+    }
+
     /**
      * Main method for the application.
      *

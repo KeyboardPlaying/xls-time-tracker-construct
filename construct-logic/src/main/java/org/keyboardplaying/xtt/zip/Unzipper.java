@@ -2,7 +2,6 @@ package org.keyboardplaying.xtt.zip;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Objects;
@@ -110,7 +109,7 @@ public class Unzipper {
         return true;
     }
 
-    private void unzipEntry(ZipEntry ze, ZipInputStream zis) throws IOException, FileNotFoundException {
+    private void unzipEntry(ZipEntry ze, ZipInputStream zis) throws IOException {
         File entry = new File(target, ze.getName());
 
         // create all non existing directories

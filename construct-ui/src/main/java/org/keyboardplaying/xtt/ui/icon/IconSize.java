@@ -8,19 +8,19 @@ package org.keyboardplaying.xtt.ui.icon;
 public enum IconSize {
 
     /** 16px wide. */
-    _16("16"),
+    W_16("16"),
 
     /** 22px wide. */
-    _22("22"),
+    W_22("22"),
 
     /** 32px wide. */
-    _32("32"),
+    W_32("32"),
 
     /** 64px wide. */
-    _64("64"),
+    W_64("64"),
 
     /** 128px wide. */
-    _128("128");
+    W_128("128");
 
     private String path;
 

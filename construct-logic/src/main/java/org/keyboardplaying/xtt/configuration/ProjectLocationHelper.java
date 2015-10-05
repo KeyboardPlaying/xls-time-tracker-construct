@@ -142,9 +142,6 @@ public class ProjectLocationHelper {
      * @see #isValid(File)
      */
     public void setProjectLocation(File d) {
-        // if (!isValid(d)) {
-        // throw new IllegalArgumentException("Not a valid location for the project root: " + d.getAbsolutePath());
-        // }
         this.location = d;
         if (isValid(d)) {
             preferencesHelper.set(PROJECT_DIR_PREFKEY, d.getAbsolutePath());

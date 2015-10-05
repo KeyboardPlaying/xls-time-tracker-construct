@@ -2,7 +2,6 @@ package org.keyboardplaying.xtt.zip;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URI;
@@ -94,7 +93,7 @@ public class Zipper {
         return zipFiles(files);
     }
 
-    private boolean zipFiles(List<File> files) throws FileNotFoundException, IOException {
+    private boolean zipFiles(List<File> files) throws IOException {
         try (FileOutputStream fos = new FileOutputStream(target); ZipOutputStream zos = new ZipOutputStream(fos)) {
             URI root = (source.isDirectory() ? source : source.getParentFile()).toURI();
             for (File file : files) {
@@ -114,7 +113,7 @@ public class Zipper {
         return addFilesInDirectory(source, new ArrayList<File>());
     }
 
-    private List<File> addFilesInDirectory(File root, ArrayList<File> list) {
+    private List<File> addFilesInDirectory(File root, List<File> list) {
         if (root.isDirectory()) {
             for (File file : root.listFiles()) {
                 addFilesInDirectory(file, list);
@@ -125,7 +124,7 @@ public class Zipper {
         return list;
     }
 
-    private void addZipEntry(URI root, File file, ZipOutputStream zos) throws FileNotFoundException, IOException {
+    private void addZipEntry(URI root, File file, ZipOutputStream zos) throws IOException {
 
         try (FileInputStream fis = new FileInputStream(file)) {
 

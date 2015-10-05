@@ -18,7 +18,8 @@ public class PreferencesHelper {
     private Preferences preferences;
     private boolean initialized;
 
-    {
+    /** Creates a new instance. */
+    public PreferencesHelper() {
         Preferences prefRoot = Preferences.userRoot();
         try {
             initialized = prefRoot.nodeExists(NODE);

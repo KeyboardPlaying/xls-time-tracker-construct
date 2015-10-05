@@ -1,6 +1,5 @@
 package org.keyboardplaying.xtt.action;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.keyboardplaying.xtt.configuration.ProjectLocationHelper;
@@ -43,7 +42,7 @@ public class DeconstructAction implements ProjectAction {
      * @see org.keyboardplaying.xtt.action.ProjectAction#perform()
      */
     @Override
-    public boolean perform() throws FileNotFoundException, IOException {
+    public boolean perform() throws IOException {
         return new Unzipper(locationHelper.getConstructedFile(), locationHelper.getDeconstructedDirectory())
                 .cleanAndBuildTarget();
     }

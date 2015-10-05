@@ -57,22 +57,12 @@ public class UIController {
 
     private ConstructUtilityAction settingsAction = new ConstructUtilityAction() {
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see org.keyboardplaying.xtt.action.Action#perform()
-         */
         @Override
         public boolean perform() throws Exception {
             showSettingsWindow();
             return true;
         }
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see org.keyboardplaying.xtt.action.Action#getUnsuccessMessage()
-         */
         @Override
         public String getUnsuccessMessage() {
             return "The configuration window could not be shown";
@@ -180,14 +170,14 @@ public class UIController {
         c.gridy = 0;
         c.gridwidth = 2;
         c.fill = GridBagConstraints.BOTH;
-        pane.add(makeProjectActionButton("action.construct", "action-construct", IconSize._16, constructAction), c);
+        pane.add(makeProjectActionButton("action.construct", "action-construct", IconSize.W_16, constructAction), c);
 
         c = new GridBagConstraints();
         c.gridx = 0;
         c.gridy = 1;
         c.gridwidth = 2;
         c.fill = GridBagConstraints.BOTH;
-        pane.add(makeProjectActionButton("action.deconstruct", "action-deconstruct", IconSize._16, deconstructAction),
+        pane.add(makeProjectActionButton("action.deconstruct", "action-deconstruct", IconSize.W_16, deconstructAction),
                 c);
 
         c = new GridBagConstraints();
@@ -195,7 +185,7 @@ public class UIController {
         c.gridy = 0;
         c.gridheight = 2;
         c.fill = GridBagConstraints.BOTH;
-        pane.add(makeActionButton(null, "icon-settings", IconSize._32, settingsAction), c);
+        pane.add(makeActionButton(null, "icon-settings", IconSize.W_32, settingsAction), c);
 
         Window window = makeWindow("app.name", "icon-timetracker", pane);
         window.addWindowListener(new WindowAdapter() {
@@ -243,7 +233,7 @@ public class UIController {
         c.gridy = 1;
         c.gridwidth = 3;
         c.fill = GridBagConstraints.BOTH;
-        pane.add(makeActionButton("action.prefs.clear", "action-clear-prefs", IconSize._16, clearPrefsAction), c);
+        pane.add(makeActionButton("action.prefs.clear", "action-clear-prefs", IconSize.W_16, clearPrefsAction), c);
 
         makeWindow("app.name", "icon-timetracker", pane).setVisible(true);
     }
@@ -256,7 +246,7 @@ public class UIController {
     }
 
     private JButton makeProjectBtnChooser() {
-        JButton btn = makeIconButton(null, "action-search-folder", IconSize._16);
+        JButton btn = makeIconButton(null, "action-search-folder", IconSize.W_16);
         btn.addActionListener(new ProjectDirectoryChooserListener(btn, makeDirectoryChooser(), locationHelper));
         return btn;
     }
@@ -358,10 +348,10 @@ public class UIController {
                     JOptionPane.showMessageDialog(null, action.getUnsuccessMessage(), "Failure",
                             JOptionPane.WARNING_MESSAGE);
                 }
-            } catch (Throwable t) {
+            } catch (Exception ex) {
                 StringBuilder msg = new StringBuilder(action.getUnsuccessMessage());
-                msg.append('\n').append('\n').append(t.getClass().getName());
-                String tMsg = t.getMessage();
+                msg.append('\n').append('\n').append(ex.getClass().getName());
+                String tMsg = ex.getMessage();
                 if (tMsg != null && tMsg.length() > 0) {
                     msg.append('\n').append('\t').append(tMsg);
                 }

@@ -29,7 +29,7 @@ public class UIConfiguration {
     }
 
     @Bean
-    public ConfirmClearPrefsAction ClearPrefsAction() {
+    public ConfirmClearPrefsAction clearPrefsAction() {
         return new ConfirmClearPrefsAction();
     }
 
