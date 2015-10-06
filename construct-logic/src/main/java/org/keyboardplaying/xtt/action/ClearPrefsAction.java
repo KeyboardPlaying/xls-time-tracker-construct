@@ -42,7 +42,6 @@ public class ClearPrefsAction implements ConstructUtilityAction {
      */
     @Override
     public boolean perform() throws BackingStoreException {
-        // TODO this should close the application
         preferencesHelper.clear();
         return true;
     }
