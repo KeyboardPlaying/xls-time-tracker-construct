@@ -6,9 +6,9 @@ Cyrille Chopelet <cyrille.chopelet@mines-nancy.org>
 :github-repo: xls-time-tracker-construct
 :pom-groupid: org.keyboardplaying.xtt
 :pom-artifactid: construct
-:license-name: MIT
-:license-shield: {license-name}
-:license-url: http://opensource.org/licenses/MIT
+:license-name: ASF 2.0
+:license-shield: ASF_2.0
+:license-url: http://www.apache.org/licenses/LICENSE-2.0
 
 // The badges. Should not require any change.
 :url-shields: http://img.shields.io/
