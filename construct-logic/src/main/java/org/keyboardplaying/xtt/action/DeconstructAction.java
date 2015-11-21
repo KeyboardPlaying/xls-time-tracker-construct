@@ -29,37 +29,31 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class DeconstructAction implements ProjectAction {
 
-    private ProjectLocationHelper locationHelper;
+	private ProjectLocationHelper locationHelper;
 
-    /**
-     * Sets the project location helper for this instance.
-     *
-     * @param locationHelper
-     *            the new project location helper
-     */
-    @Autowired
-    public void setLocationHelper(ProjectLocationHelper locationHelper) {
-        this.locationHelper = locationHelper;
-    }
+	/**
+	 * Sets the project location helper for this instance.
+	 *
+	 * @param locationHelper
+	 *            the new project location helper
+	 */
+	@Autowired
+	public void setLocationHelper(ProjectLocationHelper locationHelper) {
+		this.locationHelper = locationHelper;
+	}
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see org.keyboardplaying.xtt.action.ProjectAction#getUnsuccessMessage()
-     */
-    @Override
-    public String getUnsuccessMessage() {
-        return "The action could not be performed. Is the file Excel file missing?";
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see org.keyboardplaying.xtt.action.ProjectAction#perform()
-     */
-    @Override
-    public boolean perform() throws IOException {
-        return new Unzipper(locationHelper.getConstructedFile(), locationHelper.getDeconstructedDirectory())
-                .cleanAndBuildTarget();
-    }
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see org.keyboardplaying.xtt.action.ProjectAction#perform()
+	 */
+	@Override
+	public void perform() throws ActionException {
+		try {
+			new Unzipper(locationHelper.getConstructedFile(), locationHelper.getDeconstructedDirectory())
+					.cleanAndBuildTarget();
+		} catch (IOException e) {
+			throw new ActionException("The action could not be performed. Is the Excel file missing?", e);
+		}
+	}
 }
