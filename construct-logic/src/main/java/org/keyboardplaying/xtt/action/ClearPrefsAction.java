@@ -22,37 +22,36 @@ import org.keyboardplaying.xtt.configuration.PreferencesHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * An action to remove preferences from the computer the constructor is executed
- * upon.
+ * An action to remove preferences from the computer the constructor is executed upon.
  *
  * @author Cyrille Chopelet (http://keyboardplaying.org)
  */
 public class ClearPrefsAction implements ConstructUtilityAction {
 
-	private PreferencesHelper preferencesHelper;
+    private PreferencesHelper preferencesHelper;
 
-	/**
-	 * Sets the preferences helper for this instance.
-	 *
-	 * @param preferencesHelper
-	 *            the new preferences helper
-	 */
-	@Autowired
-	public void setPreferencesHelper(PreferencesHelper preferencesHelper) {
-		this.preferencesHelper = preferencesHelper;
-	}
+    /**
+     * Sets the preferences helper for this instance.
+     *
+     * @param preferencesHelper
+     *            the new preferences helper
+     */
+    @Autowired
+    public void setPreferencesHelper(PreferencesHelper preferencesHelper) {
+        this.preferencesHelper = preferencesHelper;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.keyboardplaying.xtt.action.ProjectAction#perform()
-	 */
-	@Override
-	public void perform() throws ActionException {
-		try {
-			preferencesHelper.clear();
-		} catch (BackingStoreException e) {
-			throw new ActionException("Preferences suppression failed.", e);
-		}
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see org.keyboardplaying.xtt.action.ProjectAction#perform()
+     */
+    @Override
+    public void perform() throws ActionException {
+        try {
+            preferencesHelper.clear();
+        } catch (BackingStoreException e) {
+            throw new ActionException("Preferences suppression failed.", e);
+        }
+    }
 }
