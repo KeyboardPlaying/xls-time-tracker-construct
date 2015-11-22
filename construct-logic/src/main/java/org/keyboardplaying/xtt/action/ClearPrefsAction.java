@@ -51,7 +51,7 @@ public class ClearPrefsAction implements ConstructUtilityAction {
         try {
             preferencesHelper.clear();
         } catch (BackingStoreException e) {
-            throw new ActionException("Preferences suppression failed.", e);
+            throw new ActionException("action.error.preferences.clear", e);
         }
     }
 }

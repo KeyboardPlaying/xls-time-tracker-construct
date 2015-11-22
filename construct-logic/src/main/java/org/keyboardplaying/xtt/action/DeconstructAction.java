@@ -53,7 +53,7 @@ public class DeconstructAction implements ProjectAction {
             new Unzipper(locationHelper.getConstructedFile(), locationHelper.getDeconstructedDirectory())
                     .cleanAndBuildTarget();
         } catch (IOException e) {
-            throw new ActionException("The action could not be performed. Is the Excel file missing?", e);
+            throw new ActionException("action.error.deconstruct", e);
         }
     }
 }

@@ -24,18 +24,18 @@ package org.keyboardplaying.xtt.action;
 public class ActionException extends Exception {
 
     /** Generated serial version UID. */
-    private static final long serialVersionUID = 5196794290478647648L;
+    private static final long serialVersionUID = 1178159742837381492L;
 
-    private final String userMessage;
+    private final String messageKey;
 
     /**
      * Constructs a new exception.
      *
-     * @param userMessage
-     *            the message to be displayed to the user
+     * @param messageKey
+     *            the key for message to be displayed to the user
      */
-    public ActionException(String userMessage) {
-        this.userMessage = userMessage;
+    public ActionException(String messageKey) {
+        this.messageKey = messageKey;
     }
 
     /**
@@ -43,22 +43,22 @@ public class ActionException extends Exception {
      * {@code (cause==null ? null : cause.toString())} (which typically contains the class and detail message of cause).
      * This constructor is useful for exceptions that are little more than wrappers for other throwables.
      *
-     * @param userMessage
-     *            the message to be displayed to the user
+     * @param messageKey
+     *            the key for message to be displayed to the user
      * @param cause
      *            the cause (which is saved for later retrieval by the {@link #getCause()} method)
      */
-    public ActionException(String userMessage, Throwable cause) {
+    public ActionException(String messageKey, Throwable cause) {
         super(cause);
-        this.userMessage = userMessage;
+        this.messageKey = messageKey;
     }
 
     /**
-     * Returns the message to display to the user.
+     * Returns the key for the message to display to the user.
      *
-     * @return the message to display to the user
+     * @return the key for the message to display to the user
      */
-    public String getUserMessage() {
-        return userMessage;
+    public String getMessageKey() {
+        return messageKey;
     }
 }

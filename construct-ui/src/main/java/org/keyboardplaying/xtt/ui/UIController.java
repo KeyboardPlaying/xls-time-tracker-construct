@@ -296,7 +296,7 @@ public class UIController {
 
     private <T extends Action> JButton makeActionButton(String textKey, String iconKey, IconSize iconSize, T action) {
         JButton btn = makeIconButton(textKey, iconKey, iconSize);
-        btn.addActionListener(new ActionExecutor<>(action));
+        btn.addActionListener(new ActionExecutor<>(action, i18nHelper));
         return btn;
     }
 
@@ -346,10 +346,12 @@ public class UIController {
 
     private static class ActionExecutor<T extends Action> implements ActionListener {
 
-        private T action;
+        private final T action;
+        private final I18nHelper i18n;
 
-        public ActionExecutor(T action) {
+        public ActionExecutor(T action, I18nHelper i18n) {
             this.action = action;
+            this.i18n = i18n;
         }
 
         @Override
@@ -357,7 +359,7 @@ public class UIController {
             try {
                 action.perform();
             } catch (ActionException ex) {
-                displayActionError(ex.getUserMessage(), ex.getCause());
+                displayActionError(i18n.getMessage(ex.getMessageKey()), ex.getCause());
             } catch (RuntimeException ex) {
                 displayActionError("An unexpected error happened.", ex);
             }

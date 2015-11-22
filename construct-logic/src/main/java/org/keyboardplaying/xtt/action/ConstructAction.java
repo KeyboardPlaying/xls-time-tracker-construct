@@ -53,7 +53,7 @@ public class ConstructAction implements ProjectAction {
             new Zipper(locationHelper.getDeconstructedDirectory(), locationHelper.getConstructedFile())
                     .cleanAndBuildTarget();
         } catch (IOException e) {
-            throw new ActionException("The action could not be performed. Is the Excel file locked?", e);
+            throw new ActionException("action.error.construct", e);
         }
     }
 }
