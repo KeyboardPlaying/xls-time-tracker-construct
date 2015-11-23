@@ -6,6 +6,7 @@ Cyrille Chopelet <cyrille.chopelet@mines-nancy.org>
 :github-repo: xls-time-tracker-construct
 :pom-groupid: org.keyboardplaying.xtt
 :pom-artifactid: construct
+:waffle: xls-time-tracker
 :license-name: ASF 2.0
 :license-shield: ASF_2.0
 :license-url: http://www.apache.org/licenses/LICENSE-2.0
@@ -16,6 +17,7 @@ Cyrille Chopelet <cyrille.chopelet@mines-nancy.org>
 image:{url-shields}travis/{github-user}/{github-repo}/master.svg[Build status, link="https://travis-ci.org/{github-user}/{github-repo}"]
 image:{url-shields}sonar/http/{url-sonar}/{pom-groupid}:{pom-artifactid}/coverage.svg[Test coverage, link="http://{url-sonar}/drilldown/measures/?id={pom-groupid}:{pom-artifactid}&metric=coverage"]
 image:{url-shields}sonar/http/{url-sonar}/{pom-groupid}:{pom-artifactid}/tech_debt.svg[Technical debt, link="http://{url-sonar}/dashboard/index?id={pom-groupid}:{pom-artifactid}"]
+image:https://badge.waffle.io/{github-user}/{waffle}.svg?label=ready&title=Ready[Waffle, link="https://waffle.io/{github-user}/{waffle}"]
 image:{url-shields}badge/license-{license-shield}-blue.svg[License: {license-name}, link="{license-url}"]
 image:{url-shields}badge/gitter-join_chat_%E2%86%92-1dce73.svg[Join the chat, link="https://gitter.im/KeyboardPlaying/xls-time-tracker?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"]
 
