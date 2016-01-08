@@ -16,8 +16,13 @@
  */
 package org.keyboardplaying.xtt.ui.i18n;
 
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+
+import javax.annotation.PostConstruct;
 
 /**
  * A helper for internationalization.
@@ -28,7 +33,23 @@ public class I18nHelper {
 
     private static final String BUNDLE_BASE_NAME = "org.keyboardplaying.xtt.ui.i18n.Messages";
 
-    private ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_BASE_NAME, Locale.getDefault());
+    private ResourceBundle bundle;
+
+    /** Initializes the helper with the default locale. */
+    @PostConstruct
+    public void init() {
+        setLocale(Locale.getDefault());
+    }
+
+    /**
+     * Sets the locale for the messages to display.
+     *
+     * @param locale
+     *            the locale to use
+     */
+    public void setLocale(Locale locale) {
+        this.bundle = ResourceBundle.getBundle(BUNDLE_BASE_NAME, locale);
+    }
 
     /**
      * Gets the string message corresponding to the key.
@@ -39,5 +60,32 @@ public class I18nHelper {
      */
     public String getMessage(String key) {
         return bundle.getString(key);
+    }
+
+    /**
+     * Returns a list of all locales a bundle has been written for.
+     *
+     * @return a list of all locales availables within the application
+     */
+    public List<Locale> getAvailableLocales() {
+
+        /* Convert base name to a path. */
+        String bundlePath = BUNDLE_BASE_NAME.replaceAll("\\.", "/") + "_%s.properties";
+
+        List<Locale> available = new ArrayList<>();
+
+        /* Loop over all locales to find those we do support. */
+        // Get a list of all locales the JVM supports
+        Locale[] locales = Locale.getAvailableLocales();
+        // Loop over those to find available locales
+        for (Locale locale : locales) {
+            URL bundleUrl = ClassLoader.getSystemResource(String.format(bundlePath, locale.toString()));
+            if (bundleUrl != null) {
+                available.add(locale);
+            }
+        }
+
+        /* Return the list. */
+        return available;
     }
 }
