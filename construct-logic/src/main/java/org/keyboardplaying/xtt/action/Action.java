@@ -19,7 +19,7 @@ package org.keyboardplaying.xtt.action;
 /**
  * An interface for actions that can be executed from the utility.
  *
- * @author Cyrille Chopelet (http://keyboardplaying.org)
+ * @author Cyrille Chopelet (https://keyboardplaying.org)
  */
 public interface Action {
 

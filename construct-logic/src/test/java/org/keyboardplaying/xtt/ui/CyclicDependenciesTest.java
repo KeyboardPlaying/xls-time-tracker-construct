@@ -31,7 +31,7 @@ import jdepend.framework.JavaPackage;
  *
  * @see <a href="http://blog.mafr.de/2010/10/02/java-finding-package-cycles/">The inspirational blog post</a>
  *
- * @author Cyrille Chopelet (http://keyboardplaying.org)
+ * @author Cyrille Chopelet (https://keyboardplaying.org)
  */
 public class CyclicDependenciesTest {
 

@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
 /**
  * A class to manage the preferences of the application.
  *
- * @author Cyrille Chopelet (http://keyboardplaying.org)
+ * @author Cyrille Chopelet (https://keyboardplaying.org)
  */
 @Component
 public class PreferencesHelper {

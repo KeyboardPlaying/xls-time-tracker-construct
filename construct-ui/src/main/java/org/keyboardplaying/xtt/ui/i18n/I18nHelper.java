@@ -27,7 +27,7 @@ import javax.annotation.PostConstruct;
 /**
  * A helper for internationalization.
  *
- * @author Cyrille Chopelet (http://keyboardplaying.org)
+ * @author Cyrille Chopelet (https://keyboardplaying.org)
  */
 public class I18nHelper {
 

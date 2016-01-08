@@ -28,7 +28,7 @@ import org.springframework.context.annotation.Import;
 /**
  * The configuration of the user interface for the construct application.
  *
- * @author Cyrille Chopelet (http://keyboardplaying.org)
+ * @author Cyrille Chopelet (https://keyboardplaying.org)
  */
 @Configuration
 @Import(ConstructConfiguration.class)

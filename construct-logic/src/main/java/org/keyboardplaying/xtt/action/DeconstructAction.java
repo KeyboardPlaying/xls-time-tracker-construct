@@ -25,7 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * Updates the exploded version of the tracker based on the XLSX file.
  *
- * @author Cyrille Chopelet (http://keyboardplaying.org)
+ * @author Cyrille Chopelet (https://keyboardplaying.org)
  */
 public class DeconstructAction implements ProjectAction {
 

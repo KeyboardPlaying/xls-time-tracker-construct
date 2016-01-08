@@ -32,7 +32,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * <p/>
  * This adds a confirmation dialog and closes the application after clearing the preferences.
  *
- * @author Cyrille Chopelet (http://keyboardplaying.org)
+ * @author Cyrille Chopelet (https://keyboardplaying.org)
  */
 public class ConfirmClearPrefsAction implements ConstructUtilityAction {
 

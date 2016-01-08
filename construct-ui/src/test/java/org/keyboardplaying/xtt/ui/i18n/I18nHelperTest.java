@@ -13,7 +13,7 @@ import org.junit.Test;
 /**
  * Test class for {@link I18nHelper}.
  *
- * @author Cyrille Chopelet (http://keyboardplaying.org)
+ * @author Cyrille Chopelet (https://keyboardplaying.org)
  */
 public class I18nHelperTest {
 

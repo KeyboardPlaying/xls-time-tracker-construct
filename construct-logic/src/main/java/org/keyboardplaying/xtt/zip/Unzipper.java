@@ -27,7 +27,7 @@ import java.util.zip.ZipInputStream;
 /**
  * Unzips a file into a directory.
  *
- * @author Cyrille Chopelet (http://keyboardplaying.org)
+ * @author Cyrille Chopelet (https://keyboardplaying.org)
  */
 public class Unzipper {
 

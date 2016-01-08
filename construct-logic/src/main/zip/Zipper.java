@@ -15,7 +15,7 @@ import java.util.zip.ZipOutputStream;
 /**
  * Zips a directory into a file.
  *
- * @author Cyrille Chopelet (http://keyboardplaying.org)
+ * @author Cyrille Chopelet (https://keyboardplaying.org)
  */
 public class Zipper {
 

@@ -24,7 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * An action to remove preferences from the computer the constructor is executed upon.
  *
- * @author Cyrille Chopelet (http://keyboardplaying.org)
+ * @author Cyrille Chopelet (https://keyboardplaying.org)
  */
 public class ClearPrefsAction implements ConstructUtilityAction {
 

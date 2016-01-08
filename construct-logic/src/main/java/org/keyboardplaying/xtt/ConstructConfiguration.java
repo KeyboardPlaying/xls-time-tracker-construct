@@ -30,7 +30,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * The configuration of the logic module of the construct application.
  *
- * @author Cyrille Chopelet (http://keyboardplaying.org)
+ * @author Cyrille Chopelet (https://keyboardplaying.org)
  */
 @Configuration
 @SuppressWarnings("javadoc")

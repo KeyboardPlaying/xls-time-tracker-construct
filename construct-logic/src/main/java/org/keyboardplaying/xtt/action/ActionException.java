@@ -19,7 +19,7 @@ package org.keyboardplaying.xtt.action;
 /**
  * Exception for actions not performing correctly.
  *
- * @author Cyrille Chopelet (http://keyboardplaying.org)
+ * @author Cyrille Chopelet (https://keyboardplaying.org)
  */
 public class ActionException extends Exception {
 

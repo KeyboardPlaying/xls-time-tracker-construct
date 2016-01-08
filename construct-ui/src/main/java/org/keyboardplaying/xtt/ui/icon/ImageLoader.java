@@ -27,7 +27,7 @@ import javax.imageio.ImageIO;
 /**
  * A utility to load the images to display as button or application icons.
  *
- * @author Cyrille Chopelet (http://keyboardplaying.org)
+ * @author Cyrille Chopelet (https://keyboardplaying.org)
  */
 public class ImageLoader {
 

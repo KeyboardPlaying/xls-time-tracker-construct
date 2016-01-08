@@ -19,7 +19,7 @@ package org.keyboardplaying.xtt.ui.icon;
 /**
  * The available sizes for icons.
  *
- * @author Cyrille Chopelet (http://keyboardplaying.org)
+ * @author Cyrille Chopelet (https://keyboardplaying.org)
  */
 public enum IconSize {
 

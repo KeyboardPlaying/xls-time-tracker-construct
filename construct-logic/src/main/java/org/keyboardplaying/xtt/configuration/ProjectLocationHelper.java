@@ -27,7 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * A class to manage the paths relative to the project directory.
  *
- * @author Cyrille Chopelet (http://keyboardplaying.org)
+ * @author Cyrille Chopelet (https://keyboardplaying.org)
  */
 public class ProjectLocationHelper {
 
@@ -44,7 +44,7 @@ public class ProjectLocationHelper {
     /**
      * An interface for listening to project configuration updates.
      *
-     * @author Cyrille Chopelet (http://keyboardplaying.org)
+     * @author Cyrille Chopelet (https://keyboardplaying.org)
      */
     public static interface UpdateListener {
 

@@ -24,7 +24,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 /**
  * Launcher and main class for the utility application.
  *
- * @author Cyrille Chopelet (http://keyboardplaying.org)
+ * @author Cyrille Chopelet (https://keyboardplaying.org)
  */
 public class ConstructApplication {
 

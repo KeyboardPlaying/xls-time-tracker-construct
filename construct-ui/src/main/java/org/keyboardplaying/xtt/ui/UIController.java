@@ -51,7 +51,7 @@ import org.keyboardplaying.xtt.ui.icon.ImageLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * @author Cyrille Chopelet (http://keyboardplaying.org)
+ * @author Cyrille Chopelet (https://keyboardplaying.org)
  */
 public class UIController {
 

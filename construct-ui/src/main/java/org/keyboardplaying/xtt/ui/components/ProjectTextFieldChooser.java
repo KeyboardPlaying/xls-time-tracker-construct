@@ -30,7 +30,7 @@ import org.keyboardplaying.xtt.configuration.ProjectLocationHelper.UpdateListene
  * <p/>
  * The value can also be edited.
  *
- * @author Cyrille Chopelet (http://keyboardplaying.org)
+ * @author Cyrille Chopelet (https://keyboardplaying.org)
  */
 public class ProjectTextFieldChooser extends JTextField implements DocumentListener, UpdateListener {
 
