@@ -42,7 +42,6 @@ public class I18nHelperTest {
     /** Initializes the helper with English as default locale. */
     @Before
     public void init() {
-        Locale.setDefault(Locale.ENGLISH);
         helper = new I18nHelper();
     }
 
