@@ -18,11 +18,11 @@ package org.keyboardplaying.xtt.ui.i18n;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-
-import javax.annotation.PostConstruct;
+import java.util.Set;
 
 /**
  * A helper for internationalization.
@@ -33,12 +33,26 @@ public class I18nHelper {
 
     private static final String BUNDLE_BASE_NAME = "org.keyboardplaying.xtt.ui.i18n.Messages";
 
+    private Set<I14ed> i14ed = new HashSet<>();
     private ResourceBundle bundle;
 
-    /** Initializes the helper with the default locale. */
-    @PostConstruct
-    public void init() {
-        setLocale(Locale.getDefault());
+    /** Creates a new instance and sets it the locale to its default. */
+    public I18nHelper() {
+        updateResourceBundle(Locale.getDefault());
+    }
+
+    private void updateResourceBundle(Locale locale) {
+        this.bundle = ResourceBundle.getBundle(BUNDLE_BASE_NAME, locale);
+    }
+
+    /**
+     * Registers an {@link I14ed} component to be notified when the locale changes.
+     *
+     * @param iternationalized
+     *            the component to notify of locale changes
+     */
+    public void register(I14ed iternationalized) {
+        this.i14ed.add(iternationalized);
     }
 
     /**
@@ -48,7 +62,10 @@ public class I18nHelper {
      *            the locale to use
      */
     public void setLocale(Locale locale) {
-        this.bundle = ResourceBundle.getBundle(BUNDLE_BASE_NAME, locale);
+        updateResourceBundle(locale);
+        for (I14ed internationalized : i14ed) {
+            internationalized.updateMessages();
+        }
     }
 
     /**
