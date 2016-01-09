@@ -34,7 +34,7 @@ public class ImageLoader {
     private static final String IMG_PATH_PREFIX = "tango/";
     private static final String IMG_EXTENSION = ".png";
 
-    private BufferedImage loadImage(String imageName, IconSize size) throws IOException {
+    private BufferedImage loadImage(String imageName, ImageSize size) throws IOException {
         return ImageIO.read(
                 getClass().getResourceAsStream(IMG_PATH_PREFIX + size.getPath() + '/' + imageName + IMG_EXTENSION));
     }
@@ -48,7 +48,7 @@ public class ImageLoader {
      *            the size to load
      * @return the image
      */
-    public Image getImage(String imageName, IconSize size) {
+    public Image getImage(String imageName, ImageSize size) {
         try {
             return loadImage(imageName, size);
         } catch (IOException e) {
@@ -64,11 +64,11 @@ public class ImageLoader {
      *            the name of the image to load (without extension)
      * @return the images
      *
-     * @see #getImage(String, IconSize)
+     * @see #getImage(String, ImageSize)
      */
     public List<Image> getImages(String imageName) {
         List<Image> images = new ArrayList<>();
-        for (IconSize size : IconSize.values()) {
+        for (ImageSize size : ImageSize.values()) {
             try {
                 images.add(loadImage(imageName, size));
             } catch (IOException e) {

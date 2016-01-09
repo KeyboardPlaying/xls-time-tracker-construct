@@ -31,6 +31,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -44,10 +45,12 @@ import org.keyboardplaying.xtt.configuration.PreferencesHelper;
 import org.keyboardplaying.xtt.configuration.ProjectLocationHelper;
 import org.keyboardplaying.xtt.configuration.ProjectLocationHelper.UpdateListener;
 import org.keyboardplaying.xtt.ui.action.ConfirmClearPrefsAction;
+import org.keyboardplaying.xtt.ui.components.LocaleComboBox;
 import org.keyboardplaying.xtt.ui.components.ProjectTextFieldChooser;
 import org.keyboardplaying.xtt.ui.i18n.I18nHelper;
-import org.keyboardplaying.xtt.ui.icon.IconSize;
+import org.keyboardplaying.xtt.ui.i18n.swing.I14edJFrame;
 import org.keyboardplaying.xtt.ui.icon.ImageLoader;
+import org.keyboardplaying.xtt.ui.icon.ImageSize;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -181,14 +184,14 @@ public class UIController {
         c.gridy = 0;
         c.gridwidth = 2;
         c.fill = GridBagConstraints.BOTH;
-        pane.add(makeProjectActionButton("action.construct", "action-construct", IconSize.W_16, constructAction), c);
+        pane.add(makeProjectActionButton("action.construct", "action-construct", ImageSize.W_16, constructAction), c);
 
         c = new GridBagConstraints();
         c.gridx = 0;
         c.gridy = 1;
         c.gridwidth = 2;
         c.fill = GridBagConstraints.BOTH;
-        pane.add(makeProjectActionButton("action.deconstruct", "action-deconstruct", IconSize.W_16, deconstructAction),
+        pane.add(makeProjectActionButton("action.deconstruct", "action-deconstruct", ImageSize.W_16, deconstructAction),
                 c);
 
         c = new GridBagConstraints();
@@ -196,7 +199,7 @@ public class UIController {
         c.gridy = 0;
         c.gridheight = 2;
         c.fill = GridBagConstraints.BOTH;
-        pane.add(makeActionButton(null, "icon-settings", IconSize.W_32, settingsAction), c);
+        pane.add(makeActionButton(null, "icon-settings", ImageSize.W_32, settingsAction), c);
 
         Window window = makeWindow("app.name", "icon-timetracker", pane);
         window.addWindowListener(new WindowAdapter() {
@@ -226,6 +229,7 @@ public class UIController {
         /* Arrange the components */
         GridBagConstraints c;
 
+        // project directory (text)
         c = new GridBagConstraints();
         c.gridx = 0;
         c.gridy = 0;
@@ -233,31 +237,45 @@ public class UIController {
         c.fill = GridBagConstraints.BOTH;
         pane.add(makeProjectTextChooser(), c);
 
+        // project directory (button)
         c = new GridBagConstraints();
         c.gridx = 2;
         c.gridy = 0;
         c.fill = GridBagConstraints.BOTH;
         pane.add(makeProjectBtnChooser(), c);
 
+        // Locale (icon)
         c = new GridBagConstraints();
         c.gridx = 0;
         c.gridy = 1;
+        c.fill = GridBagConstraints.BOTH;
+        pane.add(new JLabel(new ImageIcon(imageLoader.getImage("image-prefs-locale", ImageSize.W_16))), c);
+
+        // Locale (combo)
+        c = new GridBagConstraints();
+        c.gridx = 1;
+        c.gridy = 1;
+        c.gridwidth = 2;
+        c.fill = GridBagConstraints.BOTH;
+        pane.add(new LocaleComboBox(i18nHelper), c);
+
+        // Clear preferences
+        c = new GridBagConstraints();
+        c.gridx = 0;
+        c.gridy = 2;
         c.gridwidth = 3;
         c.fill = GridBagConstraints.BOTH;
-        pane.add(makeActionButton("action.prefs.clear", "action-clear-prefs", IconSize.W_16, clearPrefsAction), c);
+        pane.add(makeActionButton("action.prefs.clear", "action-clear-prefs", ImageSize.W_16, clearPrefsAction), c);
 
-        makeWindow("app.name", "icon-timetracker", pane).setVisible(true);
+        makeWindow("app.settings", "icon-settings", pane).setVisible(true);
     }
 
     private ProjectTextFieldChooser makeProjectTextChooser() {
-        ProjectTextFieldChooser projectTextChooser = new ProjectTextFieldChooser();
-        projectTextChooser.setLocationHelper(locationHelper);
-        projectTextChooser.init();
-        return projectTextChooser;
+        return new ProjectTextFieldChooser(locationHelper);
     }
 
     private JButton makeProjectBtnChooser() {
-        JButton btn = makeIconButton(null, "action-search-folder", IconSize.W_16);
+        JButton btn = makeIconButton(null, "action-search-folder", ImageSize.W_16);
         btn.addActionListener(new ProjectDirectoryChooserListener(btn, makeDirectoryChooser(), locationHelper));
         return btn;
     }
@@ -273,7 +291,7 @@ public class UIController {
 
     private Window makeWindow(String titleKey, String iconKey, Container content) {
         /* The basics. */
-        JFrame window = new JFrame(i18nHelper.getMessage(titleKey));
+        JFrame window = new I14edJFrame(i18nHelper, titleKey);
         window.setIconImages(imageLoader.getImages(iconKey));
         /* Make sure thread is ended when window is closed. */
         window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -287,20 +305,20 @@ public class UIController {
         return window;
     }
 
-    private JButton makeIconButton(String textKey, String iconKey, IconSize iconSize) {
+    private JButton makeIconButton(String textKey, String iconKey, ImageSize iconSize) {
         String text = textKey != null ? i18nHelper.getMessage(textKey) : null;
         Image icon = imageLoader.getImage(iconKey, iconSize);
 
         return new JButton(text, icon != null ? new ImageIcon(icon) : null);
     }
 
-    private <T extends Action> JButton makeActionButton(String textKey, String iconKey, IconSize iconSize, T action) {
+    private <T extends Action> JButton makeActionButton(String textKey, String iconKey, ImageSize iconSize, T action) {
         JButton btn = makeIconButton(textKey, iconKey, iconSize);
         btn.addActionListener(new ActionExecutor<>(action, i18nHelper));
         return btn;
     }
 
-    private JButton makeProjectActionButton(String textKey, String iconKey, IconSize iconSize, ProjectAction action) {
+    private JButton makeProjectActionButton(String textKey, String iconKey, ImageSize iconSize, ProjectAction action) {
         JButton btn = makeActionButton(textKey, iconKey, iconSize, action);
         locationHelper.registerForUpdate(new ProjectButtonListener(btn, locationHelper));
         return btn;

@@ -21,7 +21,7 @@ package org.keyboardplaying.xtt.ui.icon;
  *
  * @author Cyrille Chopelet (https://keyboardplaying.org)
  */
-public enum IconSize {
+public enum ImageSize {
 
     /** 16px wide. */
     W_16("16"),
@@ -40,7 +40,7 @@ public enum IconSize {
 
     private String path;
 
-    private IconSize(String path) {
+    private ImageSize(String path) {
         this.path = path;
     }
 

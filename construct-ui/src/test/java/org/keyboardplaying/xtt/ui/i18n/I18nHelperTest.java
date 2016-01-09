@@ -1,3 +1,19 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.keyboardplaying.xtt.ui.i18n;
 
 import static org.junit.Assert.assertEquals;
@@ -30,19 +46,25 @@ public class I18nHelperTest {
         helper = new I18nHelper();
     }
 
-    /** Tests {@link I18nHelper#setLocale(Locale)} and {@link I18nHelper#getMessage(String)}. */
+    /**
+     * Tests {@link I18nHelper#setLocale(Locale)}, {@link I18nHelper#getLocale()} and
+     * {@link I18nHelper#getMessage(String)}.
+     */
     @Test
     public void testSetLocaleAndGetMessage() {
         // test default/English locale
         assertEquals(APP_NAME_EN, helper.getMessage(APP_NAME_KEY));
+        assertEquals(Locale.ENGLISH, helper.getLocale());
 
         // test another locale
         helper.setLocale(Locale.FRENCH);
         assertEquals(APP_NAME_FR, helper.getMessage(APP_NAME_KEY));
+        assertEquals(Locale.FRENCH, helper.getLocale());
 
         // test unavailable locale
         helper.setLocale(Locale.GERMAN);
         assertEquals(APP_NAME_EN, helper.getMessage(APP_NAME_KEY));
+        assertEquals(Locale.ENGLISH, helper.getLocale());
     }
 
     /** Tests {@link I18nHelper#getAvailableLocales()}. */
@@ -76,14 +98,9 @@ public class I18nHelperTest {
     private final class I14edAppName implements I14ed {
         private String appName = helper.getMessage(APP_NAME_KEY);
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see org.keyboardplaying.xtt.ui.i18n.I14ed#updateMessages()
-         */
         @Override
-        public void updateMessages() {
-            appName = helper.getMessage(APP_NAME_KEY);
+        public void updateMessages(I18nHelper i18n) {
+            appName = i18n.getMessage(APP_NAME_KEY);
         }
     }
 }

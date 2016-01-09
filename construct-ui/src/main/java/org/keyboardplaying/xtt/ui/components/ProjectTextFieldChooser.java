@@ -35,24 +35,18 @@ import org.keyboardplaying.xtt.configuration.ProjectLocationHelper.UpdateListene
 public class ProjectTextFieldChooser extends JTextField implements DocumentListener, UpdateListener {
 
     /** Generated serial version UID. */
-    private static final long serialVersionUID = -4443324929997149341L;
+    private static final long serialVersionUID = -1641064152036700917L;
 
     private ProjectLocationHelper locationHelper;
 
     /**
-     * Sets the project location helper for this instance.
+     * Creates a new instance.
      *
      * @param locationHelper
      *            the new project location helper
      */
-    // @Autowired
-    public void setLocationHelper(ProjectLocationHelper locationHelper) {
+    public ProjectTextFieldChooser(ProjectLocationHelper locationHelper) {
         this.locationHelper = locationHelper;
-    }
-
-    /** Initializes this instance. */
-    // @PostConstruct
-    public void init() {
         updateTextField(locationHelper.getProjectLocation());
         getDocument().addDocumentListener(this);
     }

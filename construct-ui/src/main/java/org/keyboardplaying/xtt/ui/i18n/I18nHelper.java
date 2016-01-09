@@ -48,11 +48,20 @@ public class I18nHelper {
     /**
      * Registers an {@link I14ed} component to be notified when the locale changes.
      *
-     * @param iternationalized
+     * @param internationalized
      *            the component to notify of locale changes
      */
-    public void register(I14ed iternationalized) {
-        this.i14ed.add(iternationalized);
+    public void register(I14ed internationalized) {
+        this.i14ed.add(internationalized);
+    }
+
+    /**
+     * Returns the current locale.
+     *
+     * @return the current locale
+     */
+    public Locale getLocale() {
+        return bundle.getLocale();
     }
 
     /**
@@ -64,7 +73,7 @@ public class I18nHelper {
     public void setLocale(Locale locale) {
         updateResourceBundle(locale);
         for (I14ed internationalized : i14ed) {
-            internationalized.updateMessages();
+            internationalized.updateMessages(this);
         }
     }
 
