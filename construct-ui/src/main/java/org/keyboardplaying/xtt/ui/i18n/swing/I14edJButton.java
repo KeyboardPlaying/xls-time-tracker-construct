@@ -34,12 +34,30 @@ public class I14edJButton extends JButton implements I14ed {
 
     private final String textKey;
 
+    /**
+     * Creates a button with initial internationalized text and an icon.
+     *
+     * @param i18n
+     *            the internationalization helper
+     * @param textKey
+     *            the key for the text of the button
+     * @param icon
+     *            the Icon image to display on the button
+     */
     public I14edJButton(I18nHelper i18n, String textKey, Icon icon) {
         super(i18n.getMessage(textKey), icon);
         this.textKey = textKey;
         i18n.register(this);
     }
 
+    /**
+     * Creates a button with internationalized text.
+     *
+     * @param i18n
+     *            the internationalization helper
+     * @param textKey
+     *            the key for the text of the button
+     */
     public I14edJButton(I18nHelper i18n, String textKey) {
         super(i18n.getMessage(textKey));
         this.textKey = textKey;

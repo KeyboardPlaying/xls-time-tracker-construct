@@ -36,7 +36,7 @@ public class I14edJFrame extends JFrame implements I14ed {
     private final String titleKey;
 
     /**
-     * Creates a new {@link I14edJFrame}.
+     * Creates a new, initially invisible {@code Frame} with the specified internationalized title.
      *
      * @param i18n
      *            the internationalization helper
@@ -50,7 +50,8 @@ public class I14edJFrame extends JFrame implements I14ed {
     }
 
     /**
-     * Creates a new {@link I14edJFrame}.
+     * Creates a {@link I14edJFrame} with the specified title and the specified {@link GraphicsConfiguration} of a
+     * screen device.
      *
      * @param i18n
      *            the internationalization helper
