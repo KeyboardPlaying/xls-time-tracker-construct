@@ -17,8 +17,6 @@
 package org.keyboardplaying.xtt.ui.i18n.swing;
 
 import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsEnvironment;
-import java.awt.HeadlessException;
 
 import javax.swing.JFrame;
 
@@ -44,10 +42,8 @@ public class I14edJFrame extends JFrame implements I14ed {
      *            the internationalization helper
      * @param titleKey
      *            the key for the title of the window
-     * @throws HeadlessException
-     *             if {@link GraphicsEnvironment#isHeadless()} returns true
      */
-    public I14edJFrame(I18nHelper i18n, String titleKey) throws HeadlessException {
+    public I14edJFrame(I18nHelper i18n, String titleKey) {
         super(i18n.getMessage(titleKey));
         this.titleKey = titleKey;
         i18n.register(this);

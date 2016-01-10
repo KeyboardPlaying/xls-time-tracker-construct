@@ -35,28 +35,28 @@ import org.springframework.context.annotation.Import;
 @SuppressWarnings("javadoc")
 public class UIConfiguration {
 
-	@Bean
-	public I18nHelper i18nHelper() {
-		return new I18nHelper();
-	}
+    @Bean
+    public I18nHelper i18nHelper() {
+        return new I18nHelper();
+    }
 
-	@Bean
-	public ImageLoader imageLoader() {
-		return new ImageLoader();
-	}
+    @Bean
+    public ImageLoader imageLoader() {
+        return new ImageLoader();
+    }
 
-	@Bean
-	public ConfirmClearPrefsAction confirmClearPrefsAction() {
-		return new ConfirmClearPrefsAction();
-	}
+    @Bean
+    public ConfirmClearPrefsAction confirmClearPrefsAction() {
+        return new ConfirmClearPrefsAction();
+    }
 
-	@Bean
-	public ClearPrefsAction clearPrefsAction() {
-		return new ClearPrefsAction();
-	}
+    @Bean
+    public ClearPrefsAction clearPrefsAction() {
+        return new ClearPrefsAction();
+    }
 
-	@Bean
-	public UIController uiController() {
-		return new UIController();
-	}
+    @Bean
+    public UIController uiController() {
+        return new UIController();
+    }
 }
