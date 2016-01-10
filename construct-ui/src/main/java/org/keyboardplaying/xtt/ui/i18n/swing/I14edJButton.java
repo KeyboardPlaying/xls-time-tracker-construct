@@ -29,6 +29,9 @@ import org.keyboardplaying.xtt.ui.i18n.I18nHelper;
  */
 public class I14edJButton extends JButton implements I14ed {
 
+    /** Generated serial version UID. */
+    private static final long serialVersionUID = -7311086663191166400L;
+
     private final String textKey;
 
     public I14edJButton(I18nHelper i18n, String textKey, Icon icon) {

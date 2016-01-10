@@ -24,12 +24,17 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * A utility to load the images to display as button or application icons.
  *
  * @author Cyrille Chopelet (https://keyboardplaying.org)
  */
 public class ImageLoader {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ImageLoader.class);
 
     private static final String IMG_PATH_PREFIX = "tango/";
     private static final String IMG_EXTENSION = ".png";
@@ -53,6 +58,7 @@ public class ImageLoader {
             return loadImage(imageName, size);
         } catch (IOException e) {
             // icons are with source, this should not happen
+            LOG.error("Image " + imageName + " could not be loaded in size " + size.name() + ".", e);
             return null;
         }
     }
@@ -69,11 +75,7 @@ public class ImageLoader {
     public List<Image> getImages(String imageName) {
         List<Image> images = new ArrayList<>();
         for (ImageSize size : ImageSize.values()) {
-            try {
-                images.add(loadImage(imageName, size));
-            } catch (IOException e) {
-                // OK, that one's missing, we'll do without
-            }
+            images.add(getImage(imageName, size));
         }
         return images;
     }

@@ -29,6 +29,21 @@
         </dependency>
 
         <!--<![CDATA[
+              _
+             | |   ___  __ _
+             | |__/ _ \/ _` |
+             |____\___/\__, |
+                       |___/ ]]>-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+
+        <!--<![CDATA[
              _____       _
             |_   _|__ __| |_
               | |/ -_|_-<  _|

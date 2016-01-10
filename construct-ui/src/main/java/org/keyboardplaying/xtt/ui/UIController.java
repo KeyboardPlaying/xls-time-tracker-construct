@@ -52,6 +52,8 @@ import org.keyboardplaying.xtt.ui.i18n.swing.I14edJButton;
 import org.keyboardplaying.xtt.ui.i18n.swing.I14edJFrame;
 import org.keyboardplaying.xtt.ui.icon.ImageLoader;
 import org.keyboardplaying.xtt.ui.icon.ImageSize;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -368,6 +370,8 @@ public class UIController {
 
     private static class ActionExecutor<T extends Action> implements ActionListener {
 
+        private static final Logger LOG = LoggerFactory.getLogger(ActionExecutor.class);
+
         private final T action;
         private final I18nHelper i18n;
 
@@ -382,8 +386,10 @@ public class UIController {
                 action.perform();
             } catch (ActionException ex) {
                 displayActionError(i18n.getMessage(ex.getMessageKey()), ex.getCause());
+                LOG.error(ex.getMessage(), ex);
             } catch (RuntimeException ex) {
                 displayActionError("An unexpected error happened.", ex);
+                LOG.error(ex.getMessage(), ex);
             }
         }
 

@@ -29,6 +29,8 @@ import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
 
 import org.keyboardplaying.xtt.configuration.PreferencesHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -40,6 +42,8 @@ public class I18nHelper {
 
     /** The key the locale is stored under in the preferences. */
     public static final String LOCALE_PREFKEY = "project.dir";
+
+    private static final Logger LOG = LoggerFactory.getLogger(I18nHelper.class);
 
     private static final String BUNDLE_BASE_NAME = "org.keyboardplaying.xtt.ui.i18n.Messages";
     private static final String LOCALE_REGEX = "([a-z]{2})(?:_([A-Z]{2})?(?:_([a-zA-Z]+))?(?:_#.+)?)?";
@@ -100,7 +104,7 @@ public class I18nHelper {
         Locale l;
 
         if (!m.matches()) {
-            // XXX log locale + " does not match the expected format for a locale");
+            LOG.warn(locale + " does not match the expected format for a locale");
             l = Locale.getDefault();
         } else {
             String language = m.group(1);
@@ -135,7 +139,7 @@ public class I18nHelper {
      */
     public void setLocale(Locale locale) {
         updateResourceBundle(locale);
-        prefs.set(LOCALE_PREFKEY, locale.toString()); // FIXME test
+        prefs.set(LOCALE_PREFKEY, locale.toString());
         for (I14ed internationalized : i14ed) {
             internationalized.updateMessages(this);
         }

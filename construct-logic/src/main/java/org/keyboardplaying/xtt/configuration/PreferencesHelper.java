@@ -19,6 +19,8 @@ package org.keyboardplaying.xtt.configuration;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -29,6 +31,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class PreferencesHelper {
 
+    private static final Logger LOG = LoggerFactory.getLogger(PreferencesHelper.class);
     private static final String NODE = "org/keyboardplaying/xtt/construct";
 
     private Preferences preferences;
@@ -40,6 +43,7 @@ public class PreferencesHelper {
         try {
             initialized = prefRoot.nodeExists(NODE);
         } catch (BackingStoreException e) {
+            LOG.error("The preferences store could not be loaded. Preferences will not be saved.", e);
             initialized = false;
         }
         preferences = prefRoot.node(NODE);

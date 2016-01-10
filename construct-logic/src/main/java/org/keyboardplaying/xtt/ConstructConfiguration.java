@@ -24,6 +24,8 @@ import org.keyboardplaying.xtt.action.ConstructAction;
 import org.keyboardplaying.xtt.action.DeconstructAction;
 import org.keyboardplaying.xtt.configuration.PreferencesHelper;
 import org.keyboardplaying.xtt.configuration.ProjectLocationHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -36,6 +38,8 @@ import org.springframework.context.annotation.Configuration;
 @SuppressWarnings("javadoc")
 public class ConstructConfiguration {
 
+    private static final Logger LOG = LoggerFactory.getLogger(ConstructConfiguration.class);
+
     /* Apply the system look and feel. */
     static {
         try {
@@ -43,8 +47,7 @@ public class ConstructConfiguration {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
                 | UnsupportedLookAndFeelException e) {
             // this is no custom look and feel
-            // therefore, no exception should happen
-            e.printStackTrace();
+            LOG.warn("An error occurred while loading the system look and feel.", e);
         }
     }
 
