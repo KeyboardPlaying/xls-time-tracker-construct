@@ -18,6 +18,10 @@ package org.keyboardplaying.xtt.ui.i18n;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,6 +29,7 @@ import java.util.Locale;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.keyboardplaying.xtt.configuration.PreferencesHelper;
 
 /**
  * Test class for {@link I18nHelper}.
@@ -38,11 +43,32 @@ public class I18nHelperTest {
     private static final String APP_NAME_FR = "Constructeur XTT";
 
     private I18nHelper helper;
+    private PreferencesHelper prefs;
 
     /** Initializes the helper with English as default locale. */
     @Before
     public void init() {
         helper = new I18nHelper();
+        prefs = mock(PreferencesHelper.class);
+        when(prefs.get(I18nHelper.LOCALE_PREFKEY)).thenReturn(Locale.ENGLISH.toString());
+        helper.setPrefs(prefs);
+        helper.init();
+    }
+
+    /** Tests the initialization when no preferred locale is stored. */
+    @Test
+    public void testDefaultLocale() {
+        // Prepare
+        I18nHelper i18n = new I18nHelper();
+        when(prefs.get(I18nHelper.LOCALE_PREFKEY)).thenReturn(null);
+        i18n.setPrefs(prefs);
+
+        // Execute
+        I18nHelper spy = spy(i18n);
+        spy.init();
+
+        // Assert
+        verify(spy).updateResourceBundle(Locale.getDefault());
     }
 
     /**
@@ -57,6 +83,7 @@ public class I18nHelperTest {
 
         // test another locale
         helper.setLocale(Locale.FRENCH);
+        verify(prefs).set(I18nHelper.LOCALE_PREFKEY, Locale.FRENCH.toString());
         assertEquals(APP_NAME_FR, helper.getMessage(APP_NAME_KEY));
         assertEquals(Locale.FRENCH, helper.getLocale());
 
@@ -78,6 +105,24 @@ public class I18nHelperTest {
         // Assert
         assertEquals(available.size(), locales.size());
         assertTrue(available.containsAll(locales));
+    }
+
+    /** Tests {@link I18nHelper#parseLocale(String)}. */
+    @Test
+    public void testParseLocale() {
+        for (Locale locale : Locale.getAvailableLocales()) {
+            testLocale(locale);
+        }
+    }
+
+    private void testLocale(Locale locale) {
+        Locale parsed = helper.parseLocale(locale.toString());
+        String errorIndicator = "Tested: <" + locale.toString() + "> - ";
+        assertEquals(errorIndicator, locale.getLanguage(), parsed.getLanguage());
+        assertEquals(errorIndicator, locale.getCountry(), parsed.getCountry());
+        assertEquals(errorIndicator, locale.getVariant(), parsed.getVariant());
+        // Locales are not equal because script is not taken into account
+        // assertEquals(errorIndicator, locale, parsed);
     }
 
     /** Tests the notification to internationalized components. */

@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.annotation.PostConstruct;
 
@@ -36,10 +38,11 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class I18nHelper {
 
-    private static final String BUNDLE_BASE_NAME = "org.keyboardplaying.xtt.ui.i18n.Messages";
-
     /** The key the locale is stored under in the preferences. */
-    private static final String LOCALE_PREFKEY = "project.dir";
+    public static final String LOCALE_PREFKEY = "project.dir";
+
+    private static final String BUNDLE_BASE_NAME = "org.keyboardplaying.xtt.ui.i18n.Messages";
+    private static final String LOCALE_REGEX = "([a-z]{2})(?:_([A-Z]{2})?(?:_([a-zA-Z]+))?(?:_#.+)?)?";
 
     @Autowired
     private PreferencesHelper prefs;
@@ -56,41 +59,8 @@ public class I18nHelper {
     @PostConstruct
     public void init() {
         String locale = prefs.get(LOCALE_PREFKEY);
-        Locale l = locale == null ? Locale.getDefault() : getLocale(locale);
+        Locale l = locale == null ? Locale.getDefault() : parseLocale(locale);
         updateResourceBundle(l);
-    }
-
-    // FIXME test
-    /**
-     * Parses the locale from the supplied representation.
-     *
-     * @param locale
-     *            the string representation of a locale (e.g.: "en", "de_DE", "_GB", "en_US_WIN", "de__POSIX", "fr_MAC")
-     * @return the associated {@link Locale} or default locale if format is incorrect
-     */
-    public Locale getLocale(String locale) {
-        String[] split = locale.split("_");
-        Locale l;
-
-        switch (split.length) {
-        case 1:
-            l = new Locale(split[0]);
-            break;
-
-        case 2:
-            l = new Locale(split[0], split[1]);
-            break;
-
-        case 3:
-            l = new Locale(split[0], split[1], split[2]);
-            break;
-
-        default:
-            // XXX log locale + " does not match the expected format for a locale");
-            l = Locale.getDefault();
-        }
-
-        return l;
     }
 
     /**
@@ -103,7 +73,7 @@ public class I18nHelper {
         this.prefs = prefs;
     }
 
-    private void updateResourceBundle(Locale locale) {
+    protected void updateResourceBundle(Locale locale) {
         this.bundle = ResourceBundle.getBundle(BUNDLE_BASE_NAME, locale);
     }
 
@@ -115,6 +85,37 @@ public class I18nHelper {
      */
     public void register(I14ed internationalized) {
         this.i14ed.add(internationalized);
+    }
+
+    /**
+     * Parses the locale from the supplied representation.
+     *
+     * @param locale
+     *            the string representation of a locale (e.g.: "en", "de_DE", "_GB", "en_US_WIN", "de__POSIX", "fr_MAC")
+     * @return the associated {@link Locale} or default locale if format is incorrect
+     */
+    public Locale parseLocale(String locale) {
+        // XXX less compact but more efficient: abandon regex, use substring and indexOf
+        Matcher m = Pattern.compile(LOCALE_REGEX).matcher(locale);
+        Locale l;
+
+        if (!m.matches()) {
+            // XXX log locale + " does not match the expected format for a locale");
+            l = Locale.getDefault();
+        } else {
+            String language = m.group(1);
+            String country = m.group(2);
+            String variant = m.group(3);
+            if (variant != null) {
+                l = new Locale(language, country, variant);
+            } else if (country != null) {
+                l = new Locale(language, country);
+            } else {
+                l = new Locale(language);
+            }
+        }
+
+        return l;
     }
 
     /**

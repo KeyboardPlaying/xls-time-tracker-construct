@@ -41,6 +41,7 @@
         <!-- Version management - test -->
         <junit.version>4.12</junit.version>
         <jdepend.version>2.9.1</jdepend.version>
+        <mockito.version>2.0.36-beta</mockito.version>
     </properties>
 
     <dependencyManagement>
@@ -71,6 +72,11 @@
                 <groupId>jdepend</groupId>
                 <artifactId>jdepend</artifactId>
                 <version>${jdepend.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
