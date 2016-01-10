@@ -41,7 +41,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class I18nHelper {
 
     /** The key the locale is stored under in the preferences. */
-    public static final String LOCALE_PREFKEY = "project.dir";
+    protected static final String LOCALE_PREFKEY = "project.dir";
 
     private static final Logger LOG = LoggerFactory.getLogger(I18nHelper.class);
 
@@ -49,7 +49,7 @@ public class I18nHelper {
     private static final String LOCALE_REGEX = "([a-z]{2})(?:_([A-Z]{2})?(?:_([a-zA-Z]+))?(?:_#.+)?)?";
 
     @Autowired
-    private PreferencesHelper prefs;
+    private PreferencesHelper preferences;
 
     private Set<I14ed> i14ed = new HashSet<>();
     private ResourceBundle bundle;
@@ -62,7 +62,7 @@ public class I18nHelper {
     /** Initializes the internationalization helper with the saved locale. */
     @PostConstruct
     public void init() {
-        String locale = prefs.get(LOCALE_PREFKEY);
+        String locale = preferences.get(LOCALE_PREFKEY);
         Locale l = locale == null ? Locale.getDefault() : parseLocale(locale);
         updateResourceBundle(l);
     }
@@ -70,11 +70,11 @@ public class I18nHelper {
     /**
      * Sets the preferences helper.
      *
-     * @param prefs
+     * @param preferences
      *            the preferences helper
      */
-    public void setPrefs(PreferencesHelper prefs) {
-        this.prefs = prefs;
+    public void setPreferences(PreferencesHelper preferences) {
+        this.preferences = preferences;
     }
 
     protected void updateResourceBundle(Locale locale) {
@@ -139,7 +139,7 @@ public class I18nHelper {
      */
     public void setLocale(Locale locale) {
         updateResourceBundle(locale);
-        prefs.set(LOCALE_PREFKEY, locale.toString());
+        preferences.set(LOCALE_PREFKEY, locale.toString());
         for (I14ed internationalized : i14ed) {
             internationalized.updateMessages(this);
         }

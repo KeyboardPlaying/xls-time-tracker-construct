@@ -42,29 +42,29 @@ public class I18nHelperTest {
     private static final String APP_NAME_EN = "XTT Construct";
     private static final String APP_NAME_FR = "Constructeur XTT";
 
-    private I18nHelper helper;
+    private I18nHelper i18n;
     private PreferencesHelper prefs;
 
     /** Initializes the helper with English as default locale. */
     @Before
     public void init() {
-        helper = new I18nHelper();
+        i18n = new I18nHelper();
         prefs = mock(PreferencesHelper.class);
         when(prefs.get(I18nHelper.LOCALE_PREFKEY)).thenReturn(Locale.ENGLISH.toString());
-        helper.setPrefs(prefs);
-        helper.init();
+        i18n.setPreferences(prefs);
+        i18n.init();
     }
 
     /** Tests the initialization when no preferred locale is stored. */
     @Test
     public void testDefaultLocale() {
         // Prepare
-        I18nHelper i18n = new I18nHelper();
+        I18nHelper defaultI18n = new I18nHelper();
         when(prefs.get(I18nHelper.LOCALE_PREFKEY)).thenReturn(null);
-        i18n.setPrefs(prefs);
+        defaultI18n.setPreferences(prefs);
+        I18nHelper spy = spy(defaultI18n);
 
         // Execute
-        I18nHelper spy = spy(i18n);
         spy.init();
 
         // Assert
@@ -78,19 +78,19 @@ public class I18nHelperTest {
     @Test
     public void testSetLocaleAndGetMessage() {
         // test default/English locale
-        assertEquals(APP_NAME_EN, helper.getMessage(APP_NAME_KEY));
-        assertEquals(Locale.ENGLISH, helper.getLocale());
+        assertEquals(APP_NAME_EN, i18n.getMessage(APP_NAME_KEY));
+        assertEquals(Locale.ENGLISH, i18n.getLocale());
 
         // test another locale
-        helper.setLocale(Locale.FRENCH);
+        i18n.setLocale(Locale.FRENCH);
         verify(prefs).set(I18nHelper.LOCALE_PREFKEY, Locale.FRENCH.toString());
-        assertEquals(APP_NAME_FR, helper.getMessage(APP_NAME_KEY));
-        assertEquals(Locale.FRENCH, helper.getLocale());
+        assertEquals(APP_NAME_FR, i18n.getMessage(APP_NAME_KEY));
+        assertEquals(Locale.FRENCH, i18n.getLocale());
 
         // test unavailable locale
-        helper.setLocale(Locale.GERMAN);
-        assertEquals(APP_NAME_EN, helper.getMessage(APP_NAME_KEY));
-        assertEquals(Locale.ENGLISH, helper.getLocale());
+        i18n.setLocale(Locale.GERMAN);
+        assertEquals(APP_NAME_EN, i18n.getMessage(APP_NAME_KEY));
+        assertEquals(Locale.ENGLISH, i18n.getLocale());
     }
 
     /** Tests {@link I18nHelper#getAvailableLocales()}. */
@@ -100,7 +100,7 @@ public class I18nHelperTest {
         List<Locale> available = Arrays.asList(Locale.ENGLISH, Locale.FRENCH);
 
         // Execute
-        List<Locale> locales = helper.getAvailableLocales();
+        List<Locale> locales = i18n.getAvailableLocales();
 
         // Assert
         assertEquals(available.size(), locales.size());
@@ -115,11 +115,11 @@ public class I18nHelperTest {
         }
 
         // an invalid locale
-        assertEquals(Locale.getDefault(), helper.parseLocale("this_IS_NOT_a#locale"));
+        assertEquals(Locale.getDefault(), i18n.parseLocale("this_IS_NOT_a#locale"));
     }
 
     private void testLocale(Locale locale) {
-        Locale parsed = helper.parseLocale(locale.toString());
+        Locale parsed = i18n.parseLocale(locale.toString());
         String errorIndicator = "Tested: <" + locale.toString() + "> - ";
         assertEquals(errorIndicator, locale.getLanguage(), parsed.getLanguage());
         assertEquals(errorIndicator, locale.getCountry(), parsed.getCountry());
@@ -132,22 +132,13 @@ public class I18nHelperTest {
     @Test
     public void testI14edNotification() {
         // Prepare
-        I14edAppName i14ed = new I14edAppName();
-        helper.register(i14ed);
+        I14ed i14ed = mock(I14ed.class);
+        i18n.register(i14ed);
 
-        // Execute and assert
-        assertEquals(APP_NAME_EN, i14ed.appName);
+        // Execute
+        i18n.setLocale(Locale.FRENCH);
 
-        helper.setLocale(Locale.FRENCH);
-        assertEquals(APP_NAME_FR, i14ed.appName);
-    }
-
-    private final class I14edAppName implements I14ed {
-        private String appName = helper.getMessage(APP_NAME_KEY);
-
-        @Override
-        public void updateMessages(I18nHelper i18n) {
-            appName = i18n.getMessage(APP_NAME_KEY);
-        }
+        // Assert
+        verify(i14ed).updateMessages(i18n);
     }
 }

@@ -26,6 +26,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -326,7 +327,7 @@ public class UIController {
 
     private JButton makeProjectActionButton(String textKey, String iconKey, ImageSize iconSize, ProjectAction action) {
         JButton btn = makeActionButton(textKey, iconKey, iconSize, action);
-        locationHelper.registerForUpdate(new ProjectButtonListener(btn, locationHelper));
+        locationHelper.registerForUpdate(new ProjectButtonListener(btn));
         return btn;
     }
 
@@ -355,16 +356,14 @@ public class UIController {
 
     private static class ProjectButtonListener implements UpdateListener {
         private final JButton btn;
-        private final ProjectLocationHelper locationHelper;
 
-        private ProjectButtonListener(JButton btn, ProjectLocationHelper locationHelper) {
+        private ProjectButtonListener(JButton btn) {
             this.btn = btn;
-            this.locationHelper = locationHelper;
         }
 
         @Override
-        public void notifyLocationUpdate() {
-            btn.setEnabled(locationHelper.isValid());
+        public void notifyLocationUpdate(File location, boolean valid) {
+            btn.setEnabled(valid);
         }
     }
 
