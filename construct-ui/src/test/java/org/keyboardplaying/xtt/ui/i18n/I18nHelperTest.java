@@ -113,6 +113,9 @@ public class I18nHelperTest {
         for (Locale locale : Locale.getAvailableLocales()) {
             testLocale(locale);
         }
+
+        // an invalid locale
+        assertEquals(Locale.getDefault(), helper.parseLocale("this_IS_NOT_a#locale"));
     }
 
     private void testLocale(Locale locale) {

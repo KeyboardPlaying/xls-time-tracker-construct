@@ -76,7 +76,7 @@ public class I14edJFrame extends JFrame implements I14ed {
      * @see org.keyboardplaying.xtt.ui.i18n.I14ed#updateMessages(org.keyboardplaying.xtt.ui.i18n.I18nHelper)
      */
     @Override
-    public void updateMessages(I18nHelper helper) {
-        this.setTitle(helper.getMessage(titleKey));
+    public void updateMessages(I18nHelper i18n) {
+        this.setTitle(i18n.getMessage(titleKey));
     }
 }

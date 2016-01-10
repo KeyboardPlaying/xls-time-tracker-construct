@@ -48,6 +48,7 @@ import org.keyboardplaying.xtt.ui.action.ConfirmClearPrefsAction;
 import org.keyboardplaying.xtt.ui.components.LocaleComboBox;
 import org.keyboardplaying.xtt.ui.components.ProjectTextFieldChooser;
 import org.keyboardplaying.xtt.ui.i18n.I18nHelper;
+import org.keyboardplaying.xtt.ui.i18n.swing.I14edJButton;
 import org.keyboardplaying.xtt.ui.i18n.swing.I14edJFrame;
 import org.keyboardplaying.xtt.ui.icon.ImageLoader;
 import org.keyboardplaying.xtt.ui.icon.ImageSize;
@@ -306,10 +307,13 @@ public class UIController {
     }
 
     private JButton makeIconButton(String textKey, String iconKey, ImageSize iconSize) {
-        String text = textKey != null ? i18nHelper.getMessage(textKey) : null;
         Image icon = imageLoader.getImage(iconKey, iconSize);
 
-        return new JButton(text, icon != null ? new ImageIcon(icon) : null);
+        if (textKey == null) {
+            return new JButton(new ImageIcon(icon));
+        }
+
+        return new I14edJButton(i18nHelper, textKey, icon != null ? new ImageIcon(icon) : null);
     }
 
     private <T extends Action> JButton makeActionButton(String textKey, String iconKey, ImageSize iconSize, T action) {
