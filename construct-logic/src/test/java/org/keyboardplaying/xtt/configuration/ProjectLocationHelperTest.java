@@ -32,6 +32,7 @@ import java.io.File;
 import org.junit.Before;
 import org.junit.Test;
 import org.keyboardplaying.xtt.configuration.ProjectLocationHelper.UpdateListener;
+import org.keyboardplaying.xtt.util.FileTestUtil;
 
 /**
  * Test class for {@link ProjectLocationHelper}.
@@ -49,7 +50,7 @@ public class ProjectLocationHelperTest {
         location = new ProjectLocationHelper();
         prefs = mock(PreferencesHelper.class);
         when(prefs.get(ProjectLocationHelper.PROJECT_DIR_PREFKEY))
-                .thenReturn(getClass().getResource("location").getPath());
+                .thenReturn(FileTestUtil.getPath(getClass(), "location"));
         location.setPreferences(prefs);
         location.init();
     }
@@ -86,7 +87,7 @@ public class ProjectLocationHelperTest {
         assertFalse(location.isValid(f));
 
         /* Test existing but not directory */
-        f = new File(getClass().getResource(getClass().getSimpleName() + ".class").getPath());
+        f = new File(FileTestUtil.getFile(getClass(), getClass().getSimpleName() + ".class").getPath());
         assert f.exists() && f.isFile();
         assertFalse(location.isValid(f));
 

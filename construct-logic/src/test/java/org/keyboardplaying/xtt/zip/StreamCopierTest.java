@@ -27,6 +27,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 
 import org.junit.Test;
+import org.keyboardplaying.xtt.util.FileTestUtil;
 
 /**
  * Test class for {@link StreamCopier}.
@@ -44,9 +45,16 @@ public class StreamCopierTest {
         testCopy(new StreamCopier());
     }
 
+    /** Tests {@link StreamCopier#copyStream(InputStream, java.io.OutputStream)} when a buffer has been specified. */
+    @Test
+    @SuppressWarnings("javadoc")
+    public void testCopyStreamWithSpecifiedBuffer() throws IOException {
+        testCopy(new StreamCopier(256));
+    }
+
     private void testCopy(StreamCopier copier) throws IOException {
         // Prepare
-        String path = getClass().getResource(TEST_FILE_NAME).getPath();
+        String path = FileTestUtil.getPath(getClass(), TEST_FILE_NAME);
         File file = new File(path);
         byte[] parsed;
 
