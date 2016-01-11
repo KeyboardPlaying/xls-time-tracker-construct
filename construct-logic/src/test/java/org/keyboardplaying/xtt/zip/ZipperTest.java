@@ -94,7 +94,7 @@ public class ZipperTest {
 
                 assertEquals(expEntry.getName(), actEntry.getName());
                 assertEquals(expEntry.isDirectory(), actEntry.isDirectory());
-                assertEquals(expEntry.getSize(), actEntry.getSize());
+                assertEquals(expEntry.getSize(), actEntry.getSize(), 1);
             }
             assertFalse(actIter.hasNext());
         }

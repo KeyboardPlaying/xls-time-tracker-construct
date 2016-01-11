@@ -22,6 +22,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Comparator;
 
 import org.junit.Test;
 import org.keyboardplaying.xtt.util.FileTestUtil;
@@ -79,6 +81,9 @@ public class UnzipperTest {
             File[] expFiles = expected.listFiles();
             File[] actFiles = actual.listFiles();
 
+            Arrays.sort(expFiles, new FileComparator());
+            Arrays.sort(actFiles, new FileComparator());
+
             assertEquals(expFiles.length, actFiles.length);
 
             for (int i = 0; i < expFiles.length; i++) {
@@ -89,6 +94,13 @@ public class UnzipperTest {
             }
         } else {
             assertFalse(actual.getName(), actual.isDirectory());
+        }
+    }
+
+    private static final class FileComparator implements Comparator<File> {
+        @Override
+        public int compare(File f1, File f2) {
+            return f1.getAbsolutePath().compareTo(f2.getAbsolutePath());
         }
     }
 }
