@@ -72,7 +72,7 @@ public class UnzipperTest {
     }
 
     private void assertFileEquals(File expected, File actual) {
-        assertEquals(actual.getName(), expected.length(), actual.length());
+        assertEquals(actual.getName(), expected.length(), actual.length(), 1);
         if (expected.isDirectory()) {
             assertTrue(actual.getName(), actual.isDirectory());
 
