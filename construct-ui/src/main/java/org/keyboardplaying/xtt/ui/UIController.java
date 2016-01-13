@@ -387,7 +387,7 @@ public class UIController {
                 displayActionError(i18n.getMessage(ex.getMessageKey()), ex.getCause());
                 LOG.error(ex.getMessage(), ex);
             } catch (RuntimeException ex) {
-                displayActionError("An unexpected error happened.", ex);
+                displayActionError(i18n.getMessage("action.error.unexpected"), ex);
                 LOG.error(ex.getMessage(), ex);
             }
         }
@@ -400,9 +400,11 @@ public class UIController {
                 if (causeMsg != null && causeMsg.trim().length() != 0) {
                     msg.append('\n').append('\n').append(causeMsg);
                 }
-                JOptionPane.showMessageDialog(null, msg.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, msg.toString(), i18n.getMessage("action.error.title.error"),
+                        JOptionPane.ERROR_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(null, msg.toString(), "Failure", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, msg.toString(), i18n.getMessage("action.error.title.failure"),
+                        JOptionPane.WARNING_MESSAGE);
             }
         }
     }
