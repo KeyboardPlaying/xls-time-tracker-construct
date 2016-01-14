@@ -39,6 +39,24 @@ import org.keyboardplaying.xtt.util.FileTestUtil;
  */
 public class ZipperTest {
 
+    /** Tests zipping a file that does not exist. */
+    @Test(expected = IllegalArgumentException.class)
+    public void testBuildTargetFromInexistingFile() {
+        File in = new File("something_useless");
+        File out = new File("doesnt_matter_wont_exist");
+        @SuppressWarnings("unused")
+        Zipper zipper = new Zipper(in, out);
+    }
+
+    /** Tests zipping a file that does not exist. */
+    @Test(expected = IllegalArgumentException.class)
+    public void testBuildTargetToExistingNonDirectory() {
+        File in = FileTestUtil.getFile(getClass(), "xlsx_ref.xlsx");
+        File out = FileTestUtil.getFile(getClass(), "xlsx_ref");
+        @SuppressWarnings("unused")
+        Zipper zipper = new Zipper(in, out);
+    }
+
     /** Tests zipping a directory. */
     @Test
     @SuppressWarnings("javadoc")
@@ -58,7 +76,7 @@ public class ZipperTest {
         File inFile = FileTestUtil.getFile(getClass(), in);
         File expFile = FileTestUtil.getFile(getClass(), expected);
 
-        File outDir = new File("target/test");
+        File outDir = new File("target/test/zip");
         if (!outDir.exists()) {
             outDir.mkdirs();
         }

@@ -35,6 +35,33 @@ import org.keyboardplaying.xtt.util.FileTestUtil;
  */
 public class UnzipperTest {
 
+    /** Tests unzipping when source does not exist. */
+    @Test(expected = IllegalArgumentException.class)
+    public void testBuildTargetFromUnexistingSource() {
+        File in = new File("something_useless");
+        File out = new File("doesnt_matter_wont_exist");
+        @SuppressWarnings("unused")
+        Unzipper unzipper = new Unzipper(in, out);
+    }
+
+    /** Tests unzipping when source is a directory. */
+    @Test(expected = IllegalArgumentException.class)
+    public void testBuildTargetFromDirectorySource() {
+        File in = FileTestUtil.getFile(getClass(), "xlsx_ref");
+        File out = new File("doesnt_matter_wont_exist");
+        @SuppressWarnings("unused")
+        Unzipper unzipper = new Unzipper(in, out);
+    }
+
+    /** Tests unzipping when target is an existing file. */
+    @Test(expected = IllegalArgumentException.class)
+    public void testBuildTargetToNonDirectoryTarget() {
+        File in = FileTestUtil.getFile(getClass(), "xlsx_ref.zip");
+        File out = FileTestUtil.getFile(getClass(), "xlsx_ref.xlsx");
+        @SuppressWarnings("unused")
+        Unzipper unzipper = new Unzipper(in, out);
+    }
+
     /** Tests unzipping a directory. */
     @Test
     @SuppressWarnings("javadoc")
@@ -54,7 +81,7 @@ public class UnzipperTest {
         File inFile = FileTestUtil.getFile(getClass(), in);
         File expFile = FileTestUtil.getFile(getClass(), expected);
 
-        File outDir = new File("target/test");
+        File outDir = new File("target/test/unzip");
         if (!outDir.exists()) {
             outDir.mkdirs();
         }
