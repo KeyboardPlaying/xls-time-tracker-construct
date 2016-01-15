@@ -27,7 +27,7 @@
     <properties>
         <!-- Github properties -->
         <github.user>KeyboardPlaying</github.user>
-        <github.repo>${project.artifactId}</github.repo>
+        <github.repo>xls-time-tracker-construct</github.repo>
 
         <!-- Compilation settings -->
         <java.version>1.7</java.version>
