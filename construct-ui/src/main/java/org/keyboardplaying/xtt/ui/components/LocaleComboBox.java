@@ -101,7 +101,8 @@ public class LocaleComboBox extends JComboBox<Locale> implements ItemListener {
      * @see Locale#getDisplayName()
      */
     private static String getDisplayText(Locale locale) {
-        return locale.getDisplayName();
+        String localeName = locale.getDisplayName(locale);
+        return localeName.substring(0, 1).toUpperCase() + localeName.substring(1);
     }
 
     /**
@@ -123,7 +124,7 @@ public class LocaleComboBox extends JComboBox<Locale> implements ItemListener {
         @Override
         public Component getListCellRendererComponent(JList<? extends Locale> list, Locale value, int index,
                 boolean isSelected, boolean cellHasFocus) {
-            setText(value.getDisplayName());
+            setText(getDisplayText(value));
             return this;
         }
     }
