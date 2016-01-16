@@ -31,6 +31,8 @@ image:doc/screenshots/construct.png[xls-time-tracker construct,align="center"]
 
 image:doc/screenshots/settings.png[xls-time-tracker construct settings,align="center"]
 
+<small>The interface needs some polishing, especially the settings window (#26), but hey, it works!</small>
+
 == Documentation
 
 See {url-main}[xls-time-tracker]'s {url-wiki}[wiki] for documentation about this utility.
