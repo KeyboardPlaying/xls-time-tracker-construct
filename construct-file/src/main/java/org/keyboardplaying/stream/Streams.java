@@ -14,37 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.keyboardplaying.xtt.zip;
+package org.keyboardplaying.stream;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
- * Utility to perform stream copy.
+ * Utilities for stream management.
  *
  * @author Cyrille Chopelet (https://keyboardplaying.org)
  */
-public class StreamCopier {
+public final class Streams {
 
     private static final int DEFAULT_BUFFER_SIZE = 1024 * 4;
     private static final int EOF = -1;
 
-    private int bufferSize;
-
-    /** Creates a new instance with the default buffer size. */
-    public StreamCopier() {
-        this(DEFAULT_BUFFER_SIZE);
-    }
-
-    /**
-     * Creates a new instance.
-     *
-     * @param bufferSize
-     *            the buffer size
-     */
-    public StreamCopier(int bufferSize) {
-        this.bufferSize = bufferSize;
+    private Streams() {
     }
 
     /**
@@ -57,7 +43,23 @@ public class StreamCopier {
      * @throws IOException
      *             if an I/O error occurs
      */
-    public void copyStream(InputStream in, OutputStream out) throws IOException {
+    public static void copy(InputStream in, OutputStream out) throws IOException {
+        copy(in, out, DEFAULT_BUFFER_SIZE);
+    }
+
+    /**
+     * Copy bytes from an {@link InputStream} to an {@link OutputStream}.
+     *
+     * @param in
+     *            the {@link InputStream} to read from
+     * @param out
+     *            the {@link OutputStream} to write to
+     * @param bufferSize
+     *            the size to use for the buffer when copying
+     * @throws IOException
+     *             if an I/O error occurs
+     */
+    public static void copy(InputStream in, OutputStream out, int bufferSize) throws IOException {
         byte[] buffer = new byte[bufferSize];
         int n = 0; // number of bytes read for the current iteration
         while (EOF != (n = in.read(buffer))) {

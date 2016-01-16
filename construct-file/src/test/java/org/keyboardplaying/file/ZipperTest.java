@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.keyboardplaying.xtt.zip;
+package org.keyboardplaying.file;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -30,61 +30,79 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import org.junit.Test;
-import org.keyboardplaying.xtt.util.FileTestUtil;
 
 /**
- * Test class for {@link Zipper}.
+ * Test class for {@link Files}.
  *
  * @author Cyrille Chopelet (https://keyboardplaying.org)
  */
-public class ZipperTest {
+public class ZipperTest extends AbstractFilesTest {
+
+    private static final String DIR = "zip/";
 
     /** Tests zipping a file that does not exist. */
     @Test(expected = IllegalArgumentException.class)
-    public void testBuildTargetFromInexistingFile() {
+    @SuppressWarnings("javadoc")
+    public void testZipFromInexistingFile() throws IOException {
+        // Prepare
         File in = new File("something_useless");
         File out = new File("doesnt_matter_wont_exist");
-        @SuppressWarnings("unused")
-        Zipper zipper = new Zipper(in, out);
+
+        // Execute
+        Zipper.zip(in, out);
     }
 
-    /** Tests zipping a file that does not exist. */
+    /** Tests zipping a file that exists and is a directory. */
     @Test(expected = IllegalArgumentException.class)
-    public void testBuildTargetToExistingNonDirectory() {
-        File in = FileTestUtil.getFile(getClass(), "xlsx_ref.xlsx");
-        File out = FileTestUtil.getFile(getClass(), "xlsx_ref");
-        @SuppressWarnings("unused")
-        Zipper zipper = new Zipper(in, out);
+    @SuppressWarnings("javadoc")
+    public void testZipToExistingDirectory() throws IOException {
+        // Prepare
+        File in = getFile(DIR + "xlsx_ref.xlsx");
+        File out = getFile(DIR + "xlsx_ref");
+
+        // Execute
+        Zipper.zip(in, out);
     }
 
     /** Tests zipping a directory. */
     @Test
     @SuppressWarnings("javadoc")
-    public void testBuildTargetFromDirectory() throws IOException {
-        testBuildTarget("xlsx_ref", "xlsx_test.zip", "xlsx_ref.xlsx");
+    public void testZipXlsxFromDirectory() throws IOException {
+        testZip("xlsx_ref", "xlsx_test.zip", true, false, "xlsx_ref.xlsx");
+    }
+
+    @Test
+    @SuppressWarnings("javadoc")
+    public void testZipFromDirectoryWithDirEntries() throws IOException {
+        testZip("xlsx_ref", "xlsx_test.zip", false, true, "xlsx_ref.zip");
+    }
+
+    @Test
+    @SuppressWarnings("javadoc")
+    public void testZipFromDirectoryWithDirAndRootEntries() throws IOException {
+        testZip("xlsx_ref", "xlsx_test.zip", true, true, "xlsx_ref.root.zip");
     }
 
     /** Tests zipping a file. */
     @Test
     @SuppressWarnings("javadoc")
-    public void testBuildTargetFromFile() throws IOException {
-        testBuildTarget("xlsx_ref.xlsx", "xlsx_test.zip", "xlsx_ref.zip");
+    public void testZipFromFile() throws IOException {
+        testZip("xlsx_ref.xlsx", "xlsx_test.zip", false, false, "xlsx_ref.xlsx.zip");
     }
 
-    private void testBuildTarget(String in, String out, String expected) throws IOException {
+    private void testZip(String in, String out, boolean root, boolean dirs, String expected) throws IOException {
         // Prepare
-        File inFile = FileTestUtil.getFile(getClass(), in);
-        File expFile = FileTestUtil.getFile(getClass(), expected);
+        File inFile = getFile(DIR + in);
+        File expFile = getFile(DIR + expected);
 
         File outDir = new File("target/test/zip");
         if (!outDir.exists()) {
             outDir.mkdirs();
         }
         File outFile = new File(outDir, out);
-        Zipper zipper = new Zipper(inFile, outFile);
 
         // Execute
-        zipper.cleanAndBuildTarget();
+        Zipper.zip(inFile, outFile, root, dirs);
 
         // Assert
         assertZipEquals(expFile, outFile);

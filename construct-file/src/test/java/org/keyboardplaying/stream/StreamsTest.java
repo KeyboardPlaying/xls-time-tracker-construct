@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.keyboardplaying.xtt.zip;
+package org.keyboardplaying.stream;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -27,40 +27,27 @@ import java.io.InputStream;
 import java.nio.file.Files;
 
 import org.junit.Test;
-import org.keyboardplaying.xtt.util.FileTestUtil;
+import org.keyboardplaying.file.AbstractFilesTest;
 
 /**
- * Test class for {@link StreamCopier}.
+ * Test for {@link Streams}.
  *
  * @author Cyrille Chopelet (https://keyboardplaying.org)
  */
-public class StreamCopierTest {
+public class StreamsTest extends AbstractFilesTest {
 
-    private static final String TEST_FILE_NAME = "lipsum.txt";
-
-    /** Tests {@link StreamCopier#copyStream(InputStream, java.io.OutputStream)} when no buffer has been specified. */
+    /** Tests the copying of a stream. */
     @Test
     @SuppressWarnings("javadoc")
-    public void testCopyStream() throws IOException {
-        testCopy(new StreamCopier());
-    }
-
-    /** Tests {@link StreamCopier#copyStream(InputStream, java.io.OutputStream)} when a buffer has been specified. */
-    @Test
-    @SuppressWarnings("javadoc")
-    public void testCopyStreamWithSpecifiedBuffer() throws IOException {
-        testCopy(new StreamCopier(256));
-    }
-
-    private void testCopy(StreamCopier copier) throws IOException {
+    public void testCopy() throws IOException {
         // Prepare
-        String path = FileTestUtil.getPath(getClass(), TEST_FILE_NAME);
+        String path = getPath("lipsum.txt");
         File file = new File(path);
         byte[] parsed;
 
         // Execute
         try (InputStream in = new FileInputStream(file); ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-            copier.copyStream(in, out);
+            Streams.copy(in, out);
             parsed = out.toByteArray();
         }
 

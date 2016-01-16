@@ -18,8 +18,8 @@ package org.keyboardplaying.xtt.action;
 
 import java.io.IOException;
 
+import org.keyboardplaying.file.Unzipper;
 import org.keyboardplaying.xtt.configuration.ProjectLocationHelper;
-import org.keyboardplaying.xtt.zip.Unzipper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -50,8 +50,7 @@ public class DeconstructAction implements ProjectAction {
     @Override
     public void perform() throws ActionException {
         try {
-            new Unzipper(locationHelper.getConstructedFile(), locationHelper.getDeconstructedDirectory())
-                    .cleanAndBuildTarget();
+            Unzipper.unzip(locationHelper.getConstructedFile(), locationHelper.getDeconstructedDirectory(), true);
         } catch (IOException e) {
             throw new ActionException("action.error.deconstruct", e);
         }

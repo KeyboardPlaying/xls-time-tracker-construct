@@ -1,0 +1,42 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.keyboardplaying.xtt</groupId>
+        <artifactId>construct</artifactId>
+        <version>2.1.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>construct-file</artifactId>
+    <packaging>jar</packaging>
+    <name>construct-file</name>
+    <description>
+        A module for externalizing some simple file manipulation logic.
+    </description>
+    <dependencies>
+        <!--<![CDATA[
+             _____       _
+            |_   _|__ __| |_
+              | |/ -_|_-<  _|
+              |_|\___/__/\__| ]]>-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>jdepend</groupId>
+            <artifactId>jdepend</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <!--<![CDATA[
+           _   _              _
+          /_\ | |__  ___ _  _| |_
+         / _ \| '_ \/ _ \ || |  _|
+        /_/ \_\_.__/\___/\_,_|\__| ]]>-->
+    <scm>
+        <url>https://github.com/${github.user}/${github.repo}</url>
+        <connection>scm:git:https://github.com/${github.user}/${github.repo}.git</connection>
+        <developerConnection>scm:git:git@github.com:${github.user}/${github.repo}.git</developerConnection>
+    </scm>
+</project>

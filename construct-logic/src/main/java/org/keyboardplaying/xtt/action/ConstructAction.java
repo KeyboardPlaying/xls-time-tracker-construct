@@ -18,8 +18,8 @@ package org.keyboardplaying.xtt.action;
 
 import java.io.IOException;
 
+import org.keyboardplaying.file.Zipper;
 import org.keyboardplaying.xtt.configuration.ProjectLocationHelper;
-import org.keyboardplaying.xtt.zip.Zipper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -50,8 +50,7 @@ public class ConstructAction implements ProjectAction {
     @Override
     public void perform() throws ActionException {
         try {
-            new Zipper(locationHelper.getDeconstructedDirectory(), locationHelper.getConstructedFile())
-                    .cleanAndBuildTarget();
+            Zipper.zip(locationHelper.getDeconstructedDirectory(), locationHelper.getConstructedFile(), true, false);
         } catch (IOException e) {
             throw new ActionException("action.error.construct", e);
         }

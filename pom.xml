@@ -22,6 +22,7 @@
     <modules>
         <module>construct-ui</module>
         <module>construct-logic</module>
+        <module>construct-file</module>
     </modules>
 
     <properties>
