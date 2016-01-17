@@ -52,8 +52,8 @@ public class DeconstructAction implements ProjectAction {
     /**
      * Sets the XLSX builder for file assembling.
      *
-     * @param builder
-     *            the XLSX builder
+     * @param normalizer
+     *            the XLSX normalizer
      */
     @Autowired
     public void setXlsxNormalizer(XlsxNormalizer normalizer) {
@@ -63,8 +63,8 @@ public class DeconstructAction implements ProjectAction {
     /**
      * Sets the XLSX normalizer to use when deconstructing the tracker.
      *
-     * @param normalizer
-     *            the XLSX normalizer
+     * @param builder
+     *            the XLSX builder
      */
     @Autowired
     public void setXlsxBuilder(XlsxBuilder builder) {

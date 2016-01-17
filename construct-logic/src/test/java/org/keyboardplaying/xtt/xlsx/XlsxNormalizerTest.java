@@ -23,6 +23,7 @@ import java.io.IOException;
 import org.apache.poi.POIXMLProperties;
 import org.apache.poi.POIXMLProperties.CoreProperties;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -52,15 +53,19 @@ public class XlsxNormalizerTest extends AbstractXlsxTest {
     @Test
     @SuppressWarnings("javadoc")
     public void testNormalizeProperty() throws InvalidFormatException, IOException {
-        // Execute
-        normalizer.normalizeProperties(getReferenceWorkbook());
+        // Prepare
+        try (XSSFWorkbook original = getReferenceWorkbook()) {
 
-        // Assert
-        POIXMLProperties properties = getReferenceWorkbook().getProperties();
-        CoreProperties coreProperties = properties.getCoreProperties();
-        assertEquals(AUTHOR, coreProperties.getCreator());
-        assertEquals(AUTHOR, coreProperties.getUnderlyingProperties().getLastModifiedByProperty().getValue());
-        assertEquals(COMPANY, properties.getExtendedProperties().getCompany());
-        assertEquals(coreProperties.getCreated(), coreProperties.getModified());
+            // Execute
+            normalizer.normalizeProperties(original);
+
+            // Assert
+            POIXMLProperties properties = original.getProperties();
+            CoreProperties coreProperties = properties.getCoreProperties();
+            assertEquals(AUTHOR, coreProperties.getCreator());
+            assertEquals(AUTHOR, coreProperties.getUnderlyingProperties().getLastModifiedByProperty().getValue());
+            assertEquals(COMPANY, properties.getExtendedProperties().getCompany());
+            assertEquals(coreProperties.getCreated(), coreProperties.getModified());
+        }
     }
 }

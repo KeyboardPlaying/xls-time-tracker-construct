@@ -46,19 +46,16 @@ public class XlsxBuilderTest extends AbstractXlsxTest {
     @SuppressWarnings("javadoc")
     public void testWriteWorkbookToTmpFile() throws InvalidFormatException, IOException {
         // Prepare
-        File file;
-        XSSFWorkbook original = getReferenceWorkbook();
+        try (XSSFWorkbook original = getReferenceWorkbook()) {
 
-        // Execute
-        file = builder.writeWorkbookToTmpFile(original);
+            // Execute
+            File file = builder.writeWorkbookToTmpFile(original);
 
-        // Assert
-        // Check file is an unaltered copy
-        try (XSSFWorkbook copy = new XSSFWorkbook(file)) {
-            assertEquals(original.getCTWorkbook().xmlText(), copy.getCTWorkbook().xmlText());
+            // Assert
+            // Check file is an unaltered copy
+            try (XSSFWorkbook copy = new XSSFWorkbook(file)) {
+                assertEquals(original.getCTWorkbook().xmlText(), copy.getCTWorkbook().xmlText());
+            }
         }
-
-        // Clean
-        original.close();
     }
 }
