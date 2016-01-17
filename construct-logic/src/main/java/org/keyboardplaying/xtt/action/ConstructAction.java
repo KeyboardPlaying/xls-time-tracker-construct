@@ -29,6 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class ConstructAction implements ProjectAction {
 
+    @Autowired
     private ProjectLocationHelper locationHelper;
 
     /**
@@ -37,7 +38,6 @@ public class ConstructAction implements ProjectAction {
      * @param locationHelper
      *            the new project location helper
      */
-    @Autowired
     public void setLocationHelper(ProjectLocationHelper locationHelper) {
         this.locationHelper = locationHelper;
     }

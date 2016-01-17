@@ -34,11 +34,16 @@ public class XlsxNormalizer {
 
     private static final int ZOOM_100 = 100;
 
+    @Value("${xlsx.properties.title}")
     private String title;
+    @Value("${xlsx.properties.author}")
     private String author;
+    @Value("${xlsx.properties.company}")
     private String company;
 
+    @Value("${xlsx.cell.tracker}")
     private String trackerActiveRange;
+    @Value("${xlsx.cell.config}")
     private String configActiveRange;
 
     /**
@@ -47,7 +52,6 @@ public class XlsxNormalizer {
      * @param title
      *            the title of the Excel file
      */
-    @Value("${xlsx.properties.title}")
     public void setTitle(String title) {
         this.title = title;
     }
@@ -58,7 +62,6 @@ public class XlsxNormalizer {
      * @param author
      *            the author of the Excel file
      */
-    @Value("${xlsx.properties.author}")
     public void setAuthor(String author) {
         this.author = author;
     }
@@ -69,7 +72,6 @@ public class XlsxNormalizer {
      * @param company
      *            the company of the Excel file
      */
-    @Value("${xlsx.properties.company}")
     public void setCompany(String company) {
         this.company = company;
     }
@@ -80,7 +82,6 @@ public class XlsxNormalizer {
      * @param trackerActiveRange
      *            the tracker sheet
      */
-    @Value("${xlsx.cell.tracker}")
     public void setTrackerActiveRange(String trackerActiveRange) {
         this.trackerActiveRange = trackerActiveRange;
     }
@@ -91,7 +92,6 @@ public class XlsxNormalizer {
      * @param configActiveRange
      *            the configuration sheet
      */
-    @Value("${xlsx.cell.config}")
     public void setConfigActiveRange(String configActiveRange) {
         this.configActiveRange = configActiveRange;
     }

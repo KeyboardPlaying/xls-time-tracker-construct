@@ -28,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class ClearPrefsAction implements ConstructUtilityAction {
 
+    @Autowired
     private PreferencesHelper preferencesHelper;
 
     /**
@@ -36,7 +37,6 @@ public class ClearPrefsAction implements ConstructUtilityAction {
      * @param preferencesHelper
      *            the new preferences helper
      */
-    @Autowired
     public void setPreferencesHelper(PreferencesHelper preferencesHelper) {
         this.preferencesHelper = preferencesHelper;
     }
