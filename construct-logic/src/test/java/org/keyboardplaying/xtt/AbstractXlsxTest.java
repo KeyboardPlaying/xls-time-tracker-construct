@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.keyboardplaying.xtt.xlsx;
+package org.keyboardplaying.xtt;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,7 +34,7 @@ public abstract class AbstractXlsxTest {
     }
 
     protected File getXlsxFile() {
-        return getFile("xlsx_test.xlsx");
+        return getFile("/xlsx/xlsx_test.xlsx");
     }
 
     protected XSSFWorkbook getReferenceWorkbook() throws IOException, InvalidFormatException {

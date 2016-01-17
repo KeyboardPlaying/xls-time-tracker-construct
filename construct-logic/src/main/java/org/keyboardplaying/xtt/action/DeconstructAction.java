@@ -34,19 +34,19 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class DeconstructAction implements ProjectAction {
 
-    private ProjectLocationHelper locationHelper;
+    private ProjectLocationHelper location;
     private XlsxNormalizer normalizer;
     private XlsxBuilder builder;
 
     /**
      * Sets the project location helper for this instance.
      *
-     * @param locationHelper
+     * @param location
      *            the new project location helper
      */
     @Autowired
-    public void setLocationHelper(ProjectLocationHelper locationHelper) {
-        this.locationHelper = locationHelper;
+    public void setLocationHelper(ProjectLocationHelper location) {
+        this.location = location;
     }
 
     /**
@@ -78,7 +78,7 @@ public class DeconstructAction implements ProjectAction {
      */
     @Override
     public void perform() throws ActionException {
-        try (XSSFWorkbook workbook = new XSSFWorkbook(locationHelper.getConstructedFile())) {
+        try (XSSFWorkbook workbook = new XSSFWorkbook(location.getConstructedFile())) {
 
             // Normalize file
             normalizer.normalizeProperties(workbook);
@@ -88,7 +88,7 @@ public class DeconstructAction implements ProjectAction {
             File tmpFile = builder.writeWorkbookToTmpFile(workbook);
 
             // Deconstruct temporary file
-            Unzipper.unzip(tmpFile, locationHelper.getDeconstructedDirectory(), true);
+            Unzipper.unzip(tmpFile, location.getDeconstructedDirectory(), true);
 
             // Do some cleaning
             tmpFile.delete();
