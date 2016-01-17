@@ -99,7 +99,6 @@ public class I18nHelper {
      * @return the associated {@link Locale} or default locale if format is incorrect
      */
     public Locale parseLocale(String locale) {
-        // XXX less compact but more efficient: abandon regex, use substring and indexOf
         Matcher m = Pattern.compile(LOCALE_REGEX).matcher(locale);
         Locale l;
 

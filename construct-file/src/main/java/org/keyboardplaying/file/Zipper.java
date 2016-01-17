@@ -18,7 +18,6 @@ package org.keyboardplaying.file;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URI;
@@ -119,8 +118,7 @@ public final class Zipper {
         }
     }
 
-    private static void zipFile(File in, File zip, boolean roots, boolean dirs)
-            throws IOException, FileNotFoundException {
+    private static void zipFile(File in, File zip, boolean roots, boolean dirs) throws IOException {
         boolean rootIsDirectory = in.isDirectory();
         URI root = (rootIsDirectory && (!dirs || !roots) ? in : in.getParentFile()).toURI();
         List<File> files = Files.listFiles(in, dirs);

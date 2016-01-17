@@ -19,6 +19,8 @@ package org.keyboardplaying.file;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.io.File;
 import java.io.IOException;
@@ -62,6 +64,22 @@ public class ZipperTest extends AbstractFilesTest {
 
         // Execute
         Zipper.zip(in, out);
+    }
+
+    /** Tests unzipping when the deletion of the target directory fails. */
+    @Test(expected = IOException.class)
+    @SuppressWarnings("javadoc")
+    public void testUnremovableTarget() throws IOException {
+        // Prepare
+        File in = getFile(DIR + "xlsx_ref.xlsx");
+        File out = mock(File.class);
+        when(out.exists()).thenReturn(true);
+        when(out.isDirectory()).thenReturn(false);
+        when(out.isFile()).thenReturn(true);
+        when(out.delete()).thenReturn(false);
+
+        // Execute
+        Zipper.zip(in, out, true);
     }
 
     /** Tests zipping a directory. */

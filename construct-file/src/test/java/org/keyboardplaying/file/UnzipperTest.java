@@ -19,6 +19,8 @@ package org.keyboardplaying.file;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,46 +43,87 @@ public class UnzipperTest extends AbstractFilesTest {
 
     /** Tests unzipping when source does not exist. */
     @Test(expected = IllegalArgumentException.class)
-    public void testUnzipFromUnexistingSource() throws IOException {
+    @SuppressWarnings("javadoc")
+    public void testUnzipUnexisting() throws IOException {
+        // Prepare
         File in = new File("something_useless");
         File out = new File("doesnt_matter_wont_exist");
+        // Execute
         Unzipper.unzip(in, out, true);
     }
 
     /** Tests unzipping when source is a directory. */
     @Test(expected = IllegalArgumentException.class)
-    public void testUnzipFromDirectorySource() throws IOException {
+    @SuppressWarnings("javadoc")
+    public void testUnzipDirectory() throws IOException {
+        // Prepare
         File in = getFile(DIR + "xlsx_ref");
         File out = new File("doesnt_matter_wont_exist");
+        // Execute
         Unzipper.unzip(in, out, true);
     }
 
     /** Tests unzipping when target is an existing file. */
     @Test(expected = IllegalArgumentException.class)
-    public void testUnzipToNonDirectoryTarget() throws IOException {
-        File in = getFile(DIR + "xlsx_ref.zip");
+    @SuppressWarnings("javadoc")
+    public void testUnzipToFileTarget() throws IOException {
+        // Prepare
+        File in = getFile(DIR + "xlsx_ref.xlsx.zip");
         File out = getFile(DIR + "xlsx_ref.xlsx");
+
+        // Execute
+        Unzipper.unzip(in, out, true);
+    }
+
+    /** Tests unzipping when the deletion of the target directory fails. */
+    @Test(expected = IOException.class)
+    @SuppressWarnings("javadoc")
+    public void testUnremovableTarget() throws IOException {
+        // Prepare
+        File in = getFile(DIR + "xlsx_ref.zip");
+        File out = mock(File.class);
+        when(out.exists()).thenReturn(true);
+        when(out.isDirectory()).thenReturn(true);
+        when(out.listFiles()).thenReturn(new File[0]);
+        when(out.delete()).thenReturn(false);
+
+        // Execute
         Unzipper.unzip(in, out, true);
     }
 
     /** Tests unzipping a directory. */
     @Test
     @SuppressWarnings("javadoc")
-    public void testUnzipFromDirectory() throws IOException {
+    public void testUnzipOriginalDirectory() throws IOException {
         testUnzip("xlsx_ref.xlsx", "xlsx_test", true, "xlsx_ref");
+    }
+
+    /** Tests unzipping a directory. */
+    @Test
+    @SuppressWarnings("javadoc")
+    public void testUnzipOriginalDirectoryWithDirs() throws IOException {
+        testUnzip("xlsx_ref.zip", "xlsx_test", true, "xlsx_ref");
+    }
+
+    /** Tests unzipping a directory. */
+    @Test
+    @SuppressWarnings("javadoc")
+    public void testUnzipOriginalDirectoryWithRootAndDirs() throws IOException {
+        // FIXME make this one work
+        testUnzip("xlsx_ref.root.zip", "", false, "xlsx_ref.root/xlsx_ref", "xlsx_ref");
     }
 
     /** Tests unzipping a file. */
     @Test
     @SuppressWarnings("javadoc")
-    public void testUnzipFromFile() throws IOException {
+    public void testUnzipOriginalFileInPlace() throws IOException {
         testUnzip("xlsx_ref.xlsx.zip", "", true, "xlsx_ref.xlsx", "xlsx_ref.xlsx");
     }
 
     /** Tests unzipping a file but not in place. */
     @Test
     @SuppressWarnings("javadoc")
-    public void testUnzipFromFileNotInPlace() throws IOException {
+    public void testUnzipOriginalFile() throws IOException {
         testUnzip("xlsx_ref.xlsx.zip", "bis", false, "bis/xlsx_ref.xlsx/xlsx_ref.xlsx", "xlsx_ref.xlsx");
     }
 

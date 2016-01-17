@@ -36,6 +36,19 @@ public final class Unzipper {
     private Unzipper() {
     }
 
+    /**
+     * Unzips a file.
+     *
+     * @param zip
+     *            the zip file
+     * @param target
+     *            the target directory
+     * @param extractHere
+     *            {@code true} to extract the zip content directly under the supplied directory, {@code false} to add a
+     *            folder with the name of the zip
+     * @throws IOException
+     *             if an I/O error occurs
+     */
     public static void unzip(File zip, File target, boolean extractHere) throws IOException {
         // Controls the parameters
         File out = controlParameters(zip, target, extractHere);
@@ -50,25 +63,28 @@ public final class Unzipper {
             // get the zipped file list entry
             ZipEntry ze = zis.getNextEntry();
             while (ze != null) {
-                unzipEntry(ze, zis, out);
+                if (ze.isDirectory()) {
+                    new File(out, ze.getName()).mkdirs();
+                } else {
+                    unzipFileEntry(new File(out, ze.getName()), zis);
+                }
                 ze = zis.getNextEntry();
             }
         }
     }
 
-    private static File controlParameters(File source, File target, boolean extractHere) {
-        Objects.requireNonNull(source, "Source must not be null.");
+    private static File controlParameters(File zip, File target, boolean extractHere) {
+        Objects.requireNonNull(zip, "Source must not be null.");
         Objects.requireNonNull(target, "Target must not be null.");
 
-        if (!source.exists() || !source.isFile()) {
-            throw new IllegalArgumentException(
-                    "Source " + source.getAbsolutePath() + " does not exist or is not a file.");
+        if (!zip.exists() || !zip.isFile()) {
+            throw new IllegalArgumentException("Source " + zip.getAbsolutePath() + " does not exist or is not a file.");
         }
         File out;
         if (extractHere) {
             out = target;
         } else {
-            String zipName = source.getName();
+            String zipName = zip.getName();
             out = new File(target, zipName.substring(0, zipName.lastIndexOf('.')));
         }
         if (out.exists() && !out.isDirectory()) {
@@ -78,9 +94,7 @@ public final class Unzipper {
         return out;
     }
 
-    private static void unzipEntry(ZipEntry ze, ZipInputStream zis, File target) throws IOException {
-        File entry = new File(target, ze.getName());
-
+    private static void unzipFileEntry(File entry, ZipInputStream zis) throws IOException {
         // create all non existing directories
         File destinationDirectory = new File(entry.getParent());
         destinationDirectory.mkdirs();
