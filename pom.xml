@@ -37,7 +37,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Version management - Spring -->
-        <spring.version>4.2.2.RELEASE</spring.version>
+        <spring.version>4.2.4.RELEASE</spring.version>
 
         <!-- Version management - logging -->
         <slf4j.version>1.7.13</slf4j.version>

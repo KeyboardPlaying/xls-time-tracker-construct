@@ -16,10 +16,15 @@
  */
 package org.keyboardplaying.xtt.action;
 
+import java.io.File;
 import java.io.IOException;
 
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.keyboardplaying.file.Unzipper;
 import org.keyboardplaying.xtt.configuration.ProjectLocationHelper;
+import org.keyboardplaying.xtt.xlsx.XlsxBuilder;
+import org.keyboardplaying.xtt.xlsx.XlsxNormalizer;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -30,6 +35,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class DeconstructAction implements ProjectAction {
 
     private ProjectLocationHelper locationHelper;
+    private XlsxNormalizer normalizer;
+    private XlsxBuilder builder;
 
     /**
      * Sets the project location helper for this instance.
@@ -42,6 +49,28 @@ public class DeconstructAction implements ProjectAction {
         this.locationHelper = locationHelper;
     }
 
+    /**
+     * Sets the XLSX builder for file assembling.
+     *
+     * @param builder
+     *            the XLSX builder
+     */
+    @Autowired
+    public void setXlsxNormalizer(XlsxNormalizer normalizer) {
+        this.normalizer = normalizer;
+    }
+
+    /**
+     * Sets the XLSX normalizer to use when deconstructing the tracker.
+     *
+     * @param normalizer
+     *            the XLSX normalizer
+     */
+    @Autowired
+    public void setXlsxBuilder(XlsxBuilder builder) {
+        this.builder = builder;
+    }
+
     /*
      * (non-Javadoc)
      *
@@ -49,9 +78,19 @@ public class DeconstructAction implements ProjectAction {
      */
     @Override
     public void perform() throws ActionException {
-        try {
-            Unzipper.unzip(locationHelper.getConstructedFile(), locationHelper.getDeconstructedDirectory(), true);
-        } catch (IOException e) {
+        try (XSSFWorkbook workbook = new XSSFWorkbook(locationHelper.getConstructedFile())) {
+            // Normalize file
+            normalizer.normalizeProperties(workbook);
+
+            // Create temporary file with normalized XLS
+            File tmpFile = builder.writeWorkbookToTmpFile(workbook);
+
+            // Deconstruct temporary file
+            Unzipper.unzip(tmpFile, locationHelper.getDeconstructedDirectory(), true);
+
+            // Do some cleaning
+            tmpFile.delete();
+        } catch (IOException | InvalidFormatException e) {
             throw new ActionException("action.error.deconstruct", e);
         }
     }

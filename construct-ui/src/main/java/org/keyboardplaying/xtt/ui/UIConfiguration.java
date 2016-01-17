@@ -16,11 +16,16 @@
  */
 package org.keyboardplaying.xtt.ui;
 
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
 import org.keyboardplaying.xtt.ConstructConfiguration;
 import org.keyboardplaying.xtt.action.ClearPrefsAction;
 import org.keyboardplaying.xtt.ui.action.ConfirmClearPrefsAction;
 import org.keyboardplaying.xtt.ui.i18n.I18nHelper;
 import org.keyboardplaying.xtt.ui.icon.ImageLoader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -34,6 +39,19 @@ import org.springframework.context.annotation.Import;
 @Import(ConstructConfiguration.class)
 @SuppressWarnings("javadoc")
 public class UIConfiguration {
+
+    private static final Logger LOG = LoggerFactory.getLogger(UIConfiguration.class);
+
+    /* Apply the system look and feel. */
+    static {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                | UnsupportedLookAndFeelException e) {
+            // this is no custom look and feel
+            LOG.warn("An error occurred while loading the system look and feel.", e);
+        }
+    }
 
     @Bean
     public I18nHelper i18nHelper() {

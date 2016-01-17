@@ -18,11 +18,11 @@ package org.keyboardplaying.xtt.xlsx;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.File;
 import java.io.IOException;
 
-import org.apache.poi.POIXMLProperties;
-import org.apache.poi.POIXMLProperties.CoreProperties;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,36 +31,34 @@ import org.junit.Test;
  *
  * @author Cyrille Chopelet (https://keyboardplaying.org)
  */
-public class XlsxNormalizerTest extends AbstractXlsxTest {
+public class XlsxBuilderTest extends AbstractXlsxTest {
 
-    private static final String AUTHOR = "Author";
-    private static final String COMPANY = "Company";
-    private static final String TITLE = "Title";
-
-    private XlsxNormalizer normalizer;
+    private XlsxBuilder builder;
 
     /** Prepares the normalizer for tests. */
     @Before
     public void init() {
-        normalizer = new XlsxNormalizer();
-        normalizer.setAuthor(AUTHOR);
-        normalizer.setCompany(COMPANY);
-        normalizer.setTitle(TITLE);
+        builder = new XlsxBuilder();
     }
 
-    /** Tests the properties normalization. */
+    /** Tests {@link XlsxBuilder#writeWorkbookToTmpFile(XSSFWorkbook)}. */
     @Test
     @SuppressWarnings("javadoc")
-    public void testNormalizeProperty() throws InvalidFormatException, IOException {
+    public void testWriteWorkbookToTmpFile() throws InvalidFormatException, IOException {
+        // Prepare
+        File file;
+        XSSFWorkbook original = getReferenceWorkbook();
+
         // Execute
-        normalizer.normalizeProperties(getReferenceWorkbook());
+        file = builder.writeWorkbookToTmpFile(original);
 
         // Assert
-        POIXMLProperties properties = getReferenceWorkbook().getProperties();
-        CoreProperties coreProperties = properties.getCoreProperties();
-        assertEquals(AUTHOR, coreProperties.getCreator());
-        assertEquals(AUTHOR, coreProperties.getUnderlyingProperties().getLastModifiedByProperty().getValue());
-        assertEquals(COMPANY, properties.getExtendedProperties().getCompany());
-        assertEquals(coreProperties.getCreated(), coreProperties.getModified());
+        // Check file is an unaltered copy
+        try (XSSFWorkbook copy = new XSSFWorkbook(file)) {
+            assertEquals(original.getCTWorkbook().xmlText(), copy.getCTWorkbook().xmlText());
+        }
+
+        // Clean
+        original.close();
     }
 }

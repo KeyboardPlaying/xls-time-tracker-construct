@@ -14,41 +14,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.keyboardplaying.xtt.util;
+package org.keyboardplaying.xtt.xlsx;
 
 import java.io.File;
+import java.io.IOException;
+
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
- * File utilities for testing.
+ * A utility to easily access the reference XLSX file for testing.
  *
  * @author Cyrille Chopelet (https://keyboardplaying.org)
  */
-@Deprecated
-public class FileTestUtil {
+public abstract class AbstractXlsxTest {
 
-    /**
-     * Shortcut method to get a file path based on {@link Class#getResource(String)}.
-     *
-     * @param c
-     *            the class
-     * @param name
-     *            name of the desired file or directory
-     * @return the path to the file or directory
-     */
-    public static String getPath(Class<?> c, String name) {
-        return c.getResource(name).getPath();
+    protected File getFile(String name) {
+        return new File(getClass().getResource(name).getPath());
     }
 
-    /**
-     * Shortcut method to get a file or directory based on {@link Class#getResource(String)}.
-     *
-     * @param c
-     *            the class
-     * @param name
-     *            name of the desired file or directory
-     * @return the file or directory
-     */
-    public static File getFile(Class<?> c, String name) {
-        return new File(getPath(c, name));
+    protected File getXlsxFile() {
+        return getFile("xlsx_test.xlsx");
+    }
+
+    protected XSSFWorkbook getReferenceWorkbook() throws IOException, InvalidFormatException {
+        XSSFWorkbook workbook = new XSSFWorkbook(getXlsxFile());
+        return workbook;
     }
 }

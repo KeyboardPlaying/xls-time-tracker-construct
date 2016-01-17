@@ -39,7 +39,7 @@ public class XlsxNormalizer {
      * @param title
      *            the title of the Excel file
      */
-    @Value("${xlsx.title}")
+    @Value("${xlsx.properties.title}")
     public void setTitle(String title) {
         this.title = title;
     }
@@ -50,7 +50,7 @@ public class XlsxNormalizer {
      * @param author
      *            the author of the Excel file
      */
-    @Value("${xlsx.author}")
+    @Value("${xlsx.properties.author}")
     public void setAuthor(String author) {
         this.author = author;
     }
@@ -61,7 +61,7 @@ public class XlsxNormalizer {
      * @param company
      *            the company of the Excel file
      */
-    @Value("${xlsx.company}")
+    @Value("${xlsx.properties.company}")
     public void setCompany(String company) {
         this.company = company;
     }

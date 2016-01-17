@@ -16,39 +16,31 @@
  */
 package org.keyboardplaying.xtt;
 
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-
 import org.keyboardplaying.xtt.action.ClearPrefsAction;
 import org.keyboardplaying.xtt.action.ConstructAction;
 import org.keyboardplaying.xtt.action.DeconstructAction;
 import org.keyboardplaying.xtt.configuration.PreferencesHelper;
 import org.keyboardplaying.xtt.configuration.ProjectLocationHelper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.keyboardplaying.xtt.xlsx.XlsxBuilder;
+import org.keyboardplaying.xtt.xlsx.XlsxNormalizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 /**
  * The configuration of the logic module of the construct application.
  *
  * @author Cyrille Chopelet (https://keyboardplaying.org)
  */
-@Configuration
 @SuppressWarnings("javadoc")
+@Configuration
+@PropertySource("classpath:context.properties")
 public class ConstructConfiguration {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ConstructConfiguration.class);
-
-    /* Apply the system look and feel. */
-    static {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-                | UnsupportedLookAndFeelException e) {
-            // this is no custom look and feel
-            LOG.warn("An error occurred while loading the system look and feel.", e);
-        }
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertyConfigInDev() {
+        return new PropertySourcesPlaceholderConfigurer();
     }
 
     @Bean
@@ -59,6 +51,16 @@ public class ConstructConfiguration {
     @Bean
     public ProjectLocationHelper locationHelper() {
         return new ProjectLocationHelper();
+    }
+
+    @Bean
+    public XlsxBuilder xlsxBuilder() {
+        return new XlsxBuilder();
+    }
+
+    @Bean
+    public XlsxNormalizer xlsxNormalizer() {
+        return new XlsxNormalizer();
     }
 
     @Bean
