@@ -18,7 +18,9 @@ package org.keyboardplaying.xtt.xlsx;
 
 import org.apache.poi.POIXMLProperties;
 import org.apache.poi.POIXMLProperties.CoreProperties;
+import org.apache.poi.hssf.util.PaneInformation;
 import org.apache.poi.openxml4j.util.Nullable;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -32,6 +34,8 @@ public class XlsxNormalizer {
     private String title;
     private String author;
     private String company;
+    private String trackerActiveRange;
+    private String configActiveRange;
 
     /**
      * Sets the title to use for the Excel file's properties.
@@ -67,6 +71,28 @@ public class XlsxNormalizer {
     }
 
     /**
+     * Sets the active range for the tracker sheet.
+     *
+     * @param trackerActiveRange
+     *            the tracker sheet
+     */
+    @Value("${xlsx.cell.tracker}")
+    public void setTrackerActiveRange(String trackerActiveRange) {
+        this.trackerActiveRange = trackerActiveRange;
+    }
+
+    /**
+     * Sets the active range for the configuration sheet.
+     *
+     * @param configActiveRange
+     *            the configuration sheet
+     */
+    @Value("${xlsx.cell.config}")
+    public void setConfigActiveRange(String configActiveRange) {
+        this.configActiveRange = configActiveRange;
+    }
+
+    /**
      * Normalizes the time tracker workbook's properties to avoid unrequired changes in the SCM repository.
      * <p/>
      * This sets the author, company and title with the properties of the instance, and resets the last modification
@@ -89,5 +115,31 @@ public class XlsxNormalizer {
 
         // Don't save last modification date
         coreProperties.setModified(new Nullable<>(coreProperties.getCreated()));
+    }
+
+    /**
+     * Normalizes the time tracker workbook's selected sheet and cells and applies some styling.
+     *
+     * @param workbook
+     *            the workbook to normalize
+     */
+    public void normalizeSheets(XSSFWorkbook workbook) {
+        normalizeSheet(workbook.getSheetAt(XlsxTracker.TAB_INDEX_TRACKER), trackerActiveRange);
+        normalizeSheet(workbook.getSheetAt(XlsxTracker.TAB_INDEX_CONFIG), configActiveRange);
+        workbook.setActiveSheet(XlsxTracker.TAB_INDEX_TRACKER);
+    }
+
+    private void normalizeSheet(XSSFSheet sheet, String activeRange) {
+        sheet.setActiveCell(activeRange); // FIXME reset selection when the target cell is in a merged range
+        sheet.setZoom(100);
+        PaneInformation pane = sheet.getPaneInformation();
+        if (pane == null) {
+            sheet.showInPane(0, 0);
+            // FIXME reset position when there is no pane
+        } else {
+            sheet.showInPane((int) pane.getHorizontalSplitPosition(), (int) pane.getVerticalSplitPosition());
+        }
+        sheet.setDisplayGridlines(false);
+        sheet.setSelected(false);
     }
 }

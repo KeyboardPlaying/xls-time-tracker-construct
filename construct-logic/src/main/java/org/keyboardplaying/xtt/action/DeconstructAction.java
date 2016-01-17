@@ -79,8 +79,10 @@ public class DeconstructAction implements ProjectAction {
     @Override
     public void perform() throws ActionException {
         try (XSSFWorkbook workbook = new XSSFWorkbook(locationHelper.getConstructedFile())) {
+
             // Normalize file
             normalizer.normalizeProperties(workbook);
+            normalizer.normalizeSheets(workbook);
 
             // Create temporary file with normalized XLS
             File tmpFile = builder.writeWorkbookToTmpFile(workbook);
