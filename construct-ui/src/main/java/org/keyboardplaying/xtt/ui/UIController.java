@@ -22,18 +22,14 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import org.keyboardplaying.xtt.action.Action;
@@ -47,14 +43,13 @@ import org.keyboardplaying.xtt.configuration.ProjectLocationHelper;
 import org.keyboardplaying.xtt.configuration.ProjectLocationHelper.UpdateListener;
 import org.keyboardplaying.xtt.ui.action.ConfirmClearPrefsAction;
 import org.keyboardplaying.xtt.ui.components.LocaleComboBox;
+import org.keyboardplaying.xtt.ui.components.ProjectButtonChooser;
 import org.keyboardplaying.xtt.ui.components.ProjectTextFieldChooser;
 import org.keyboardplaying.xtt.ui.i18n.I18nHelper;
 import org.keyboardplaying.xtt.ui.i18n.swing.I14edJButton;
 import org.keyboardplaying.xtt.ui.i18n.swing.I14edJFrame;
 import org.keyboardplaying.xtt.ui.icon.ImageLoader;
 import org.keyboardplaying.xtt.ui.icon.ImageSize;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -63,14 +58,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class UIController {
 
     @Autowired
-    private I18nHelper i18nHelper;
+    private I18nHelper i18n;
     @Autowired
-    private ImageLoader imageLoader;
+    private ImageLoader images;
 
     @Autowired
-    private PreferencesHelper preferencesHelper;
+    private PreferencesHelper prefs;
     @Autowired
-    private ProjectLocationHelper locationHelper;
+    private ProjectLocationHelper location;
 
     @Autowired
     private ConstructAction constructAction;
@@ -94,7 +89,7 @@ public class UIController {
      *            the new i18nHelper
      */
     public void setI18nHelper(I18nHelper i18nHelper) {
-        this.i18nHelper = i18nHelper;
+        this.i18n = i18nHelper;
     }
 
     /**
@@ -104,7 +99,7 @@ public class UIController {
      *            the new imageLoader
      */
     public void setImageLoader(ImageLoader imageLoader) {
-        this.imageLoader = imageLoader;
+        this.images = imageLoader;
     }
 
     /**
@@ -114,7 +109,7 @@ public class UIController {
      *            the new preferencesHelper
      */
     public void setPreferencesHelper(PreferencesHelper preferencesHelper) {
-        this.preferencesHelper = preferencesHelper;
+        this.prefs = preferencesHelper;
     }
 
     /**
@@ -124,7 +119,7 @@ public class UIController {
      *            the new locationHelper
      */
     public void setLocationHelper(ProjectLocationHelper locationHelper) {
-        this.locationHelper = locationHelper;
+        this.location = locationHelper;
     }
 
     /**
@@ -170,7 +165,7 @@ public class UIController {
     /** Starts the UI. */
     public void startUI() {
         showMainWindow();
-        if (!preferencesHelper.wasInitialized()) {
+        if (!prefs.wasInitialized()) {
             showSettingsWindow();
         }
     }
@@ -239,21 +234,21 @@ public class UIController {
         c.gridy = 0;
         c.gridwidth = 2;
         c.fill = GridBagConstraints.BOTH;
-        pane.add(makeProjectTextChooser(), c);
+        pane.add(new ProjectTextFieldChooser(location), c);
 
         // project directory (button)
         c = new GridBagConstraints();
         c.gridx = 2;
         c.gridy = 0;
         c.fill = GridBagConstraints.BOTH;
-        pane.add(makeProjectBtnChooser(), c);
+        pane.add(new ProjectButtonChooser(images, i18n, location), c);
 
         // Locale (icon)
         c = new GridBagConstraints();
         c.gridx = 0;
         c.gridy = 1;
         c.fill = GridBagConstraints.BOTH;
-        pane.add(new JLabel(new ImageIcon(imageLoader.getImage("image-prefs-locale", ImageSize.W_16))), c);
+        pane.add(new JLabel(new ImageIcon(images.getImage("image-prefs-locale", ImageSize.W_16))), c);
 
         // Locale (combo)
         c = new GridBagConstraints();
@@ -261,7 +256,7 @@ public class UIController {
         c.gridy = 1;
         c.gridwidth = 2;
         c.fill = GridBagConstraints.BOTH;
-        pane.add(new LocaleComboBox(i18nHelper), c);
+        pane.add(new LocaleComboBox(i18n), c);
 
         // Clear preferences
         c = new GridBagConstraints();
@@ -274,29 +269,10 @@ public class UIController {
         makeWindow("app.settings", "icon-settings", pane).setVisible(true);
     }
 
-    private ProjectTextFieldChooser makeProjectTextChooser() {
-        return new ProjectTextFieldChooser(locationHelper);
-    }
-
-    private JButton makeProjectBtnChooser() {
-        JButton btn = makeIconButton(null, "action-search-folder", ImageSize.W_16);
-        btn.addActionListener(new ProjectDirectoryChooserListener(btn, makeDirectoryChooser(), locationHelper));
-        return btn;
-    }
-
-    private JFileChooser makeDirectoryChooser() {
-        JFileChooser chooser = new JFileChooser();
-        chooser.setCurrentDirectory(locationHelper.getProjectLocation());
-        chooser.setDialogTitle(i18nHelper.getMessage("project.directory.select"));
-        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        chooser.setAcceptAllFileFilterUsed(false);
-        return chooser;
-    }
-
     private Window makeWindow(String titleKey, String iconKey, Container content) {
         /* The basics. */
-        JFrame window = new I14edJFrame(i18nHelper, titleKey);
-        window.setIconImages(imageLoader.getImages(iconKey));
+        JFrame window = new I14edJFrame(i18n, titleKey);
+        window.setIconImages(images.getImages(iconKey));
         /* Make sure thread is ended when window is closed. */
         window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -310,48 +286,20 @@ public class UIController {
     }
 
     private JButton makeIconButton(String textKey, String iconKey, ImageSize iconSize) {
-        Image icon = imageLoader.getImage(iconKey, iconSize);
-
-        if (textKey == null) {
-            return new JButton(new ImageIcon(icon));
-        }
-
-        return new I14edJButton(i18nHelper, textKey, icon != null ? new ImageIcon(icon) : null);
+        Image icon = images.getImage(iconKey, iconSize);
+        return new I14edJButton(i18n, textKey, icon != null ? new ImageIcon(icon) : null);
     }
 
     private <T extends Action> JButton makeActionButton(String textKey, String iconKey, ImageSize iconSize, T action) {
         JButton btn = makeIconButton(textKey, iconKey, iconSize);
-        btn.addActionListener(new ActionExecutor<>(action, i18nHelper));
+        btn.addActionListener(new ActionExecutor<>(action, i18n));
         return btn;
     }
 
     private JButton makeProjectActionButton(String textKey, String iconKey, ImageSize iconSize, ProjectAction action) {
         JButton btn = makeActionButton(textKey, iconKey, iconSize, action);
-        locationHelper.registerForUpdate(new ProjectButtonListener(btn));
+        location.registerForUpdate(new ProjectButtonListener(btn));
         return btn;
-    }
-
-    private static class ProjectDirectoryChooserListener implements ActionListener {
-
-        private final JButton btn;
-        private final JFileChooser chooser;
-
-        private final ProjectLocationHelper locationHelper;
-
-        public ProjectDirectoryChooserListener(JButton btn, JFileChooser chooser,
-                ProjectLocationHelper locationHelper) {
-            super();
-            this.btn = btn;
-            this.chooser = chooser;
-            this.locationHelper = locationHelper;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (chooser.showOpenDialog(btn) == JFileChooser.APPROVE_OPTION) {
-                locationHelper.setProjectLocation(chooser.getSelectedFile());
-            }
-        }
     }
 
     private static class ProjectButtonListener implements UpdateListener {
@@ -364,48 +312,6 @@ public class UIController {
         @Override
         public void notifyLocationUpdate(File location, boolean valid) {
             btn.setEnabled(valid);
-        }
-    }
-
-    private static class ActionExecutor<T extends Action> implements ActionListener {
-
-        private static final Logger LOG = LoggerFactory.getLogger(ActionExecutor.class);
-
-        private final T action;
-        private final I18nHelper i18n;
-
-        public ActionExecutor(T action, I18nHelper i18n) {
-            this.action = action;
-            this.i18n = i18n;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            try {
-                action.perform();
-            } catch (ActionException ex) {
-                displayActionError(i18n.getMessage(ex.getMessageKey()), ex.getCause());
-                LOG.error(ex.getMessage(), ex);
-            } catch (RuntimeException ex) {
-                displayActionError(i18n.getMessage("action.error.unexpected"), ex);
-                LOG.error(ex.getMessage(), ex);
-            }
-        }
-
-        private void displayActionError(String message, Throwable cause) {
-            StringBuilder msg = new StringBuilder(message);
-            if (cause != null) {
-                msg.append('\n').append('\n').append(cause.getClass().getName());
-                String causeMsg = cause.getMessage();
-                if (causeMsg != null && causeMsg.trim().length() != 0) {
-                    msg.append('\n').append('\n').append(causeMsg);
-                }
-                JOptionPane.showMessageDialog(null, msg.toString(), i18n.getMessage("action.error.title.error"),
-                        JOptionPane.ERROR_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(null, msg.toString(), i18n.getMessage("action.error.title.failure"),
-                        JOptionPane.WARNING_MESSAGE);
-            }
         }
     }
 }

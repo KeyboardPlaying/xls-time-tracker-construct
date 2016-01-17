@@ -45,7 +45,7 @@ public class I14edJButton extends JButton implements I14ed {
      *            the Icon image to display on the button
      */
     public I14edJButton(I18nHelper i18n, String textKey, Icon icon) {
-        super(i18n.getMessage(textKey), icon);
+        super(textKey == null ? null : i18n.getMessage(textKey), icon);
         this.textKey = textKey;
         i18n.register(this);
     }
@@ -59,7 +59,7 @@ public class I14edJButton extends JButton implements I14ed {
      *            the key for the text of the button
      */
     public I14edJButton(I18nHelper i18n, String textKey) {
-        super(i18n.getMessage(textKey));
+        super(textKey == null ? null : i18n.getMessage(textKey));
         this.textKey = textKey;
         i18n.register(this);
     }

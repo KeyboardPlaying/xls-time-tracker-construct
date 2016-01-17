@@ -53,7 +53,7 @@ public class ProjectTextFieldChooser extends JTextField implements DocumentListe
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * org.keyboardplaying.xtt.configuration.ProjectLocationHelper.UpdateListener#notifyLocationUpdate(java.io.File,
      * boolean)
