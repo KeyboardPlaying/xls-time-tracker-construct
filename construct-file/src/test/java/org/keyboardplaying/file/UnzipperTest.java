@@ -29,6 +29,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.junit.Test;
+import org.keyboardplaying.AbstractFilesTest;
 
 /**
  * Test class for {@link Unzipper}.

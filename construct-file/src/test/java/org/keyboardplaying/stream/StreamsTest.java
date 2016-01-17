@@ -27,7 +27,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 
 import org.junit.Test;
-import org.keyboardplaying.file.AbstractFilesTest;
+import org.keyboardplaying.AbstractFilesTest;
 
 /**
  * Test for {@link Streams}.

@@ -40,6 +40,17 @@
         </dependency>
 
         <!--<![CDATA[
+             ___  ___ ___
+            | _ \/ _ \_ _|
+            |  _/ (_) | |
+            |_|  \___/___| ]]>-->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>${poi.version}</version>
+        </dependency>
+
+        <!--<![CDATA[
               _
              | |   ___  __ _
              | |__/ _ \/ _` |

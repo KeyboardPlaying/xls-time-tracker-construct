@@ -32,6 +32,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import org.junit.Test;
+import org.keyboardplaying.AbstractFilesTest;
 
 /**
  * Test class for {@link Files}.

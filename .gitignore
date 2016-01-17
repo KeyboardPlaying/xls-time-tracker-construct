@@ -3,6 +3,8 @@
 pom.xml.*
 release.properties
 
+*.log
+
 ## IDE ##
 
 # Cloud9
