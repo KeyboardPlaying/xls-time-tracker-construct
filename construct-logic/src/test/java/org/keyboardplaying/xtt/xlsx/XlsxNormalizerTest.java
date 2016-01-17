@@ -24,6 +24,7 @@ import java.io.IOException;
 import org.apache.poi.POIXMLProperties;
 import org.apache.poi.POIXMLProperties.CoreProperties;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.util.CellAddress;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.Before;
@@ -39,7 +40,7 @@ public class XlsxNormalizerTest extends AbstractXlsxTest {
     private static final String AUTHOR = "Author";
     private static final String COMPANY = "Company";
     private static final String TITLE = "Title";
-    private static final String ACTIVE_TRACKER = "A1:A2";
+    private static final String ACTIVE_TRACKER = "A1";
     private static final String ACTIVE_CONFIG = "C2";
 
     private XlsxNormalizer normalizer;
@@ -86,19 +87,19 @@ public class XlsxNormalizerTest extends AbstractXlsxTest {
             normalizer.normalizeSheets(workbook);
 
             // Assert
-            XSSFSheet sheet;
-
-            sheet = workbook.getSheetAt(XlsxTracker.TAB_INDEX_TRACKER);
-            assertEquals(ACTIVE_TRACKER, sheet.getActiveCell());
-            assertFalse(sheet.isDisplayGridlines());
-            assertFalse(sheet.isSelected());
-
-            sheet = workbook.getSheetAt(XlsxTracker.TAB_INDEX_CONFIG);
-            assertEquals(ACTIVE_CONFIG, sheet.getActiveCell());
-            assertFalse(sheet.isDisplayGridlines());
-            assertFalse(sheet.isSelected());
+            controlSheet(workbook, ACTIVE_TRACKER, XlsxTracker.TAB_INDEX_TRACKER);
+            controlSheet(workbook, ACTIVE_CONFIG, XlsxTracker.TAB_INDEX_CONFIG);
 
             assertEquals(XlsxTracker.TAB_INDEX_TRACKER, workbook.getActiveSheetIndex());
         }
+    }
+
+    private void controlSheet(XSSFWorkbook workbook, String range, int sheetIndex) {
+        XSSFSheet sheet = workbook.getSheetAt(sheetIndex);
+        assertEquals(new CellAddress(range), sheet.getActiveCell());
+        assertEquals(0, sheet.getTopRow());
+        assertEquals(0, sheet.getLeftCol());
+        assertFalse(sheet.isDisplayGridlines());
+        assertFalse(sheet.isSelected());
     }
 }

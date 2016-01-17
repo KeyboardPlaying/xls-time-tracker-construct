@@ -20,6 +20,7 @@ import org.apache.poi.POIXMLProperties;
 import org.apache.poi.POIXMLProperties.CoreProperties;
 import org.apache.poi.hssf.util.PaneInformation;
 import org.apache.poi.openxml4j.util.Nullable;
+import org.apache.poi.ss.util.CellAddress;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,9 +32,12 @@ import org.springframework.beans.factory.annotation.Value;
  */
 public class XlsxNormalizer {
 
+    private static final int ZOOM_100 = 100;
+
     private String title;
     private String author;
     private String company;
+
     private String trackerActiveRange;
     private String configActiveRange;
 
@@ -130,16 +134,26 @@ public class XlsxNormalizer {
     }
 
     private void normalizeSheet(XSSFSheet sheet, String activeRange) {
-        sheet.setActiveCell(activeRange); // FIXME reset selection when the target cell is in a merged range
-        sheet.setZoom(100);
-        PaneInformation pane = sheet.getPaneInformation();
-        if (pane == null) {
-            sheet.showInPane(0, 0);
-            // FIXME reset position when there is no pane
-        } else {
-            sheet.showInPane((int) pane.getHorizontalSplitPosition(), (int) pane.getVerticalSplitPosition());
-        }
+        updateSheetPosition(sheet);
+        sheet.setZoom(ZOOM_100);
         sheet.setDisplayGridlines(false);
         sheet.setSelected(false);
+
+        setSheetActiveRange(sheet, activeRange);
+    }
+
+    private void setSheetActiveRange(XSSFSheet sheet, String activeRange) {
+        sheet.setActiveCell(new CellAddress(activeRange)); // FIXME doesn't work when cell is merged
+    }
+
+    private void updateSheetPosition(XSSFSheet sheet) {
+        PaneInformation pane = sheet.getPaneInformation();
+        if (pane == null) {
+            sheet.getTopRow();
+            sheet.showInPane(0, 0);
+            // FIXME doesn't work when there is no pane
+        } else {
+            sheet.showInPane(pane.getHorizontalSplitPosition(), pane.getVerticalSplitPosition());
+        }
     }
 }
