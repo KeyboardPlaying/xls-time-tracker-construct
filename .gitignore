@@ -16,3 +16,8 @@ release.properties
 /*/.project
 /.settings/
 /.project
+
+# IntelliJ
+.idea
+*.iml
+
