@@ -149,9 +149,8 @@ public class XlsxNormalizer {
     private void updateSheetPosition(XSSFSheet sheet) {
         PaneInformation pane = sheet.getPaneInformation();
         if (pane == null) {
-            sheet.getTopRow();
-            sheet.showInPane(0, 0);
             // FIXME doesn't work when there is no pane
+            sheet.showInPane(CellAddress.A1.getRow(), CellAddress.A1.getColumn());
         } else {
             sheet.showInPane(pane.getHorizontalSplitPosition(), pane.getVerticalSplitPosition());
         }
