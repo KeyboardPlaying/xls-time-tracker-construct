@@ -27,6 +27,14 @@ import org.keyboardplaying.xtt.ui.i18n.I18nHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * An {@link ActionListener} that executes an {@link Action}.
+ *
+ * @author Cyrille Chopelet (https://keyboardplaying.org)
+ *
+ * @param <T>
+ *            the type of action to execute
+ */
 public class ActionExecutor<T extends Action> implements ActionListener {
 
     private static final Logger LOG = LoggerFactory.getLogger(ActionExecutor.class);
@@ -34,6 +42,14 @@ public class ActionExecutor<T extends Action> implements ActionListener {
     private final T action;
     private final I18nHelper i18n;
 
+    /**
+     * Creates a new instance.
+     *
+     * @param action
+     *            the action to execute
+     * @param i18n
+     *            the internationalization helper
+     */
     public ActionExecutor(T action, I18nHelper i18n) {
         this.action = action;
         this.i18n = i18n;
@@ -41,7 +57,7 @@ public class ActionExecutor<T extends Action> implements ActionListener {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     @Override
