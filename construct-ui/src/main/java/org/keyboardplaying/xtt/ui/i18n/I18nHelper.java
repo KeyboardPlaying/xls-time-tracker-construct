@@ -41,7 +41,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class I18nHelper {
 
     /** The key the locale is stored under in the preferences. */
-    protected static final String LOCALE_PREFKEY = "project.dir";
+    protected static final String LOCALE_PREFKEY = "locale";
 
     private static final Logger LOG = LoggerFactory.getLogger(I18nHelper.class);
 
