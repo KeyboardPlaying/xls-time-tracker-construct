@@ -134,23 +134,22 @@ public class XlsxNormalizer {
     }
 
     private void normalizeSheet(XSSFSheet sheet, String activeRange) {
-        updateSheetPosition(sheet);
         sheet.setZoom(ZOOM_100);
         sheet.setDisplayGridlines(false);
         sheet.setSelected(false);
 
-        setSheetActiveRange(sheet, activeRange);
-    }
-
-    private void setSheetActiveRange(XSSFSheet sheet, String activeRange) {
-        sheet.setActiveCell(new CellAddress(activeRange)); // FIXME doesn't work when cell is merged
-    }
-
-    private void updateSheetPosition(XSSFSheet sheet) {
         PaneInformation pane = sheet.getPaneInformation();
         if (pane == null) {
+            /* Reset cell */
+            sheet.setActiveCell(new CellAddress(activeRange));
+            /* Reset view */
             sheet.getCTWorksheet().getSheetViews().getSheetViewArray(0).setTopLeftCell(CellAddress.A1.formatAsString());
         } else {
+            /* Reset cell */
+            sheet.createFreezePane(0, 0); // Remove panes
+            sheet.setActiveCell(new CellAddress(activeRange));
+            sheet.createFreezePane(pane.getVerticalSplitLeftColumn(), pane.getHorizontalSplitTopRow()); // Reset panes
+            /* Reset view */
             sheet.showInPane(pane.getHorizontalSplitPosition(), pane.getVerticalSplitPosition());
         }
     }
