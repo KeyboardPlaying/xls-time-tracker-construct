@@ -17,9 +17,10 @@
 package org.keyboardplaying.xtt.action;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.keyboardplaying.file.Unzipper;
 import org.keyboardplaying.xtt.configuration.ProjectLocationHelper;
@@ -78,7 +79,8 @@ public class DeconstructAction implements ProjectAction {
      */
     @Override
     public void perform() throws ActionException {
-        try (XSSFWorkbook workbook = new XSSFWorkbook(location.getConstructedFile())) {
+        try (InputStream in = new FileInputStream(location.getConstructedFile());
+                XSSFWorkbook workbook = new XSSFWorkbook(in)) {
 
             // Normalize file
             normalizer.normalizeProperties(workbook);
@@ -92,7 +94,7 @@ public class DeconstructAction implements ProjectAction {
 
             // Do some cleaning
             tmpFile.delete();
-        } catch (IOException | InvalidFormatException e) {
+        } catch (IOException e) {
             throw new ActionException("action.error.deconstruct", e);
         }
     }
