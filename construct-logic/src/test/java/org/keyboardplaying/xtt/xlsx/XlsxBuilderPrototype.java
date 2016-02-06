@@ -3,10 +3,15 @@ package org.keyboardplaying.xtt.xlsx;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.poi.ss.usermodel.CellCopyPolicy;
+import org.apache.poi.ss.usermodel.ConditionalFormatting;
+import org.apache.poi.ss.util.CellReference;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFSheetConditionalFormatting;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.joda.time.DateTimeConstants;
 import org.joda.time.LocalDate;
@@ -21,8 +26,10 @@ public class XlsxBuilderPrototype {
 
     private static final int NB_HEADER_ROWS = 2;
 
-    private static final int COLUMN_MONTH = 20;
-    private static final int COLUMN_DAY = 21;
+    private static final int COLUMN_MONTH = CellReference.convertColStringToIndex("U");
+    private static final int COLUMN_DAY = CellReference.convertColStringToIndex("V");
+    private static final int COLUMN_TECHNICAL_FIRST = CellReference.convertColStringToIndex("U");
+    private static final int COLUMN_TECHNICAL_LAST = CellReference.convertColStringToIndex("AB");
 
     @Test
     @SuppressWarnings("javadoc")
@@ -34,9 +41,18 @@ public class XlsxBuilderPrototype {
             final int startRow = monthRow + 1;
 
             XSSFSheet sheet = wb.getSheet("Timesheet");
+
+            /* Save and remove conditional formatting */
+            List<ConditionalFormatting> formattingRules = new ArrayList<>();
+            XSSFSheetConditionalFormatting formatting = sheet.getSheetConditionalFormatting();
+            for (int i = formatting.getNumConditionalFormattings() - 1; i >= 0; i--) {
+                formattingRules.add(formatting.getConditionalFormattingAt(i));
+                formatting.removeConditionalFormatting(i);
+            }
+
+            /* Prepare tracker rows */
             int currentYear = 2016;
             LocalDate dt = new LocalDate(currentYear, DateTimeConstants.JANUARY, 1);
-
             int r = startRow;
             final CellCopyPolicy policy = new CellCopyPolicy.Builder().build();
             while (dt.year().get() == currentYear) {
@@ -45,6 +61,13 @@ public class XlsxBuilderPrototype {
                 dt = dt.plusMonths(1);
             }
 
+            /* TODO Remove two first rows */
+
+            /* TODO Apply conditional formatting */
+
+            /* TODO Hide technical columns */
+
+            /* Write output file */
             File out = new File("tracker-test.xlsx");
             wb.write(new FileOutputStream(out));
             wb.close();
