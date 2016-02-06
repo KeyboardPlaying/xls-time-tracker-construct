@@ -43,10 +43,10 @@ public class XlsxBuilderPrototype {
             XSSFSheet sheet = wb.getSheet("Timesheet");
 
             /* Save and remove conditional formatting */
-            List<ConditionalFormatting> formattingRules = new ArrayList<>();
+            List<ConditionalFormatting> formats = new ArrayList<>();
             XSSFSheetConditionalFormatting formatting = sheet.getSheetConditionalFormatting();
             for (int i = formatting.getNumConditionalFormattings() - 1; i >= 0; i--) {
-                formattingRules.add(formatting.getConditionalFormattingAt(i));
+                formats.add(formatting.getConditionalFormattingAt(i));
                 formatting.removeConditionalFormatting(i);
             }
 
@@ -61,9 +61,22 @@ public class XlsxBuilderPrototype {
                 dt = dt.plusMonths(1);
             }
 
-            /* TODO Remove two first rows */
+            /* Remove two first rows */
+            sheet.shiftRows(startRow, sheet.getLastRowNum(), dayRow - startRow);
 
             /* TODO Apply conditional formatting */
+            // final int lastRow = sheet.getLastRowNum();
+            // for (ConditionalFormatting format : formats) {
+            // CellRangeAddress[] ranges = format.getFormattingRanges();
+            // for (CellRangeAddress range : ranges) {
+            // range.setLastRow(lastRow);
+            // }
+            // final int nbRules = format.getNumberOfRules();
+            // for (int i = 0; i < nbRules; i++) {
+            // ConditionalFormattingRule rule = format.getRule(i);
+            // formatting.addConditionalFormatting(ranges, rule);
+            // }
+            // }
 
             /* TODO Hide technical columns */
 
