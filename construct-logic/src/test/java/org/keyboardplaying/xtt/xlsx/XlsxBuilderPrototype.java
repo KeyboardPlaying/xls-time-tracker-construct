@@ -3,12 +3,12 @@ package org.keyboardplaying.xtt.xlsx;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.poi.ss.usermodel.CellCopyPolicy;
-import org.apache.poi.ss.usermodel.ConditionalFormatting;
+import org.apache.poi.ss.usermodel.ConditionalFormattingRule;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.CellReference;
+import org.apache.poi.xssf.usermodel.XSSFConditionalFormatting;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFSheetConditionalFormatting;
@@ -42,41 +42,15 @@ public class XlsxBuilderPrototype {
 
             XSSFSheet sheet = wb.getSheet("Timesheet");
 
-            /* Save and remove conditional formatting */
-            List<ConditionalFormatting> formats = new ArrayList<>();
-            XSSFSheetConditionalFormatting formatting = sheet.getSheetConditionalFormatting();
-            for (int i = formatting.getNumConditionalFormattings() - 1; i >= 0; i--) {
-                formats.add(formatting.getConditionalFormattingAt(i));
-                formatting.removeConditionalFormatting(i);
-            }
-
             /* Prepare tracker rows */
-            int currentYear = 2016;
-            LocalDate dt = new LocalDate(currentYear, DateTimeConstants.JANUARY, 1);
-            int r = startRow;
-            final CellCopyPolicy policy = new CellCopyPolicy.Builder().build();
-            while (dt.year().get() == currentYear) {
-                /* Create rows */
-                r = createMonth(sheet, dt, dayRow, monthRow, r, policy);
-                dt = dt.plusMonths(1);
-            }
+            int year = 2016;
+            createRowsFromTemplate(sheet, year, dayRow, monthRow, startRow);
+
+            /* Save and remove conditional formatting */
+            applyConditionalFormattingToCopiedRows(sheet, startRow);
 
             /* Remove two first rows */
-            sheet.shiftRows(startRow, sheet.getLastRowNum(), dayRow - startRow);
-
-            /* TODO Apply conditional formatting */
-            // final int lastRow = sheet.getLastRowNum();
-            // for (ConditionalFormatting format : formats) {
-            // CellRangeAddress[] ranges = format.getFormattingRanges();
-            // for (CellRangeAddress range : ranges) {
-            // range.setLastRow(lastRow);
-            // }
-            // final int nbRules = format.getNumberOfRules();
-            // for (int i = 0; i < nbRules; i++) {
-            // ConditionalFormattingRule rule = format.getRule(i);
-            // formatting.addConditionalFormatting(ranges, rule);
-            // }
-            // }
+            removeTemplateRows(sheet, startRow);
 
             /* TODO Hide technical columns */
 
@@ -91,8 +65,18 @@ public class XlsxBuilderPrototype {
         }
     }
 
-    private int createMonth(XSSFSheet sheet, LocalDate dt, final int dayRow, final int monthRow, int row,
-            final CellCopyPolicy policy) {
+    private void createRowsFromTemplate(XSSFSheet sheet, int year, int dayRow, int monthRow, int startRow) {
+        LocalDate dt = new LocalDate(year, DateTimeConstants.JANUARY, 1);
+        int r = startRow;
+        final CellCopyPolicy policy = new CellCopyPolicy();
+        while (dt.year().get() == year) {
+            /* Create rows */
+            r = createMonth(sheet, dt, dayRow, monthRow, r, policy);
+            dt = dt.plusMonths(1);
+        }
+    }
+
+    private int createMonth(XSSFSheet sheet, LocalDate dt, int dayRow, int monthRow, int row, CellCopyPolicy policy) {
         int r = row;
 
         final int nbDays = dt.dayOfMonth().getMaximumValue();
@@ -119,8 +103,44 @@ public class XlsxBuilderPrototype {
         return r;
     }
 
-    private XSSFRow copyRow(XSSFSheet sheet, int srcRow, int destRow, final CellCopyPolicy policy) {
+    private XSSFRow copyRow(XSSFSheet sheet, int srcRow, int destRow, CellCopyPolicy policy) {
         sheet.copyRows(srcRow, srcRow + 1, destRow, policy);
         return sheet.getRow(destRow);
+    }
+
+    private void applyConditionalFormattingToCopiedRows(XSSFSheet sheet, int startRow) {
+        final int lastRow = sheet.getLastRowNum();
+        XSSFSheetConditionalFormatting formatting = sheet.getSheetConditionalFormatting();
+        // Go from end to start because we will be removing them
+        for (int i = formatting.getNumConditionalFormattings() - 1; i >= 0; i--) {
+            // Get conditional formatting
+            XSSFConditionalFormatting format = formatting.getConditionalFormattingAt(i);
+            // Apply conditional formatting to new range
+            CellRangeAddress[] ranges = computeNewFormattingRanges(format.getFormattingRanges(), startRow, lastRow);
+            applyRulesToRanges(formatting, format, ranges);
+            // remove previous version of the conditional formatting
+            formatting.removeConditionalFormatting(i);
+        }
+    }
+
+    private CellRangeAddress[] computeNewFormattingRanges(CellRangeAddress[] ranges, int startRow, int lastRow) {
+        for (CellRangeAddress range : ranges) {
+            range.setFirstRow(startRow);
+            range.setLastRow(lastRow);
+        }
+        return ranges;
+    }
+
+    private void applyRulesToRanges(XSSFSheetConditionalFormatting formatting, XSSFConditionalFormatting format,
+            CellRangeAddress[] ranges) {
+        final int nbRules = format.getNumberOfRules();
+        for (int j = 0; j < nbRules; j++) {
+            ConditionalFormattingRule rule = format.getRule(j);
+            formatting.addConditionalFormatting(ranges, rule);
+        }
+    }
+
+    private void removeTemplateRows(XSSFSheet sheet, int startRow) {
+        sheet.shiftRows(startRow, sheet.getLastRowNum(), NB_HEADER_ROWS - startRow);
     }
 }
