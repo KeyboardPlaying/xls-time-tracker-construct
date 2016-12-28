@@ -46,7 +46,9 @@ public class XlsxNormalizerTest extends AbstractXlsxTest {
 
     private XlsxNormalizer normalizer;
 
-    /** Prepares the normalizer for tests. */
+    /**
+     * Prepares the normalizer for tests.
+     */
     @Before
     public void init() {
         normalizer = new XlsxNormalizer();
@@ -57,7 +59,9 @@ public class XlsxNormalizerTest extends AbstractXlsxTest {
         normalizer.setConfigActiveRange(ACTIVE_CONFIG);
     }
 
-    /** Tests the properties normalization. */
+    /**
+     * Tests the properties normalization.
+     */
     @Test
     @SuppressWarnings("javadoc")
     public void testNormalizeProperty() throws InvalidFormatException, IOException {
@@ -77,7 +81,9 @@ public class XlsxNormalizerTest extends AbstractXlsxTest {
         }
     }
 
-    /** Tests the properties normalization. */
+    /**
+     * Tests the properties normalization.
+     */
     @Test
     @SuppressWarnings("javadoc")
     public void testNormalizeSheets() throws InvalidFormatException, IOException {

@@ -44,8 +44,7 @@ public class ConfirmClearPrefsAction implements ConstructUtilityAction {
     /**
      * Sets the i18nHelper for this instance.
      *
-     * @param i18nHelper
-     *            the new i18nHelper
+     * @param i18nHelper the new i18nHelper
      */
     public void setI18nHelper(I18nHelper i18nHelper) {
         this.i18nHelper = i18nHelper;
@@ -54,8 +53,7 @@ public class ConfirmClearPrefsAction implements ConstructUtilityAction {
     /**
      * Sets the clearPrefsAction for this instance.
      *
-     * @param clearPrefsAction
-     *            the new clearPrefsAction
+     * @param clearPrefsAction the new clearPrefsAction
      */
     public void setClearPrefsAction(ClearPrefsAction clearPrefsAction) {
         this.clearPrefsAction = clearPrefsAction;

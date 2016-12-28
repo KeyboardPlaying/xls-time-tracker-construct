@@ -34,8 +34,7 @@ public class ClearPrefsAction implements ConstructUtilityAction {
     /**
      * Sets the preferences helper for this instance.
      *
-     * @param preferencesHelper
-     *            the new preferences helper
+     * @param preferencesHelper the new preferences helper
      */
     public void setPreferencesHelper(PreferencesHelper preferencesHelper) {
         this.preferencesHelper = preferencesHelper;

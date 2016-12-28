@@ -35,7 +35,9 @@ import org.keyboardplaying.xtt.ui.icon.ImageSize;
  */
 public class ProjectButtonChooser extends JButton {
 
-    /** Generated serial version UID. */
+    /**
+     * Generated serial version UID.
+     */
     private static final long serialVersionUID = 6126902924808094141L;
 
     private static final ImageSize IMAGE_SIZE = ImageSize.W_16;
@@ -45,12 +47,9 @@ public class ProjectButtonChooser extends JButton {
     /**
      * Creates a new instance.
      *
-     * @param images
-     *            the image loader
-     * @param i18n
-     *            the internationalization helper
-     * @param location
-     *            the project location helper
+     * @param images   the image loader
+     * @param i18n     the internationalization helper
+     * @param location the project location helper
      */
     public ProjectButtonChooser(ImageLoader images, I18nHelper i18n, ProjectLocationHelper location) {
         super(new ImageIcon(images.getImage(IMAGE_NAME, IMAGE_SIZE)));

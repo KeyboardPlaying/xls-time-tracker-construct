@@ -34,12 +34,11 @@ public class ConstructApplication {
     /**
      * Main method for the application.
      *
-     * @param args
-     *            unused arguments
+     * @param args unused arguments
      */
     public static void main(String... args) {
         @SuppressWarnings("resource") // not closing, needed for prototypes
-        ApplicationContext ctx = new AnnotationConfigApplicationContext(UIConfiguration.class);
+                ApplicationContext ctx = new AnnotationConfigApplicationContext(UIConfiguration.class);
         UIController controller = ctx.getBean(UIController.class);
         controller.startUI();
     }

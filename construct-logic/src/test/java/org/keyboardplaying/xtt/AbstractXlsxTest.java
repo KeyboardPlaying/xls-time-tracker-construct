@@ -38,7 +38,6 @@ public abstract class AbstractXlsxTest {
     }
 
     protected XSSFWorkbook getReferenceWorkbook() throws IOException, InvalidFormatException {
-        XSSFWorkbook workbook = new XSSFWorkbook(getXlsxFile());
-        return workbook;
+        return new XSSFWorkbook(getXlsxFile());
     }
 }

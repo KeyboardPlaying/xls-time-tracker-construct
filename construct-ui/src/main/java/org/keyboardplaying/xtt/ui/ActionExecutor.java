@@ -30,10 +30,8 @@ import org.slf4j.LoggerFactory;
 /**
  * An {@link ActionListener} that executes an {@link Action}.
  *
+ * @param <T> the type of action to execute
  * @author Cyrille Chopelet (https://keyboardplaying.org)
- *
- * @param <T>
- *            the type of action to execute
  */
 public class ActionExecutor<T extends Action> implements ActionListener {
 
@@ -45,10 +43,8 @@ public class ActionExecutor<T extends Action> implements ActionListener {
     /**
      * Creates a new instance.
      *
-     * @param action
-     *            the action to execute
-     * @param i18n
-     *            the internationalization helper
+     * @param action the action to execute
+     * @param i18n   the internationalization helper
      */
     public ActionExecutor(T action, I18nHelper i18n) {
         this.action = action;

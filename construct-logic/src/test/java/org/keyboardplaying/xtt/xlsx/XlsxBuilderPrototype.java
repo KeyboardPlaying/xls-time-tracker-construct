@@ -35,7 +35,7 @@ public class XlsxBuilderPrototype {
     @SuppressWarnings("javadoc")
     public void generateWorkbook() {
         try (InputStream in = getClass().getResourceAsStream("tracker-dev.xlsx");
-                XSSFWorkbook wb = new XSSFWorkbook(in)) {
+             XSSFWorkbook wb = new XSSFWorkbook(in)) {
             final int dayRow = NB_HEADER_ROWS;
             final int monthRow = dayRow + 1;
             final int startRow = monthRow + 1;
@@ -132,7 +132,7 @@ public class XlsxBuilderPrototype {
     }
 
     private void applyRulesToRanges(XSSFSheetConditionalFormatting formatting, XSSFConditionalFormatting format,
-            CellRangeAddress[] ranges) {
+                                    CellRangeAddress[] ranges) {
         final int nbRules = format.getNumberOfRules();
         for (int j = 0; j < nbRules; j++) {
             ConditionalFormattingRule rule = format.getRule(j);

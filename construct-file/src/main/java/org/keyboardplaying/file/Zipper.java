@@ -44,12 +44,9 @@ public final class Zipper {
      * If a previous version of the destination file existed, it will be replaced. If it is a directory, an exception
      * will be thrown.
      *
-     * @param in
-     *            the file or directory to zip
-     * @param zip
-     *            the file to zip to
-     * @throws IOException
-     *             if an I/O error occurs
+     * @param in  the file or directory to zip
+     * @param zip the file to zip to
+     * @throws IOException if an I/O error occurs
      */
     public static void zip(File in, File zip) throws IOException {
         zip(in, zip, true);
@@ -61,14 +58,10 @@ public final class Zipper {
      * If a previous version of the destination file existed, it will be replaced. If it is a directory, an exception
      * will be thrown.
      *
-     * @param in
-     *            the file or directory to zip
-     * @param zip
-     *            the file to zip to
-     * @param includeDirectories
-     *            whether directories should create entries in the zip or not
-     * @throws IOException
-     *             if an I/O error occurs
+     * @param in                 the file or directory to zip
+     * @param zip                the file to zip to
+     * @param includeDirectories whether directories should create entries in the zip or not
+     * @throws IOException if an I/O error occurs
      */
     public static void zip(File in, File zip, boolean includeDirectories) throws IOException {
         zip(in, zip, true, includeDirectories);
@@ -80,16 +73,11 @@ public final class Zipper {
      * If a previous version of the destination file existed, it will be replaced. If it is a directory, an exception
      * will be thrown.
      *
-     * @param in
-     *            the file or directory to zip
-     * @param zip
-     *            the file to zip to
-     * @param includeRoot
-     *            whether the root level should be included or not
-     * @param includeDirectories
-     *            whether directories should create entries in the zip or not
-     * @throws IOException
-     *             if an I/O error occurs
+     * @param in                 the file or directory to zip
+     * @param zip                the file to zip to
+     * @param includeRoot        whether the root level should be included or not
+     * @param includeDirectories whether directories should create entries in the zip or not
+     * @throws IOException if an I/O error occurs
      */
     public static void zip(File in, File zip, boolean includeRoot, boolean includeDirectories) throws IOException {
         // Check if the parameters are correct

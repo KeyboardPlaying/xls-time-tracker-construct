@@ -30,8 +30,7 @@ public interface I14ed {
      * This method will be called on components implementing this interface and registered to the {@link I18nHelper}
      * when the locale is changed.
      *
-     * @param helper
-     *            the updated helper so that listeners do not have to store it
+     * @param helper the updated helper so that listeners do not have to store it
      */
     void updateMessages(I18nHelper helper);
 }

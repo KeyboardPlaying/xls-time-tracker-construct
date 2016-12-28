@@ -44,7 +44,9 @@ public class ProjectLocationHelperTest {
     private ProjectLocationHelper location;
     private PreferencesHelper prefs;
 
-    /** Initializes the {@link ProjectLocationHelper} with a path to the dedicated test directory. */
+    /**
+     * Initializes the {@link ProjectLocationHelper} with a path to the dedicated test directory.
+     */
     @Before
     public void init() {
         location = new ProjectLocationHelper();
@@ -55,7 +57,9 @@ public class ProjectLocationHelperTest {
         location.init();
     }
 
-    /** Tests the initialization when no preferred location is stored. */
+    /**
+     * Tests the initialization when no preferred location is stored.
+     */
     @Test
     public void testDefaultLocation() {
         // Prepare
@@ -70,7 +74,9 @@ public class ProjectLocationHelperTest {
         assertEquals(new File("."), defaultLocation.getProjectLocation());
     }
 
-    /** Tests {@link ProjectLocationHelper#isValid(java.io.File)}. */
+    /**
+     * Tests {@link ProjectLocationHelper#isValid(java.io.File)}.
+     */
     @Test
     public void testIsValid() {
         /* Test standard */
@@ -97,13 +103,17 @@ public class ProjectLocationHelperTest {
         assertTrue(location.isValid(f));
     }
 
-    /** Tests {@link ProjectLocationHelper#setProjectLocation(String)} with a specified path. */
+    /**
+     * Tests {@link ProjectLocationHelper#setProjectLocation(String)} with a specified path.
+     */
     @Test
     public void testSetProjectLocationFromCorrectPath() {
         testSetProjectLocationFromPath("some/path");
     }
 
-    /** Tests {@link ProjectLocationHelper#setProjectLocation(String)} with a {@code null} path. */
+    /**
+     * Tests {@link ProjectLocationHelper#setProjectLocation(String)} with a {@code null} path.
+     */
     @Test
     public void testSetProjectLocationFromNullPath() {
         testSetProjectLocationFromPath(null);
@@ -120,19 +130,25 @@ public class ProjectLocationHelperTest {
         verify(spy).setProjectLocation(new File(path == null ? "." : path));
     }
 
-    /** Tests {@link ProjectLocationHelper#setProjectLocation(File)} with a correct file. */
+    /**
+     * Tests {@link ProjectLocationHelper#setProjectLocation(File)} with a correct file.
+     */
     @Test
     public void testSetProjectLocationFromCorrectFile() {
         testSetProjectLocationFromFile(location.getProjectLocation());
     }
 
-    /** Tests {@link ProjectLocationHelper#setProjectLocation(File)} with an incorrect file. */
+    /**
+     * Tests {@link ProjectLocationHelper#setProjectLocation(File)} with an incorrect file.
+     */
     @Test
     public void testSetProjectLocationFromIncorrectFile() {
         testSetProjectLocationFromFile(new File("some/path"));
     }
 
-    /** Tests {@link ProjectLocationHelper#setProjectLocation(File)} with a {@code null} file. */
+    /**
+     * Tests {@link ProjectLocationHelper#setProjectLocation(File)} with a {@code null} file.
+     */
     @Test
     public void testSetProjectLocationFromNullFile() {
         testSetProjectLocationFromFile(null);
@@ -151,7 +167,9 @@ public class ProjectLocationHelperTest {
         }
     }
 
-    /** Tests the notification of registered {@link UpdateListener} objects. */
+    /**
+     * Tests the notification of registered {@link UpdateListener} objects.
+     */
     @Test
     public void testListenerNotification() {
         // Prepare
@@ -166,7 +184,9 @@ public class ProjectLocationHelperTest {
         verify(listener).notifyLocationUpdate(newLocation, true);
     }
 
-    /** Tests {@link ProjectLocationHelper#getConstructedFile()}. */
+    /**
+     * Tests {@link ProjectLocationHelper#getConstructedFile()}.
+     */
     @Test
     public void testGetConstructedFile() {
         // Execute
@@ -177,7 +197,9 @@ public class ProjectLocationHelperTest {
         assertTrue(f.getPath().endsWith(".xlsx"));
     }
 
-    /** Tests {@link ProjectLocationHelper#getDeconstructedDirectory()}. */
+    /**
+     * Tests {@link ProjectLocationHelper#getDeconstructedDirectory()}.
+     */
     @Test
     public void testGetDeconstructedDirectory() {
         // Execute

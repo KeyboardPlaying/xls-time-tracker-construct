@@ -45,8 +45,7 @@ public class DeconstructAction implements ProjectAction {
     /**
      * Sets the project location helper for this instance.
      *
-     * @param location
-     *            the new project location helper
+     * @param location the new project location helper
      */
     public void setLocationHelper(ProjectLocationHelper location) {
         this.location = location;
@@ -55,8 +54,7 @@ public class DeconstructAction implements ProjectAction {
     /**
      * Sets the XLSX builder for file assembling.
      *
-     * @param normalizer
-     *            the XLSX normalizer
+     * @param normalizer the XLSX normalizer
      */
     public void setXlsxNormalizer(XlsxNormalizer normalizer) {
         this.normalizer = normalizer;
@@ -65,8 +63,7 @@ public class DeconstructAction implements ProjectAction {
     /**
      * Sets the XLSX normalizer to use when deconstructing the tracker.
      *
-     * @param builder
-     *            the XLSX builder
+     * @param builder the XLSX builder
      */
     public void setXlsxBuilder(XlsxBuilder builder) {
         this.builder = builder;
@@ -80,7 +77,7 @@ public class DeconstructAction implements ProjectAction {
     @Override
     public void perform() throws ActionException {
         try (InputStream in = new FileInputStream(location.getConstructedFile());
-                XSSFWorkbook workbook = new XSSFWorkbook(in)) {
+             XSSFWorkbook workbook = new XSSFWorkbook(in)) {
 
             // Normalize file
             normalizer.normalizeProperties(workbook);

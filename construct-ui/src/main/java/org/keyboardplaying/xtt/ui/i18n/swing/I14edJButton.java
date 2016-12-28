@@ -29,7 +29,9 @@ import org.keyboardplaying.xtt.ui.i18n.I18nHelper;
  */
 public class I14edJButton extends JButton implements I14ed {
 
-    /** Generated serial version UID. */
+    /**
+     * Generated serial version UID.
+     */
     private static final long serialVersionUID = -7311086663191166400L;
 
     private final String textKey;
@@ -37,12 +39,9 @@ public class I14edJButton extends JButton implements I14ed {
     /**
      * Creates a button with initial internationalized text and an icon.
      *
-     * @param i18n
-     *            the internationalization helper
-     * @param textKey
-     *            the key for the text of the button
-     * @param icon
-     *            the Icon image to display on the button
+     * @param i18n    the internationalization helper
+     * @param textKey the key for the text of the button
+     * @param icon    the Icon image to display on the button
      */
     public I14edJButton(I18nHelper i18n, String textKey, Icon icon) {
         super(textKey == null ? null : i18n.getMessage(textKey), icon);
@@ -53,10 +52,8 @@ public class I14edJButton extends JButton implements I14ed {
     /**
      * Creates a button with internationalized text.
      *
-     * @param i18n
-     *            the internationalization helper
-     * @param textKey
-     *            the key for the text of the button
+     * @param i18n    the internationalization helper
+     * @param textKey the key for the text of the button
      */
     public I14edJButton(I18nHelper i18n, String textKey) {
         super(textKey == null ? null : i18n.getMessage(textKey));

@@ -34,7 +34,9 @@ import org.keyboardplaying.xtt.configuration.ProjectLocationHelper.UpdateListene
  */
 public class ProjectTextFieldChooser extends JTextField implements DocumentListener, UpdateListener {
 
-    /** Generated serial version UID. */
+    /**
+     * Generated serial version UID.
+     */
     private static final long serialVersionUID = -1641064152036700917L;
 
     private ProjectLocationHelper locationHelper;
@@ -42,8 +44,7 @@ public class ProjectTextFieldChooser extends JTextField implements DocumentListe
     /**
      * Creates a new instance.
      *
-     * @param locationHelper
-     *            the new project location helper
+     * @param locationHelper the new project location helper
      */
     public ProjectTextFieldChooser(ProjectLocationHelper locationHelper) {
         this.locationHelper = locationHelper;
@@ -93,7 +94,9 @@ public class ProjectTextFieldChooser extends JTextField implements DocumentListe
         updateLocation();
     }
 
-    /** Updates the location of the project. This will trigger a "location updated event" */
+    /**
+     * Updates the location of the project. This will trigger a "location updated event"
+     */
     private void updateLocation() {
         locationHelper.setProjectLocation(getText());
     }
@@ -101,8 +104,7 @@ public class ProjectTextFieldChooser extends JTextField implements DocumentListe
     /**
      * Updates the text field without firing the update event.
      *
-     * @param directory
-     *            the selected directory
+     * @param directory the selected directory
      */
     private void updateTextField(File directory) {
         setText(directory.getAbsolutePath());

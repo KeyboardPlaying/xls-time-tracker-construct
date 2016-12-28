@@ -30,7 +30,9 @@ import org.keyboardplaying.xtt.ui.i18n.I18nHelper;
  */
 public class I14edJFrame extends JFrame implements I14ed {
 
-    /** Generated serial version UID. */
+    /**
+     * Generated serial version UID.
+     */
     private static final long serialVersionUID = 1769010658444161195L;
 
     private final String titleKey;
@@ -38,10 +40,8 @@ public class I14edJFrame extends JFrame implements I14ed {
     /**
      * Creates a new, initially invisible {@code Frame} with the specified internationalized title.
      *
-     * @param i18n
-     *            the internationalization helper
-     * @param titleKey
-     *            the key for the title of the window
+     * @param i18n     the internationalization helper
+     * @param titleKey the key for the title of the window
      */
     public I14edJFrame(I18nHelper i18n, String titleKey) {
         super(i18n.getMessage(titleKey));
@@ -53,13 +53,10 @@ public class I14edJFrame extends JFrame implements I14ed {
      * Creates a {@link I14edJFrame} with the specified title and the specified {@link GraphicsConfiguration} of a
      * screen device.
      *
-     * @param i18n
-     *            the internationalization helper
-     * @param titleKey
-     *            the key for the title of the window
-     * @param gc
-     *            the {@link GraphicsConfiguration} that is used to construct the new JFrame with; if {@code gc} is
-     *            {@code null}, the system default {@link GraphicsConfiguration} is assumed
+     * @param i18n     the internationalization helper
+     * @param titleKey the key for the title of the window
+     * @param gc       the {@link GraphicsConfiguration} that is used to construct the new JFrame with; if {@code gc} is
+     *                 {@code null}, the system default {@link GraphicsConfiguration} is assumed
      */
     public I14edJFrame(I18nHelper i18n, String titleKey, GraphicsConfiguration gc) {
         super(i18n.getMessage(titleKey), gc);

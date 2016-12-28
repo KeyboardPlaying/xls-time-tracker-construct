@@ -40,7 +40,9 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class I18nHelper {
 
-    /** The key the locale is stored under in the preferences. */
+    /**
+     * The key the locale is stored under in the preferences.
+     */
     protected static final String LOCALE_PREFKEY = "locale";
 
     private static final Logger LOG = LoggerFactory.getLogger(I18nHelper.class);
@@ -54,12 +56,16 @@ public class I18nHelper {
     private Set<I14ed> i14ed = new HashSet<>();
     private ResourceBundle bundle;
 
-    /** Creates a new instance and sets it the locale to its default. */
+    /**
+     * Creates a new instance and sets it the locale to its default.
+     */
     public I18nHelper() {
         updateResourceBundle(Locale.getDefault());
     }
 
-    /** Initializes the internationalization helper with the saved locale. */
+    /**
+     * Initializes the internationalization helper with the saved locale.
+     */
     @PostConstruct
     public void init() {
         String locale = preferences.get(LOCALE_PREFKEY);
@@ -70,8 +76,7 @@ public class I18nHelper {
     /**
      * Sets the preferences helper.
      *
-     * @param preferences
-     *            the preferences helper
+     * @param preferences the preferences helper
      */
     public void setPreferences(PreferencesHelper preferences) {
         this.preferences = preferences;
@@ -84,8 +89,7 @@ public class I18nHelper {
     /**
      * Registers an {@link I14ed} component to be notified when the locale changes.
      *
-     * @param internationalized
-     *            the component to notify of locale changes
+     * @param internationalized the component to notify of locale changes
      */
     public void register(I14ed internationalized) {
         this.i14ed.add(internationalized);
@@ -94,8 +98,7 @@ public class I18nHelper {
     /**
      * Parses the locale from the supplied representation.
      *
-     * @param locale
-     *            the string representation of a locale (e.g.: "en", "de_DE", "_GB", "en_US_WIN", "de__POSIX", "fr_MAC")
+     * @param locale the string representation of a locale (e.g.: "en", "de_DE", "_GB", "en_US_WIN", "de__POSIX", "fr_MAC")
      * @return the associated {@link Locale} or default locale if format is incorrect
      */
     public Locale parseLocale(String locale) {
@@ -133,8 +136,7 @@ public class I18nHelper {
     /**
      * Sets the locale for the messages to display.
      *
-     * @param locale
-     *            the locale to use
+     * @param locale the locale to use
      */
     public void setLocale(Locale locale) {
         updateResourceBundle(locale);
@@ -147,8 +149,7 @@ public class I18nHelper {
     /**
      * Gets the string message corresponding to the key.
      *
-     * @param key
-     *            the key for the desired string
+     * @param key the key for the desired string
      * @return the string for the given key
      */
     public String getMessage(String key) {

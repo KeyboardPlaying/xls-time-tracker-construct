@@ -36,7 +36,9 @@ import org.keyboardplaying.AbstractFilesTest;
  */
 public class StreamsTest extends AbstractFilesTest {
 
-    /** Tests the copying of a stream. */
+    /**
+     * Tests the copying of a stream.
+     */
     @Test
     @SuppressWarnings("javadoc")
     public void testCopy() throws IOException {

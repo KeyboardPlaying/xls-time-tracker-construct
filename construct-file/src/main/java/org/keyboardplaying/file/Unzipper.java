@@ -39,15 +39,11 @@ public final class Unzipper {
     /**
      * Unzips a file.
      *
-     * @param zip
-     *            the zip file
-     * @param target
-     *            the target directory
-     * @param extractHere
-     *            {@code true} to extract the zip content directly under the supplied directory, {@code false} to add a
-     *            folder with the name of the zip
-     * @throws IOException
-     *             if an I/O error occurs
+     * @param zip         the zip file
+     * @param target      the target directory
+     * @param extractHere {@code true} to extract the zip content directly under the supplied directory, {@code false} to add a
+     *                    folder with the name of the zip
+     * @throws IOException if an I/O error occurs
      */
     public static void unzip(File zip, File target, boolean extractHere) throws IOException {
         // Controls the parameters

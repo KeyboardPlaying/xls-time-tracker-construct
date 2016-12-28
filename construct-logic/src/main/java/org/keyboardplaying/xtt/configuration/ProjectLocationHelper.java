@@ -31,14 +31,22 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class ProjectLocationHelper {
 
-    /** The key the location is stored under in the preferences. */
+    /**
+     * The key the location is stored under in the preferences.
+     */
     protected static final String PROJECT_DIR_PREFKEY = "project.dir";
-    /** The default location for the project if no preference exists. */
+    /**
+     * The default location for the project if no preference exists.
+     */
     private static final String PROJECT_DIR_DEFAULT = ".";
 
-    /** The name of the constructed XLSX file. The file should be in the same location as the construct utility. */
+    /**
+     * The name of the constructed XLSX file. The file should be in the same location as the construct utility.
+     */
     private static final String CONSTRUCT_PATH = "tracker.xlsx";
-    /** The name of the exploded XLSX file. The directory should be in the same location as the construct utility. */
+    /**
+     * The name of the exploded XLSX file. The directory should be in the same location as the construct utility.
+     */
     private static final String DECONSTRUCT_PATH = "xlsx_deconstructed";
 
     /**
@@ -46,15 +54,13 @@ public class ProjectLocationHelper {
      *
      * @author Cyrille Chopelet (https://keyboardplaying.org)
      */
-    public static interface UpdateListener {
+    public interface UpdateListener {
 
         /**
          * ProjectAction to perform when the configuration is updated.
          *
-         * @param location
-         *            the updated configuration
-         * @param valid
-         *            whether the updated location is valid
+         * @param location the updated configuration
+         * @param valid    whether the updated location is valid
          */
         void notifyLocationUpdate(File location, boolean valid);
     }
@@ -68,14 +74,15 @@ public class ProjectLocationHelper {
     /**
      * Sets the preferences manager for this instance.
      *
-     * @param preferences
-     *            the new preferences manager
+     * @param preferences the new preferences manager
      */
     public void setPreferences(PreferencesHelper preferences) {
         this.preferences = preferences;
     }
 
-    /** Initializes this instance. */
+    /**
+     * Initializes this instance.
+     */
     @PostConstruct
     public void init() {
         String path = this.preferences.get(PROJECT_DIR_PREFKEY);
@@ -85,8 +92,7 @@ public class ProjectLocationHelper {
     /**
      * Registers a listener to be notified when the project location is updated.
      *
-     * @param listener
-     *            the listener to notify
+     * @param listener the listener to notify
      */
     public void registerForUpdate(UpdateListener listener) {
         this.listeners.add(listener);
@@ -109,8 +115,7 @@ public class ProjectLocationHelper {
      * <p/>
      * To be valid, the supplied argument must not be null, must exist and must be a directory.
      *
-     * @param d
-     *            the {@link File} to test
+     * @param d the {@link File} to test
      * @return {@code true} if the supplied argument is a possible location for the project
      */
     // XXX maybe it could test if the xlsx_deconstructed dir is present
@@ -130,10 +135,8 @@ public class ProjectLocationHelper {
     /**
      * Updates the project location.
      *
-     * @param path
-     *            the new project location
-     * @throws IllegalArgumentException
-     *             if the location is not valid
+     * @param path the new project location
+     * @throws IllegalArgumentException if the location is not valid
      * @see #isValid(File)
      */
     public void setProjectLocation(String path) {
@@ -143,10 +146,8 @@ public class ProjectLocationHelper {
     /**
      * Updates the project location.
      *
-     * @param newLocation
-     *            the new project location
-     * @throws IllegalArgumentException
-     *             if the location is not valid
+     * @param newLocation the new project location
+     * @throws IllegalArgumentException if the location is not valid
      * @see #isValid(File)
      */
     public void setProjectLocation(File newLocation) {
@@ -157,7 +158,9 @@ public class ProjectLocationHelper {
         notifyListeners();
     }
 
-    /** Notify all registered listeners that the project location was updated. */
+    /**
+     * Notify all registered listeners that the project location was updated.
+     */
     private void notifyListeners() {
         boolean valid = isValid();
         for (UpdateListener listener : listeners) {

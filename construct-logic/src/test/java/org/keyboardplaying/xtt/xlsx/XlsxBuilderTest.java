@@ -36,13 +36,17 @@ public class XlsxBuilderTest extends AbstractXlsxTest {
 
     private XlsxBuilder builder;
 
-    /** Prepares the normalizer for tests. */
+    /**
+     * Prepares the normalizer for tests.
+     */
     @Before
     public void init() {
         builder = new XlsxBuilder();
     }
 
-    /** Tests {@link XlsxBuilder#writeWorkbookToTmpFile(XSSFWorkbook)}. */
+    /**
+     * Tests {@link XlsxBuilder#writeWorkbookToTmpFile(XSSFWorkbook)}.
+     */
     @Test
     @SuppressWarnings("javadoc")
     public void testWriteWorkbookToTmpFile() throws InvalidFormatException, IOException {

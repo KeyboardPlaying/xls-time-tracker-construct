@@ -33,10 +33,8 @@ public final class Files {
     /**
      * Lists all files in a directory recursively or returns the supplied file if not a directory.
      *
-     * @param file
-     *            the root file or directory
-     * @param includeDirectories
-     *            {@code true} to include the directories in the list
+     * @param file               the root file or directory
+     * @param includeDirectories {@code true} to include the directories in the list
      * @return the list of all files under the root directory, or the file if not a directory
      */
     public static List<File> listFiles(File file, boolean includeDirectories) {
@@ -45,8 +43,11 @@ public final class Files {
             if (includeDirectories) {
                 files.add(file);
             }
-            for (File f : file.listFiles()) {
-                files.addAll(listFiles(f, includeDirectories));
+            File[] subFiles = file.listFiles();
+            if (subFiles != null) {
+                for (File f : subFiles) {
+                    files.addAll(listFiles(f, includeDirectories));
+                }
             }
         } else {
             files.add(file);
@@ -57,8 +58,7 @@ public final class Files {
     /**
      * Deletes a file or a directory.
      *
-     * @param file
-     *            the file or directory to delete
+     * @param file the file or directory to delete
      * @return {@code true} if and only if all files or directories is successfully deleted; {@code false} otherwise
      */
     public static boolean delete(File file) {
@@ -71,8 +71,11 @@ public final class Files {
         }
 
         boolean deleted = true;
-        for (File f : file.listFiles()) {
-            deleted &= delete(f);
+        File[] subFiles = file.listFiles();
+        if (subFiles != null) {
+            for (File f : subFiles) {
+                deleted &= delete(f);
+            }
         }
         return file.delete() && deleted;
     }

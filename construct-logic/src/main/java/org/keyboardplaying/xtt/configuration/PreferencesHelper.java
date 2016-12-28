@@ -37,7 +37,9 @@ public class PreferencesHelper {
     private Preferences preferences;
     private boolean initialized;
 
-    /** Creates a new instance. */
+    /**
+     * Creates a new instance.
+     */
     public PreferencesHelper() {
         Preferences prefRoot = Preferences.userRoot();
         try {
@@ -62,10 +64,9 @@ public class PreferencesHelper {
      * Returns the value associated with the specified key in this preference node. Returns the specified default if
      * there is no value associated with the key, or the backing store is inaccessible.
      *
-     * @param key
-     *            key whose associated value is to be returned
+     * @param key key whose associated value is to be returned
      * @return the value associated with <tt>key</tt>, or {@code null} if no value is associated with <tt>key</tt>, or
-     *         the backing store is inaccessible
+     * the backing store is inaccessible
      * @see Preferences#get(String, String)
      */
     public String get(String key) {
@@ -75,10 +76,8 @@ public class PreferencesHelper {
     /**
      * Associates the specified value with the specified key in the preference node.
      *
-     * @param key
-     *            key with which the specified value is to be associated
-     * @param value
-     *            value to be associated with the specified key
+     * @param key   key with which the specified value is to be associated
+     * @param value value to be associated with the specified key
      * @see Preferences#put(String, String)
      */
     public void set(String key, String value) {
@@ -88,9 +87,8 @@ public class PreferencesHelper {
     /**
      * Removes all the preferences for the XTT construct.
      *
-     * @throws BackingStoreException
-     *             if this operation cannot be completed due to a failure in the backing store, or inability to
-     *             communicate with it.
+     * @throws BackingStoreException if this operation cannot be completed due to a failure in the backing store, or inability to
+     *                               communicate with it.
      * @see Preferences#clear()
      * @see Preferences#removeNode()
      */

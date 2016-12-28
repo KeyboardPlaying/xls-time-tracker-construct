@@ -28,22 +28,20 @@ public abstract class AbstractFilesTest {
     /**
      * Shortcut method to get a file path based on {@link Class#getResource(String)}.
      *
-     * @param name
-     *            name of the desired file or directory
+     * @param name name of the desired file or directory
      * @return the path to the file or directory
      */
-    public String getPath(String name) {
+    protected String getPath(String name) {
         return getClass().getResource(name).getPath();
     }
 
     /**
      * Shortcut method to get a file or directory based on {@link Class#getResource(String)}.
      *
-     * @param name
-     *            name of the desired file or directory
+     * @param name name of the desired file or directory
      * @return the file or directory
      */
-    public File getFile(String name) {
+    protected File getFile(String name) {
         return new File(getPath(name));
     }
 }

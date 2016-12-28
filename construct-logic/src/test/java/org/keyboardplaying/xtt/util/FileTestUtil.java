@@ -29,10 +29,8 @@ public class FileTestUtil {
     /**
      * Shortcut method to get a file path based on {@link Class#getResource(String)}.
      *
-     * @param c
-     *            the class
-     * @param name
-     *            name of the desired file or directory
+     * @param c    the class
+     * @param name name of the desired file or directory
      * @return the path to the file or directory
      */
     public static String getPath(Class<?> c, String name) {
@@ -42,10 +40,8 @@ public class FileTestUtil {
     /**
      * Shortcut method to get a file or directory based on {@link Class#getResource(String)}.
      *
-     * @param c
-     *            the class
-     * @param name
-     *            name of the desired file or directory
+     * @param c    the class
+     * @param name name of the desired file or directory
      * @return the file or directory
      */
     public static File getFile(Class<?> c, String name) {

@@ -74,19 +74,12 @@ public class UIController {
     @Autowired
     private ConfirmClearPrefsAction clearPrefsAction;
 
-    private ConstructUtilityAction settingsAction = new ConstructUtilityAction() {
-
-        @Override
-        public void perform() throws ActionException {
-            showSettingsWindow();
-        }
-    };
+    private ConstructUtilityAction settingsAction = this::showSettingsWindow;
 
     /**
      * Sets the i18nHelper for this instance.
      *
-     * @param i18nHelper
-     *            the new i18nHelper
+     * @param i18nHelper the new i18nHelper
      */
     public void setI18nHelper(I18nHelper i18nHelper) {
         this.i18n = i18nHelper;
@@ -95,8 +88,7 @@ public class UIController {
     /**
      * Sets the imageLoader for this instance.
      *
-     * @param imageLoader
-     *            the new imageLoader
+     * @param imageLoader the new imageLoader
      */
     public void setImageLoader(ImageLoader imageLoader) {
         this.images = imageLoader;
@@ -105,8 +97,7 @@ public class UIController {
     /**
      * Sets the preferencesHelper for this instance.
      *
-     * @param preferencesHelper
-     *            the new preferencesHelper
+     * @param preferencesHelper the new preferencesHelper
      */
     public void setPreferencesHelper(PreferencesHelper preferencesHelper) {
         this.prefs = preferencesHelper;
@@ -115,8 +106,7 @@ public class UIController {
     /**
      * Sets the locationHelper for this instance.
      *
-     * @param locationHelper
-     *            the new locationHelper
+     * @param locationHelper the new locationHelper
      */
     public void setLocationHelper(ProjectLocationHelper locationHelper) {
         this.location = locationHelper;
@@ -125,8 +115,7 @@ public class UIController {
     /**
      * Sets the constructAction for this instance.
      *
-     * @param constructAction
-     *            the new constructAction
+     * @param constructAction the new constructAction
      */
     public void setConstructAction(ConstructAction constructAction) {
         this.constructAction = constructAction;
@@ -135,8 +124,7 @@ public class UIController {
     /**
      * Sets the deconstructAction for this instance.
      *
-     * @param deconstructAction
-     *            the new deconstructAction
+     * @param deconstructAction the new deconstructAction
      */
     public void setDeconstructAction(DeconstructAction deconstructAction) {
         this.deconstructAction = deconstructAction;
@@ -145,8 +133,7 @@ public class UIController {
     /**
      * Sets the clearPrefsAction for this instance.
      *
-     * @param clearPrefsAction
-     *            the new clearPrefsAction
+     * @param clearPrefsAction the new clearPrefsAction
      */
     public void setClearPrefsAction(ConfirmClearPrefsAction clearPrefsAction) {
         this.clearPrefsAction = clearPrefsAction;
@@ -155,14 +142,15 @@ public class UIController {
     /**
      * Sets the settingsAction for this instance.
      *
-     * @param settingsAction
-     *            the new settingsAction
+     * @param settingsAction the new settingsAction
      */
     public void setSettingsAction(ConstructUtilityAction settingsAction) {
         this.settingsAction = settingsAction;
     }
 
-    /** Starts the UI. */
+    /**
+     * Starts the UI.
+     */
     public void startUI() {
         showMainWindow();
         if (!prefs.wasInitialized()) {
@@ -170,8 +158,10 @@ public class UIController {
         }
     }
 
-    /** Builds and shows the main window. */
-    public void showMainWindow() {
+    /**
+     * Builds and shows the main window.
+     */
+    private void showMainWindow() {
         /* Create UI. */
         JPanel pane = new JPanel(new GridBagLayout());
 
@@ -220,8 +210,10 @@ public class UIController {
         window.setVisible(true);
     }
 
-    /** Builds and shows the settings window. */
-    public void showSettingsWindow() {
+    /**
+     * Builds and shows the settings window.
+     */
+    private void showSettingsWindow() {
         /* Create UI. */
         JPanel pane = new JPanel(new GridBagLayout());
 

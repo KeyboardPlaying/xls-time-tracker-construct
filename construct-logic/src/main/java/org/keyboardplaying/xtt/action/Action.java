@@ -26,8 +26,7 @@ public interface Action {
     /**
      * Executes the action.
      *
-     * @throws ActionException
-     *             when the exception could not be successfully performed
+     * @throws ActionException when the exception could not be successfully performed
      */
     void perform() throws ActionException;
 }

@@ -42,7 +42,9 @@ public class UnzipperTest extends AbstractFilesTest {
     private static final String DIR = "zip/";
     private static final int TOLERANCE = 1;
 
-    /** Tests unzipping when source does not exist. */
+    /**
+     * Tests unzipping when source does not exist.
+     */
     @Test(expected = IllegalArgumentException.class)
     @SuppressWarnings("javadoc")
     public void testUnzipUnexisting() throws IOException {
@@ -53,7 +55,9 @@ public class UnzipperTest extends AbstractFilesTest {
         Unzipper.unzip(in, out, true);
     }
 
-    /** Tests unzipping when source is a directory. */
+    /**
+     * Tests unzipping when source is a directory.
+     */
     @Test(expected = IllegalArgumentException.class)
     @SuppressWarnings("javadoc")
     public void testUnzipDirectory() throws IOException {
@@ -64,7 +68,9 @@ public class UnzipperTest extends AbstractFilesTest {
         Unzipper.unzip(in, out, true);
     }
 
-    /** Tests unzipping when target is an existing file. */
+    /**
+     * Tests unzipping when target is an existing file.
+     */
     @Test(expected = IllegalArgumentException.class)
     @SuppressWarnings("javadoc")
     public void testUnzipToFileTarget() throws IOException {
@@ -76,7 +82,9 @@ public class UnzipperTest extends AbstractFilesTest {
         Unzipper.unzip(in, out, true);
     }
 
-    /** Tests unzipping when the deletion of the target directory fails. */
+    /**
+     * Tests unzipping when the deletion of the target directory fails.
+     */
     @Test(expected = IOException.class)
     @SuppressWarnings("javadoc")
     public void testUnremovableTarget() throws IOException {
@@ -92,21 +100,27 @@ public class UnzipperTest extends AbstractFilesTest {
         Unzipper.unzip(in, out, true);
     }
 
-    /** Tests unzipping a directory. */
+    /**
+     * Tests unzipping a directory.
+     */
     @Test
     @SuppressWarnings("javadoc")
     public void testUnzipOriginalDirectory() throws IOException {
         testUnzip("xlsx_ref.xlsx", "xlsx_test", true, "xlsx_ref");
     }
 
-    /** Tests unzipping a directory. */
+    /**
+     * Tests unzipping a directory.
+     */
     @Test
     @SuppressWarnings("javadoc")
     public void testUnzipOriginalDirectoryWithDirs() throws IOException {
         testUnzip("xlsx_ref.zip", "xlsx_test", true, "xlsx_ref");
     }
 
-    /** Tests unzipping a directory. */
+    /**
+     * Tests unzipping a directory.
+     */
     @Test
     @SuppressWarnings("javadoc")
     public void testUnzipOriginalDirectoryWithRootAndDirs() throws IOException {
@@ -114,14 +128,18 @@ public class UnzipperTest extends AbstractFilesTest {
         testUnzip("xlsx_ref.root.zip", "", false, "xlsx_ref.root/xlsx_ref", "xlsx_ref");
     }
 
-    /** Tests unzipping a file. */
+    /**
+     * Tests unzipping a file.
+     */
     @Test
     @SuppressWarnings("javadoc")
     public void testUnzipOriginalFileInPlace() throws IOException {
         testUnzip("xlsx_ref.xlsx.zip", "", true, "xlsx_ref.xlsx", "xlsx_ref.xlsx");
     }
 
-    /** Tests unzipping a file but not in place. */
+    /**
+     * Tests unzipping a file but not in place.
+     */
     @Test
     @SuppressWarnings("javadoc")
     public void testUnzipOriginalFile() throws IOException {
@@ -160,8 +178,8 @@ public class UnzipperTest extends AbstractFilesTest {
             List<File> expFiles = Files.listFiles(expected, true);
 
             FileComparator comp = new FileComparator();
-            Collections.sort(actFiles, comp);
-            Collections.sort(expFiles, comp);
+            actFiles.sort(comp);
+            expFiles.sort(comp);
 
             assertEquals(actFiles.size(), expFiles.size());
             for (int i = 1; i < actFiles.size(); i++) {

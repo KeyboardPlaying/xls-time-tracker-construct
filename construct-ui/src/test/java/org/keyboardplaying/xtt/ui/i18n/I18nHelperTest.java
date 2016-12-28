@@ -45,7 +45,9 @@ public class I18nHelperTest {
     private I18nHelper i18n;
     private PreferencesHelper prefs;
 
-    /** Initializes the helper with English as default locale. */
+    /**
+     * Initializes the helper with English as default locale.
+     */
     @Before
     public void init() {
         i18n = new I18nHelper();
@@ -55,7 +57,9 @@ public class I18nHelperTest {
         i18n.init();
     }
 
-    /** Tests the initialization when no preferred locale is stored. */
+    /**
+     * Tests the initialization when no preferred locale is stored.
+     */
     @Test
     public void testDefaultLocale() {
         // Prepare
@@ -93,7 +97,9 @@ public class I18nHelperTest {
         assertEquals(Locale.ENGLISH, i18n.getLocale());
     }
 
-    /** Tests {@link I18nHelper#getAvailableLocales()}. */
+    /**
+     * Tests {@link I18nHelper#getAvailableLocales()}.
+     */
     @Test
     public void testGetAvailableLocales() {
         // Prepare
@@ -107,7 +113,9 @@ public class I18nHelperTest {
         assertTrue(available.containsAll(locales));
     }
 
-    /** Tests {@link I18nHelper#parseLocale(String)}. */
+    /**
+     * Tests {@link I18nHelper#parseLocale(String)}.
+     */
     @Test
     public void testParseLocale() {
         for (Locale locale : Locale.getAvailableLocales()) {
@@ -131,7 +139,9 @@ public class I18nHelperTest {
         // assertEquals(errorIndicator, locale, parsed);
     }
 
-    /** Tests the notification to internationalized components. */
+    /**
+     * Tests the notification to internationalized components.
+     */
     @Test
     public void testI14edNotification() {
         // Prepare

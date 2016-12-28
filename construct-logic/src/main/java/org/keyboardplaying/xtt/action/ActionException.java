@@ -23,7 +23,9 @@ package org.keyboardplaying.xtt.action;
  */
 public class ActionException extends Exception {
 
-    /** Generated serial version UID. */
+    /**
+     * Generated serial version UID.
+     */
     private static final long serialVersionUID = 1178159742837381492L;
 
     private final String messageKey;
@@ -31,8 +33,7 @@ public class ActionException extends Exception {
     /**
      * Constructs a new exception.
      *
-     * @param messageKey
-     *            the key for message to be displayed to the user
+     * @param messageKey the key for message to be displayed to the user
      */
     public ActionException(String messageKey) {
         this.messageKey = messageKey;
@@ -43,10 +44,8 @@ public class ActionException extends Exception {
      * {@code (cause==null ? null : cause.toString())} (which typically contains the class and detail message of cause).
      * This constructor is useful for exceptions that are little more than wrappers for other throwables.
      *
-     * @param messageKey
-     *            the key for message to be displayed to the user
-     * @param cause
-     *            the cause (which is saved for later retrieval by the {@link #getCause()} method)
+     * @param messageKey the key for message to be displayed to the user
+     * @param cause      the cause (which is saved for later retrieval by the {@link #getCause()} method)
      */
     public ActionException(String messageKey, Throwable cause) {
         super(cause);

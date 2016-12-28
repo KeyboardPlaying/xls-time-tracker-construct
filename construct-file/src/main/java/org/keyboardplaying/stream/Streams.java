@@ -36,12 +36,9 @@ public final class Streams {
     /**
      * Copy bytes from an {@link InputStream} to an {@link OutputStream}.
      *
-     * @param in
-     *            the {@link InputStream} to read from
-     * @param out
-     *            the {@link OutputStream} to write to
-     * @throws IOException
-     *             if an I/O error occurs
+     * @param in  the {@link InputStream} to read from
+     * @param out the {@link OutputStream} to write to
+     * @throws IOException if an I/O error occurs
      */
     public static void copy(InputStream in, OutputStream out) throws IOException {
         copy(in, out, DEFAULT_BUFFER_SIZE);
@@ -50,18 +47,14 @@ public final class Streams {
     /**
      * Copy bytes from an {@link InputStream} to an {@link OutputStream}.
      *
-     * @param in
-     *            the {@link InputStream} to read from
-     * @param out
-     *            the {@link OutputStream} to write to
-     * @param bufferSize
-     *            the size to use for the buffer when copying
-     * @throws IOException
-     *             if an I/O error occurs
+     * @param in         the {@link InputStream} to read from
+     * @param out        the {@link OutputStream} to write to
+     * @param bufferSize the size to use for the buffer when copying
+     * @throws IOException if an I/O error occurs
      */
     public static void copy(InputStream in, OutputStream out, int bufferSize) throws IOException {
         byte[] buffer = new byte[bufferSize];
-        int n = 0; // number of bytes read for the current iteration
+        int n; // number of bytes read for the current iteration
         while (EOF != (n = in.read(buffer))) {
             out.write(buffer, 0, n);
         }

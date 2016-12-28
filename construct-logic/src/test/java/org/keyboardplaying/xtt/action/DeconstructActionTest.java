@@ -42,15 +42,16 @@ public class DeconstructActionTest extends AbstractXlsxTest {
 
     private DeconstructAction action;
 
-    private ProjectLocationHelper location;
     private XlsxNormalizer normalizer;
     private XlsxBuilder builder;
 
-    /** Prepares the action for tests. */
+    /**
+     * Prepares the action for tests.
+     */
     @Before
     @SuppressWarnings("javadoc")
     public void init() throws IOException {
-        location = mock(ProjectLocationHelper.class);
+        ProjectLocationHelper location = mock(ProjectLocationHelper.class);
         when(location.getConstructedFile()).thenReturn(getXlsxFile());
         when(location.getDeconstructedDirectory()).thenReturn(new File("xlsx_deconstructed"));
 
@@ -65,7 +66,9 @@ public class DeconstructActionTest extends AbstractXlsxTest {
         action.setXlsxBuilder(builder);
     }
 
-    /** Tests the deconstruction of an XLSX. */
+    /**
+     * Tests the deconstruction of an XLSX.
+     */
     @Test
     @SuppressWarnings("javadoc")
     public void testDeconstruct() throws ActionException, IOException {

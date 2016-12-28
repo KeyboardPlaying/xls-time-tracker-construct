@@ -23,24 +23,34 @@ package org.keyboardplaying.xtt.ui.icon;
  */
 public enum ImageSize {
 
-    /** 16px wide. */
+    /**
+     * 16px wide.
+     */
     W_16("16"),
 
-    /** 22px wide. */
+    /**
+     * 22px wide.
+     */
     W_22("22"),
 
-    /** 32px wide. */
+    /**
+     * 32px wide.
+     */
     W_32("32"),
 
-    /** 64px wide. */
+    /**
+     * 64px wide.
+     */
     W_64("64"),
 
-    /** 128px wide. */
+    /**
+     * 128px wide.
+     */
     W_128("128");
 
     private String path;
 
-    private ImageSize(String path) {
+    ImageSize(String path) {
         this.path = path;
     }
 

@@ -47,10 +47,8 @@ public class ImageLoader {
     /**
      * Loads the image in PNG format with the corresponding name and size.
      *
-     * @param imageName
-     *            the name of the image to load (without extension)
-     * @param size
-     *            the size to load
+     * @param imageName the name of the image to load (without extension)
+     * @param size      the size to load
      * @return the image
      */
     public Image getImage(String imageName, ImageSize size) {
@@ -66,10 +64,8 @@ public class ImageLoader {
     /**
      * Loads the images with the corresponding name in all sizes.
      *
-     * @param imageName
-     *            the name of the image to load (without extension)
+     * @param imageName the name of the image to load (without extension)
      * @return the images
-     *
      * @see #getImage(String, ImageSize)
      */
     public List<Image> getImages(String imageName) {

@@ -43,7 +43,9 @@ public class ZipperTest extends AbstractFilesTest {
 
     private static final String DIR = "zip/";
 
-    /** Tests zipping a file that does not exist. */
+    /**
+     * Tests zipping a file that does not exist.
+     */
     @Test(expected = IllegalArgumentException.class)
     @SuppressWarnings("javadoc")
     public void testZipFromInexistingFile() throws IOException {
@@ -55,7 +57,9 @@ public class ZipperTest extends AbstractFilesTest {
         Zipper.zip(in, out);
     }
 
-    /** Tests zipping a file that exists and is a directory. */
+    /**
+     * Tests zipping a file that exists and is a directory.
+     */
     @Test(expected = IllegalArgumentException.class)
     @SuppressWarnings("javadoc")
     public void testZipToExistingDirectory() throws IOException {
@@ -67,7 +71,9 @@ public class ZipperTest extends AbstractFilesTest {
         Zipper.zip(in, out);
     }
 
-    /** Tests unzipping when the deletion of the target directory fails. */
+    /**
+     * Tests unzipping when the deletion of the target directory fails.
+     */
     @Test(expected = IOException.class)
     @SuppressWarnings("javadoc")
     public void testUnremovableTarget() throws IOException {
@@ -83,7 +89,9 @@ public class ZipperTest extends AbstractFilesTest {
         Zipper.zip(in, out, true);
     }
 
-    /** Tests zipping a directory. */
+    /**
+     * Tests zipping a directory.
+     */
     @Test
     @SuppressWarnings("javadoc")
     public void testZipXlsxFromDirectory() throws IOException {
@@ -102,7 +110,9 @@ public class ZipperTest extends AbstractFilesTest {
         testZip("xlsx_ref", "xlsx_test.zip", true, true, "xlsx_ref.root.zip");
     }
 
-    /** Tests zipping a file. */
+    /**
+     * Tests zipping a file.
+     */
     @Test
     @SuppressWarnings("javadoc")
     public void testZipFromFile() throws IOException {
@@ -130,28 +140,28 @@ public class ZipperTest extends AbstractFilesTest {
     private void assertZipEquals(File expected, File actual) throws IOException {
         try (ZipFile ze = new ZipFile(expected); ZipFile za = new ZipFile(actual)) {
 
-            List<? extends ZipEntry> expEntries = Collections.list(ze.entries());
-            List<? extends ZipEntry> actEntries = Collections.list(za.entries());
+            List<? extends ZipEntry> expectEntries = Collections.list(ze.entries());
+            List<? extends ZipEntry> actualEntries = Collections.list(za.entries());
 
-            Collections.sort(expEntries, new ZipEntryComparator());
-            Collections.sort(actEntries, new ZipEntryComparator());
+            expectEntries.sort(new ZipEntryComparator());
+            actualEntries.sort(new ZipEntryComparator());
 
-            assertEquals(expEntries.size(), actEntries.size());
+            assertEquals(expectEntries.size(), actualEntries.size());
 
-            Iterator<? extends ZipEntry> expIter = expEntries.iterator();
-            Iterator<? extends ZipEntry> actIter = actEntries.iterator();
+            Iterator<? extends ZipEntry> expectIterator = expectEntries.iterator();
+            Iterator<? extends ZipEntry> actualIterator = actualEntries.iterator();
 
-            while (expIter.hasNext()) {
-                assertTrue(actIter.hasNext());
+            while (expectIterator.hasNext()) {
+                assertTrue(actualIterator.hasNext());
 
-                ZipEntry expEntry = expIter.next();
-                ZipEntry actEntry = actIter.next();
+                ZipEntry expEntry = expectIterator.next();
+                ZipEntry actEntry = actualIterator.next();
 
                 assertEquals(expEntry.getName(), actEntry.getName());
                 assertEquals(expEntry.isDirectory(), actEntry.isDirectory());
                 assertEquals(expEntry.getSize(), actEntry.getSize(), 1);
             }
-            assertFalse(actIter.hasNext());
+            assertFalse(actualIterator.hasNext());
         }
     }
 

@@ -49,8 +49,7 @@ public class XlsxNormalizer {
     /**
      * Sets the title to use for the Excel file's properties.
      *
-     * @param title
-     *            the title of the Excel file
+     * @param title the title of the Excel file
      */
     public void setTitle(String title) {
         this.title = title;
@@ -59,8 +58,7 @@ public class XlsxNormalizer {
     /**
      * Sets the author to use for the Excel file's properties.
      *
-     * @param author
-     *            the author of the Excel file
+     * @param author the author of the Excel file
      */
     public void setAuthor(String author) {
         this.author = author;
@@ -69,8 +67,7 @@ public class XlsxNormalizer {
     /**
      * Sets the company to use for the Excel file's properties.
      *
-     * @param company
-     *            the company of the Excel file
+     * @param company the company of the Excel file
      */
     public void setCompany(String company) {
         this.company = company;
@@ -79,8 +76,7 @@ public class XlsxNormalizer {
     /**
      * Sets the active range for the tracker sheet.
      *
-     * @param trackerActiveRange
-     *            the tracker sheet
+     * @param trackerActiveRange the tracker sheet
      */
     public void setTrackerActiveRange(String trackerActiveRange) {
         this.trackerActiveRange = trackerActiveRange;
@@ -89,8 +85,7 @@ public class XlsxNormalizer {
     /**
      * Sets the active range for the configuration sheet.
      *
-     * @param configActiveRange
-     *            the configuration sheet
+     * @param configActiveRange the configuration sheet
      */
     public void setConfigActiveRange(String configActiveRange) {
         this.configActiveRange = configActiveRange;
@@ -102,8 +97,7 @@ public class XlsxNormalizer {
      * This sets the author, company and title with the properties of the instance, and resets the last modification
      * date with the creation date.
      *
-     * @param workbook
-     *            the workbook to normalize
+     * @param workbook the workbook to normalize
      */
     public void normalizeProperties(XSSFWorkbook workbook) {
         POIXMLProperties properties = workbook.getProperties();
@@ -124,8 +118,7 @@ public class XlsxNormalizer {
     /**
      * Normalizes the time tracker workbook's selected sheet and cells and applies some styling.
      *
-     * @param workbook
-     *            the workbook to normalize
+     * @param workbook the workbook to normalize
      */
     public void normalizeSheets(XSSFWorkbook workbook) {
         normalizeSheet(workbook.getSheetAt(XlsxTracker.TAB_INDEX_TRACKER), trackerActiveRange);

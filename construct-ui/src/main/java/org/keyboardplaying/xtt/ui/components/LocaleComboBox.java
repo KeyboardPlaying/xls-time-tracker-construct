@@ -40,7 +40,9 @@ import org.keyboardplaying.xtt.ui.i18n.I18nHelper;
  */
 public class LocaleComboBox extends JComboBox<Locale> implements ItemListener {
 
-    /** Generated serial version UID. */
+    /**
+     * Generated serial version UID.
+     */
     private static final long serialVersionUID = -1168140715882439602L;
 
     private I18nHelper i18n;
@@ -48,8 +50,7 @@ public class LocaleComboBox extends JComboBox<Locale> implements ItemListener {
     /**
      * Creates a new instance.
      *
-     * @param i18n
-     *            the internationalization helper
+     * @param i18n the internationalization helper
      */
     public LocaleComboBox(I18nHelper i18n) {
         super(makeStoreFromList(i18n.getAvailableLocales()));
@@ -74,19 +75,12 @@ public class LocaleComboBox extends JComboBox<Locale> implements ItemListener {
     /**
      * Converts a list of locales into a sorted array for display.
      *
-     * @param locales
-     *            the list of locales to display
+     * @param locales the list of locales to display
      * @return the store of the combo box
      */
     private static Locale[] makeStoreFromList(List<Locale> locales) {
         List<Locale> clone = new ArrayList<>(locales);
-        Collections.sort(locales, new Comparator<Locale>() {
-
-            @Override
-            public int compare(Locale o1, Locale o2) {
-                return getDisplayText(o1).compareTo(getDisplayText(o2));
-            }
-        });
+        locales.sort((o1, o2) -> getDisplayText(o1).compareTo(getDisplayText(o2)));
 
         return clone.toArray(new Locale[clone.size()]);
     }
@@ -94,10 +88,8 @@ public class LocaleComboBox extends JComboBox<Locale> implements ItemListener {
     /**
      * Returns the display name of the locale in that same locale, with an upper-case first character.
      *
-     * @param locale
-     *            the locale to display
+     * @param locale the locale to display
      * @return the localized display name of the locale
-     *
      * @see Locale#getDisplayName()
      */
     private static String getDisplayText(Locale locale) {
@@ -112,7 +104,9 @@ public class LocaleComboBox extends JComboBox<Locale> implements ItemListener {
      */
     private static class LocaleComboBoxRenderer extends JLabel implements ListCellRenderer<Locale>, Serializable {
 
-        /** Generated serial version UID. */
+        /**
+         * Generated serial version UID.
+         */
         private static final long serialVersionUID = -2867829357496336327L;
 
         /*
@@ -123,7 +117,7 @@ public class LocaleComboBox extends JComboBox<Locale> implements ItemListener {
          */
         @Override
         public Component getListCellRendererComponent(JList<? extends Locale> list, Locale value, int index,
-                boolean isSelected, boolean cellHasFocus) {
+                                                      boolean isSelected, boolean cellHasFocus) {
             setText(getDisplayText(value));
             return this;
         }

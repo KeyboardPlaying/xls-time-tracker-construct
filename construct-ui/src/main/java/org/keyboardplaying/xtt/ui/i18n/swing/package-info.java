@@ -10,5 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
-/** Extensions of Swing components with utilities to listen changes of locale. */
+/**
+ * Extensions of Swing components with utilities to listen changes of locale.
+ */
 package org.keyboardplaying.xtt.ui.i18n.swing;

@@ -35,8 +35,7 @@ public class ConstructAction implements ProjectAction {
     /**
      * Sets the project location helper for this instance.
      *
-     * @param locationHelper
-     *            the new project location helper
+     * @param locationHelper the new project location helper
      */
     public void setLocationHelper(ProjectLocationHelper locationHelper) {
         this.locationHelper = locationHelper;

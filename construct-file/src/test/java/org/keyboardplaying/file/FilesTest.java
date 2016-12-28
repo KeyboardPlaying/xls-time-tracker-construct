@@ -34,7 +34,9 @@ import org.keyboardplaying.AbstractFilesTest;
  */
 public class FilesTest extends AbstractFilesTest {
 
-    /** Tests {@link Files#listFiles(File, boolean)} when the supplied {@link File} is a file. */
+    /**
+     * Tests {@link Files#listFiles(File, boolean)} when the supplied {@link File} is a file.
+     */
     @Test
     public void testListFilesWithFile() {
         // Prepare
@@ -92,7 +94,9 @@ public class FilesTest extends AbstractFilesTest {
         assertEquals(exp, files);
     }
 
-    /** Tests deleting an unexisting file. */
+    /**
+     * Tests deleting an unexisting file.
+     */
     @Test
     public void testDeleteUnexisting() {
         // Prepare
@@ -106,7 +110,9 @@ public class FilesTest extends AbstractFilesTest {
         assertFalse(file.exists());
     }
 
-    /** Tests deleting a file. */
+    /**
+     * Tests deleting a file.
+     */
     @Test
     public void testDeleteFile() {
         // Prepare
@@ -120,7 +126,9 @@ public class FilesTest extends AbstractFilesTest {
         assertFalse(file.exists());
     }
 
-    /** Tests deleting a directory. */
+    /**
+     * Tests deleting a directory.
+     */
     @Test
     public void testDeleteDirectory() {
         // Prepare
