@@ -121,6 +121,9 @@ public class I18nHelperTest {
     private void testLocale(Locale locale) {
         Locale parsed = i18n.parseLocale(locale.toString());
         String errorIndicator = "Tested: <" + locale.toString() + "> - ";
+        if (locale.toString().isEmpty()) {
+            locale = locale.getDefault();
+        }
         assertEquals(errorIndicator, locale.getLanguage(), parsed.getLanguage());
         assertEquals(errorIndicator, locale.getCountry(), parsed.getCountry());
         assertEquals(errorIndicator, locale.getVariant(), parsed.getVariant());
