@@ -18,9 +18,9 @@ package org.keyboardplaying.xtt.xlsx;
 
 import org.apache.poi.POIXMLProperties;
 import org.apache.poi.POIXMLProperties.CoreProperties;
-import org.apache.poi.hssf.util.PaneInformation;
 import org.apache.poi.openxml4j.util.Nullable;
 import org.apache.poi.ss.util.CellAddress;
+import org.apache.poi.ss.util.PaneInformation;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Value;
