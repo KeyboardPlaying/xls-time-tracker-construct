@@ -2,10 +2,10 @@
 
 [travis-badge]: https://img.shields.io/travis/KeyboardPlaying/xls-time-tracker-construct.svg
 [travis]: https://travis-ci.org/KeyboardPlaying/xls-time-tracker-construct
-[sonarc-badge]: https://img.shields.io/sonar/https/sonar.keyboardplaying.org/org.keyboardplaying.xtt:construct/coverage.svg
-[sonarc]: https://sonar.keyboardplaying.org/overview/coverage?id=org.keyboardplaying.xtt:construct
-[sonarq-badge]: https://img.shields.io/sonar/https/sonar.keyboardplaying.org/org.keyboardplaying.xtt:construct/tech_debt.svg
-[sonarq]: https://sonar.keyboardplaying.org/overview/debt?id=org.keyboardplaying.xtt:construct
+[sonarc-badge]: https://img.shields.io/sonar/https/sonarqube.com/org.keyboardplaying.xtt:construct/coverage.svg
+[sonarc]: https://sonarqube.com/overview/coverage?id=org.keyboardplaying.xtt:construct
+[sonarq-badge]: https://img.shields.io/sonar/https/sonarqube.com/org.keyboardplaying.xtt:construct/tech_debt.svg
+[sonarq]: https://sonarqube.com/overview/debt?id=org.keyboardplaying.xtt:construct
 [issues-badge]: https://img.shields.io/github/issues-raw/cyChop/beverages-js.svg
 [waffle]: https://waffle.io/KeyboardPlaying/xls-time-tracker
 [licens-badge]: https://img.shields.io/github/license/KeyboardPlaying/xls-time-tracker-construct.svg
@@ -15,7 +15,7 @@
 [![Test coverage][sonarc-badge]][sonarc]
 [![Technical debt][sonarq-badge]][sonarq]
 [![Issues][issues-badge]][waffle]
-[![License: Apache][licens-badge]][licens]
+[![License: Apache 2.0][licens-badge]][licens]
 
 [xtt-main]: https://github.com/KeyboardPlaying/xls-time-tracker
 [xtt-wiki]: https://github.com/KeyboardPlaying/xls-time-tracker/wiki

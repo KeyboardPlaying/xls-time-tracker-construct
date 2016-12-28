@@ -1,112 +1,112 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.keyboardplaying.xtt</groupId>
-        <artifactId>construct</artifactId>
-        <version>3.0.0-SNAPSHOT</version>
-    </parent>
+  <parent>
+    <groupId>org.keyboardplaying.xtt</groupId>
+    <artifactId>construct</artifactId>
+    <version>3.0.0-SNAPSHOT</version>
+  </parent>
 
-    <artifactId>construct-logic</artifactId>
-    <packaging>jar</packaging>
+  <artifactId>construct-logic</artifactId>
+  <packaging>jar</packaging>
 
-    <name>XTT construct logic</name>
-    <description>
-        Everything related to the configuration and the handling of the Excel files for the construction.
-    </description>
+  <name>XTT construct logic</name>
+  <description>
+    Everything related to the configuration and the handling of the Excel files for the construction.
+  </description>
 
-    <dependencies>
-        <!--<![CDATA[
-             __  _______ _____
-             \ \/ /_   _|_   _|
-              >  <  | |   | |
-             /_/\_\ |_|   |_| ]]>-->
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>construct-file</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        
-        <!--<![CDATA[
-             ___          _
-            / __|_ __ _ _(_)_ _  __ _
-            \__ \ '_ \ '_| | ' \/ _` |
-            |___/ .__/_| |_|_||_\__, |
-                |_|             |___/  ]]>-->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-        </dependency>
-
-        <!--<![CDATA[
-             ___  ___ ___
-            | _ \/ _ \_ _|
-            |  _/ (_) | |
-            |_|  \___/___| ]]>-->
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi-ooxml</artifactId>
-        </dependency>
-        <!--<![CDATA[
-                _         _      
-             _ | |___  __| |__ _ 
-            | || / _ \/ _` / _` |
-             \__/\___/\__,_\__,_| ]]>-->
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-        </dependency>
-
-        <!--<![CDATA[
-              _
-             | |   ___  __ _
-             | |__/ _ \/ _` |
-             |____\___/\__, |
-                       |___/ ]]>-->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>jcl-over-slf4j</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-        </dependency>
-
-        <!--<![CDATA[
-             _____       _
-            |_   _|__ __| |_
-              | |/ -_|_-<  _|
-              |_|\___/__/\__| ]]>-->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>jdepend</groupId>
-            <artifactId>jdepend</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+  <dependencies>
+    <!--<![CDATA[
+         __  _______ _____
+         \ \/ /_   _|_   _|
+          >  <  | |   | |
+         /_/\_\ |_|   |_| ]]>-->
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>construct-file</artifactId>
+      <version>${project.version}</version>
+    </dependency>
 
     <!--<![CDATA[
-           _   _              _
-          /_\ | |__  ___ _  _| |_
-         / _ \| '_ \/ _ \ || |  _|
-        /_/ \_\_.__/\___/\_,_|\__| ]]>-->
-    <scm>
-        <url>https://github.com/${github.user}/${github.repo}</url>
-        <connection>scm:git:https://github.com/${github.user}/${github.repo}.git</connection>
-        <developerConnection>scm:git:git@github.com:${github.user}/${github.repo}.git</developerConnection>
-    </scm>
+         ___          _
+        / __|_ __ _ _(_)_ _  __ _
+        \__ \ '_ \ '_| | ' \/ _` |
+        |___/ .__/_| |_|_||_\__, |
+            |_|             |___/  ]]>-->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+    </dependency>
+
+    <!--<![CDATA[
+         ___  ___ ___
+        | _ \/ _ \_ _|
+        |  _/ (_) | |
+        |_|  \___/___| ]]>-->
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-ooxml</artifactId>
+    </dependency>
+    <!--<![CDATA[
+            _         _
+         _ | |___  __| |__ _
+        | || / _ \/ _` / _` |
+         \__/\___/\__,_\__,_| ]]>-->
+    <dependency>
+      <groupId>joda-time</groupId>
+      <artifactId>joda-time</artifactId>
+    </dependency>
+
+    <!--<![CDATA[
+          _
+         | |   ___  __ _
+         | |__/ _ \/ _` |
+         |____\___/\__, |
+                   |___/ ]]>-->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+    </dependency>
+
+    <!--<![CDATA[
+         _____       _
+        |_   _|__ __| |_
+          | |/ -_|_-<  _|
+          |_|\___/__/\__| ]]>-->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>jdepend</groupId>
+      <artifactId>jdepend</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <!--<![CDATA[
+         _   _              _
+        /_\ | |__  ___ _  _| |_
+       / _ \| '_ \/ _ \ || |  _|
+      /_/ \_\_.__/\___/\_,_|\__| ]]>-->
+  <scm>
+    <url>https://github.com/${github.user}/${github.repo}</url>
+    <connection>scm:git:https://github.com/${github.user}/${github.repo}.git</connection>
+    <developerConnection>scm:git:git@github.com:${github.user}/${github.repo}.git</developerConnection>
+  </scm>
 </project>
