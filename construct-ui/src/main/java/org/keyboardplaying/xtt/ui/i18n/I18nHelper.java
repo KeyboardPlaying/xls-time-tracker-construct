@@ -43,7 +43,9 @@ public class I18nHelper {
     /**
      * The key the locale is stored under in the preferences.
      */
-    private static final String LOCALE_PREFKEY = "locale";
+    // Use protected rather than default for package-private
+    @SuppressWarnings("WeakerAccess")
+    protected static final String LOCALE_PREFKEY = "locale";
 
     private static final Logger LOG = LoggerFactory.getLogger(I18nHelper.class);
 
