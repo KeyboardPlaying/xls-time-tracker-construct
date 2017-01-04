@@ -127,14 +127,14 @@ public class I18nHelperTest {
     }
 
     private void testLocale(Locale locale) {
-        Locale parsed = i18n.parseLocale(locale.toString());
-        String errorIndicator = "Tested: <" + locale.toString() + "> - ";
-        if (locale.toString().isEmpty()) {
-            locale = locale.getDefault();
-        }
-        assertEquals(errorIndicator, locale.getLanguage(), parsed.getLanguage());
-        assertEquals(errorIndicator, locale.getCountry(), parsed.getCountry());
-        assertEquals(errorIndicator, locale.getVariant(), parsed.getVariant());
+        String localeAsString = locale.toString();
+        Locale parsed = i18n.parseLocale(localeAsString);
+        String errorIndicator = "Tested: <" + localeAsString + "> - ";
+
+        Locale expected = localeAsString.isEmpty() ? Locale.getDefault() : locale;
+        assertEquals(errorIndicator, expected.getLanguage(), parsed.getLanguage());
+        assertEquals(errorIndicator, expected.getCountry(), parsed.getCountry());
+        assertEquals(errorIndicator, expected.getVariant(), parsed.getVariant());
         // Locales are not equal because script is not taken into account
         // assertEquals(errorIndicator, locale, parsed);
     }

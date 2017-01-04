@@ -36,9 +36,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class ConfirmClearPrefsAction implements ConstructUtilityAction {
 
-    @Autowired
     private I18nHelper i18nHelper;
-    @Autowired
     private ClearPrefsAction clearPrefsAction;
 
     /**
@@ -46,6 +44,7 @@ public class ConfirmClearPrefsAction implements ConstructUtilityAction {
      *
      * @param i18nHelper the new i18nHelper
      */
+    @Autowired
     public void setI18nHelper(I18nHelper i18nHelper) {
         this.i18nHelper = i18nHelper;
     }
@@ -55,6 +54,7 @@ public class ConfirmClearPrefsAction implements ConstructUtilityAction {
      *
      * @param clearPrefsAction the new clearPrefsAction
      */
+    @Autowired
     public void setClearPrefsAction(ClearPrefsAction clearPrefsAction) {
         this.clearPrefsAction = clearPrefsAction;
     }

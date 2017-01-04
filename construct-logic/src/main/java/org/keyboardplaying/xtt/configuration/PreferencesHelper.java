@@ -34,7 +34,8 @@ public class PreferencesHelper {
     private static final Logger LOG = LoggerFactory.getLogger(PreferencesHelper.class);
     private static final String NODE = "org/keyboardplaying/xtt/construct";
 
-    private Preferences preferences;
+    private final Preferences preferences;
+
     private boolean initialized;
 
     /**

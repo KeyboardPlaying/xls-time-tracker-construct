@@ -49,11 +49,17 @@ public class ProjectLocationHelper {
      */
     private static final String DECONSTRUCT_PATH = "xlsx_deconstructed";
 
+    private final List<UpdateListener> listeners = new ArrayList<>();
+
+    private PreferencesHelper preferences;
+    private File location;
+
     /**
      * An interface for listening to project configuration updates.
      *
      * @author Cyrille Chopelet (https://keyboardplaying.org)
      */
+    @FunctionalInterface
     public interface UpdateListener {
 
         /**
@@ -65,17 +71,12 @@ public class ProjectLocationHelper {
         void notifyLocationUpdate(File location, boolean valid);
     }
 
-    @Autowired
-    private PreferencesHelper preferences;
-
-    private List<UpdateListener> listeners = new ArrayList<>();
-    private File location;
-
     /**
      * Sets the preferences manager for this instance.
      *
      * @param preferences the new preferences manager
      */
+    @Autowired
     public void setPreferences(PreferencesHelper preferences) {
         this.preferences = preferences;
     }

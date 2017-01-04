@@ -16,20 +16,19 @@
  */
 package org.keyboardplaying.file;
 
+import org.junit.Test;
+import org.keyboardplaying.AbstractFilesTest;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Comparator;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
-import org.junit.Test;
-import org.keyboardplaying.AbstractFilesTest;
 
 /**
  * Test class for {@link Unzipper}.

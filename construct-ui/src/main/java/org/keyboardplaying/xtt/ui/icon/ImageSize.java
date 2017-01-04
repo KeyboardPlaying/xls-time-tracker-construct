@@ -48,7 +48,7 @@ public enum ImageSize {
      */
     W_128("128");
 
-    private String path;
+    private final String path;
 
     ImageSize(String path) {
         this.path = path;

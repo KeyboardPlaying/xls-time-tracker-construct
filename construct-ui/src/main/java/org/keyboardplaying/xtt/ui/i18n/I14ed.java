@@ -24,6 +24,7 @@ package org.keyboardplaying.xtt.ui.i18n;
  *
  * @author Cyrille Chopelet (https://keyboardplaying.org)
  */
+@FunctionalInterface
 public interface I14ed {
 
     /**

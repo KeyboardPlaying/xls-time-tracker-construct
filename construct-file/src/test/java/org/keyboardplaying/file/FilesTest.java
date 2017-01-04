@@ -16,16 +16,17 @@
  */
 package org.keyboardplaying.file;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+import org.keyboardplaying.AbstractFilesTest;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import org.junit.Test;
-import org.keyboardplaying.AbstractFilesTest;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Test class for {@link Files}.
@@ -68,6 +69,9 @@ public class FilesTest extends AbstractFilesTest {
         List<File> files = Files.listFiles(root, false);
 
         // Assert
+        // sort both collections to avoid relying on Java or filesystem quirks
+        Collections.sort(exp);
+        Collections.sort(files);
         assertEquals(exp, files);
     }
 
@@ -91,6 +95,9 @@ public class FilesTest extends AbstractFilesTest {
         List<File> files = Files.listFiles(root, true);
 
         // Assert
+        // sort both collections to avoid relying on Java or filesystem quirks
+        Collections.sort(exp);
+        Collections.sort(files);
         assertEquals(exp, files);
     }
 

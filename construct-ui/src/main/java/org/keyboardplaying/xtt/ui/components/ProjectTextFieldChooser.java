@@ -39,7 +39,7 @@ public class ProjectTextFieldChooser extends JTextField implements DocumentListe
      */
     private static final long serialVersionUID = -1641064152036700917L;
 
-    private ProjectLocationHelper locationHelper;
+    private final ProjectLocationHelper locationHelper;
 
     /**
      * Creates a new instance.

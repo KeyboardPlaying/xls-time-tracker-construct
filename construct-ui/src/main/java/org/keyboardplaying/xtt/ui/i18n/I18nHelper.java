@@ -43,17 +43,17 @@ public class I18nHelper {
     /**
      * The key the locale is stored under in the preferences.
      */
-    protected static final String LOCALE_PREFKEY = "locale";
+    private static final String LOCALE_PREFKEY = "locale";
 
     private static final Logger LOG = LoggerFactory.getLogger(I18nHelper.class);
 
     private static final String BUNDLE_BASE_NAME = "org.keyboardplaying.xtt.ui.i18n.Messages";
     private static final String LOCALE_REGEX = "([a-z]{2})(?:_([A-Z]{2})?(?:_([a-zA-Z]+))?(?:_#.+)?)?";
 
-    @Autowired
+    private final Set<I14ed> i14ed = new HashSet<>();
+
     private PreferencesHelper preferences;
 
-    private Set<I14ed> i14ed = new HashSet<>();
     private ResourceBundle bundle;
 
     /**
@@ -78,6 +78,7 @@ public class I18nHelper {
      *
      * @param preferences the preferences helper
      */
+    @Autowired
     public void setPreferences(PreferencesHelper preferences) {
         this.preferences = preferences;
     }

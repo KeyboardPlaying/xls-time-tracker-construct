@@ -21,6 +21,7 @@ package org.keyboardplaying.xtt.action;
  *
  * @author Cyrille Chopelet (https://keyboardplaying.org)
  */
+@FunctionalInterface
 public interface Action {
 
     /**

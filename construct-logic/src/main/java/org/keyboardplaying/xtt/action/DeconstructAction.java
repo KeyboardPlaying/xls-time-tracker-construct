@@ -35,11 +35,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class DeconstructAction implements ProjectAction {
 
-    @Autowired
     private ProjectLocationHelper location;
-    @Autowired
     private XlsxNormalizer normalizer;
-    @Autowired
     private XlsxBuilder builder;
 
     /**
@@ -47,6 +44,7 @@ public class DeconstructAction implements ProjectAction {
      *
      * @param location the new project location helper
      */
+    @Autowired
     public void setLocationHelper(ProjectLocationHelper location) {
         this.location = location;
     }
@@ -56,6 +54,7 @@ public class DeconstructAction implements ProjectAction {
      *
      * @param normalizer the XLSX normalizer
      */
+    @Autowired
     public void setXlsxNormalizer(XlsxNormalizer normalizer) {
         this.normalizer = normalizer;
     }
@@ -65,6 +64,7 @@ public class DeconstructAction implements ProjectAction {
      *
      * @param builder the XLSX builder
      */
+    @Autowired
     public void setXlsxBuilder(XlsxBuilder builder) {
         this.builder = builder;
     }

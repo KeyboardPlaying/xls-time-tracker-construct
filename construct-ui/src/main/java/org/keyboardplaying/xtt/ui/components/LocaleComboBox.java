@@ -16,22 +16,16 @@
  */
 package org.keyboardplaying.xtt.ui.components;
 
-import java.awt.Component;
+import org.keyboardplaying.xtt.ui.i18n.I18nHelper;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
-
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.ListCellRenderer;
-
-import org.keyboardplaying.xtt.ui.i18n.I18nHelper;
 
 /**
  * A combo box to choose the preferred locale amongst the available ones.
@@ -45,7 +39,7 @@ public class LocaleComboBox extends JComboBox<Locale> implements ItemListener {
      */
     private static final long serialVersionUID = -1168140715882439602L;
 
-    private I18nHelper i18n;
+    private final I18nHelper i18n;
 
     /**
      * Creates a new instance.

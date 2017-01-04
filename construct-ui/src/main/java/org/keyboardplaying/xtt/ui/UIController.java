@@ -16,24 +16,7 @@
  */
 package org.keyboardplaying.xtt.ui;
 
-import java.awt.Container;
-import java.awt.Frame;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Image;
-import java.awt.Window;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.File;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
 import org.keyboardplaying.xtt.action.Action;
-import org.keyboardplaying.xtt.action.ActionException;
 import org.keyboardplaying.xtt.action.ConstructAction;
 import org.keyboardplaying.xtt.action.ConstructUtilityAction;
 import org.keyboardplaying.xtt.action.DeconstructAction;
@@ -52,26 +35,25 @@ import org.keyboardplaying.xtt.ui.icon.ImageLoader;
 import org.keyboardplaying.xtt.ui.icon.ImageSize;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.File;
+
 /**
  * @author Cyrille Chopelet (https://keyboardplaying.org)
  */
 public class UIController {
 
-    @Autowired
     private I18nHelper i18n;
-    @Autowired
     private ImageLoader images;
 
-    @Autowired
     private PreferencesHelper prefs;
-    @Autowired
     private ProjectLocationHelper location;
 
-    @Autowired
     private ConstructAction constructAction;
-    @Autowired
     private DeconstructAction deconstructAction;
-    @Autowired
     private ConfirmClearPrefsAction clearPrefsAction;
 
     private ConstructUtilityAction settingsAction = this::showSettingsWindow;
@@ -81,6 +63,7 @@ public class UIController {
      *
      * @param i18nHelper the new i18nHelper
      */
+    @Autowired
     public void setI18nHelper(I18nHelper i18nHelper) {
         this.i18n = i18nHelper;
     }
@@ -90,6 +73,7 @@ public class UIController {
      *
      * @param imageLoader the new imageLoader
      */
+    @Autowired
     public void setImageLoader(ImageLoader imageLoader) {
         this.images = imageLoader;
     }
@@ -99,6 +83,7 @@ public class UIController {
      *
      * @param preferencesHelper the new preferencesHelper
      */
+    @Autowired
     public void setPreferencesHelper(PreferencesHelper preferencesHelper) {
         this.prefs = preferencesHelper;
     }
@@ -108,6 +93,7 @@ public class UIController {
      *
      * @param locationHelper the new locationHelper
      */
+    @Autowired
     public void setLocationHelper(ProjectLocationHelper locationHelper) {
         this.location = locationHelper;
     }
@@ -117,6 +103,7 @@ public class UIController {
      *
      * @param constructAction the new constructAction
      */
+    @Autowired
     public void setConstructAction(ConstructAction constructAction) {
         this.constructAction = constructAction;
     }
@@ -126,6 +113,7 @@ public class UIController {
      *
      * @param deconstructAction the new deconstructAction
      */
+    @Autowired
     public void setDeconstructAction(DeconstructAction deconstructAction) {
         this.deconstructAction = deconstructAction;
     }
@@ -135,6 +123,7 @@ public class UIController {
      *
      * @param clearPrefsAction the new clearPrefsAction
      */
+    @Autowired
     public void setClearPrefsAction(ConfirmClearPrefsAction clearPrefsAction) {
         this.clearPrefsAction = clearPrefsAction;
     }
