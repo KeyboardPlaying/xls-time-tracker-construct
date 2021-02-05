@@ -20,6 +20,8 @@
 [xtt-main]: https://github.com/KeyboardPlaying/xls-time-tracker
 [xtt-wiki]: https://github.com/KeyboardPlaying/xls-time-tracker/wiki
 
+> **:warning: This project was moved [to GitLab](https://gitlab.com/keyboardplaying/xtt/xls-time-tracker-construct).**
+
 This project is a utility for developers wishing to contribute to the [xls-time-tracker][xtt-wiki]. It provides an easy way to switch to and fro between the version controlled source and the editable Excel file.
 
 ![xls-time-tracker construct](doc/screenshots/construct.png)
